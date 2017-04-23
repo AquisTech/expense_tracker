@@ -1,0 +1,10 @@
+= form_for @transaction_purpose do |f|
+  - if @transaction_purpose.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@transaction_purpose.errors.count, "error")} prohibited this transaction_purpose from being saved:"
+      %ul
+        - @transaction_purpose.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

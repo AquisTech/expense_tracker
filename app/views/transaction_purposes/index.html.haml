@@ -1,0 +1,19 @@
+%h1 Listing transaction_purposes
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @transaction_purposes.each do |transaction_purpose|
+      %tr
+        %td= link_to 'Show', transaction_purpose
+        %td= link_to 'Edit', edit_transaction_purpose_path(transaction_purpose)
+        %td= link_to 'Destroy', transaction_purpose, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Transaction purpose', new_transaction_purpose_path

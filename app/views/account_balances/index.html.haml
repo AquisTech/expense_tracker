@@ -1,0 +1,19 @@
+%h1 Listing account_balances
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @account_balances.each do |account_balance|
+      %tr
+        %td= link_to 'Show', account_balance
+        %td= link_to 'Edit', edit_account_balance_path(account_balance)
+        %td= link_to 'Destroy', account_balance, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Account balance', new_account_balance_path

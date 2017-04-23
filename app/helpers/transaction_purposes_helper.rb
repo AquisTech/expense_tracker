@@ -1,0 +1,2 @@
+module TransactionPurposesHelper
+end

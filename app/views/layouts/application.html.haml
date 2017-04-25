@@ -12,5 +12,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   %body
-
-    = yield
+    .off-canvas-wrapper
+      = render 'layouts/left_sidebar'
+      = render 'layouts/right_sidebar'
+      .off-canvas-content{"data-off-canvas-content" => ""}
+        = render 'layouts/titlebar'
+        = yield

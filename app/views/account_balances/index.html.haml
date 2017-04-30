@@ -1,19 +1,34 @@
-%h1 Listing account_balances
+%h1 Account Balances
+%span= link_to 'Add New Account Balance', new_account_balance_path, class: 'button primary float-right'
 
-%table
+%table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Id
+      %th Opening balance
+      %th Calculated closing balance
+      %th Actual closing balance
+      %th Month
+      %th Year
+      %th Account
+      %th Created at
+      %th Updated at
+      %th Actions
 
   %tbody
     - @account_balances.each do |account_balance|
       %tr
-        %td= link_to 'Show', account_balance
-        %td= link_to 'Edit', edit_account_balance_path(account_balance)
-        %td= link_to 'Destroy', account_balance, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Account balance', new_account_balance_path
+        %td= account_balance.id
+        %td= account_balance.opening_balance
+        %td= account_balance.calculated_closing_balance
+        %td= account_balance.actual_closing_balance
+        %td= account_balance.month
+        %td= account_balance.year
+        %td= account_balance.account_id
+        %td= account_balance.created_at
+        %td= account_balance.updated_at
+        %td
+          .button-group
+            = link_to 'Show', account_balance, class: 'button success'
+            = link_to 'Edit', edit_account_balance_path(account_balance), class: 'button warning'
+            = link_to 'Delete', account_balance, method: :delete, data: { confirm: 'Are you sure you want to delete this Account Balance?' }, class: 'button alert'

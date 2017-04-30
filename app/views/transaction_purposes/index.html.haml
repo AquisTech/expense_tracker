@@ -1,19 +1,26 @@
-%h1 Listing transaction_purposes
+%h1 Transaction Purposes
+%span= link_to 'Add New Transaction Purpose', new_transaction_purpose_path, class: 'button primary float-right'
 
-%table
+%table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Id
+      %th Name
+      %th Sub category
+      %th Created at
+      %th Updated at
+      %th Actions
 
   %tbody
     - @transaction_purposes.each do |transaction_purpose|
       %tr
-        %td= link_to 'Show', transaction_purpose
-        %td= link_to 'Edit', edit_transaction_purpose_path(transaction_purpose)
-        %td= link_to 'Destroy', transaction_purpose, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Transaction purpose', new_transaction_purpose_path
+        %td= transaction_purpose.id
+        %td= transaction_purpose.name
+        %td= transaction_purpose.sub_category_id
+        %td= transaction_purpose.created_at
+        %td= transaction_purpose.updated_at
+        %td
+          .button-group
+            = link_to 'Show', transaction_purpose, class: 'button success'
+            = link_to 'Edit', edit_transaction_purpose_path(transaction_purpose), class: 'button warning'
+            = link_to 'Delete', transaction_purpose, method: :delete, data: { confirm: 'Are you sure you want to delete this Transaction Purpose?' }, class: 'button alert'

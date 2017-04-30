@@ -1,19 +1,26 @@
-%h1 Listing sub_categories
+%h1 Sub Categories
+%span= link_to 'Add New Sub Category', new_sub_category_path, class: 'button primary float-right'
 
-%table
+%table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Id
+      %th Name
+      %th Category
+      %th Created at
+      %th Updated at
+      %th Actions
 
   %tbody
     - @sub_categories.each do |sub_category|
       %tr
-        %td= link_to 'Show', sub_category
-        %td= link_to 'Edit', edit_sub_category_path(sub_category)
-        %td= link_to 'Destroy', sub_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Sub category', new_sub_category_path
+        %td= sub_category.id
+        %td= sub_category.name
+        %td= sub_category.category_id
+        %td= sub_category.created_at
+        %td= sub_category.updated_at
+        %td
+          .button-group
+            = link_to 'Show', sub_category, class: 'button success'
+            = link_to 'Edit', edit_sub_category_path(sub_category), class: 'button warning'
+            = link_to 'Delete', sub_category, method: :delete, data: { confirm: 'Are you sure you want to delete this Sub Category?' }, class: 'button alert'

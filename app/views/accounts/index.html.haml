@@ -1,19 +1,30 @@
-%h1 Listing accounts
+%h1 Accounts
+%span= link_to 'Add New Account', new_account_path, class: 'button primary float-right'
 
-%table
+%table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Id
+      %th Name
+      %th Description
+      %th Details
+      %th Account type
+      %th Created at
+      %th Updated at
+      %th Actions
 
   %tbody
     - @accounts.each do |account|
       %tr
-        %td= link_to 'Show', account
-        %td= link_to 'Edit', edit_account_path(account)
-        %td= link_to 'Destroy', account, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Account', new_account_path
+        %td= account.id
+        %td= account.name
+        %td= account.description
+        %td= account.details
+        %td= account.account_type
+        %td= account.created_at
+        %td= account.updated_at
+        %td
+          .button-group
+            = link_to 'Show', account, class: 'button success'
+            = link_to 'Edit', edit_account_path(account), class: 'button warning'
+            = link_to 'Delete', account, method: :delete, data: { confirm: 'Are you sure you want to delete this Account?' }, class: 'button alert'

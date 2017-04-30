@@ -1,19 +1,30 @@
-%h1 Listing transfers
+%h1 Transfers
+%span= link_to 'Add New Transfer', new_transfer_path, class: 'button primary float-right'
 
-%table
+%table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Id
+      %th Amount
+      %th Description
+      %th Source account
+      %th Destination account
+      %th Created at
+      %th Updated at
+      %th Actions
 
   %tbody
     - @transfers.each do |transfer|
       %tr
-        %td= link_to 'Show', transfer
-        %td= link_to 'Edit', edit_transfer_path(transfer)
-        %td= link_to 'Destroy', transfer, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Transfer', new_transfer_path
+        %td= transfer.id
+        %td= transfer.amount
+        %td= transfer.description
+        %td= transfer.source_account_id
+        %td= transfer.destination_account_id
+        %td= transfer.created_at
+        %td= transfer.updated_at
+        %td
+          .button-group
+            = link_to 'Show', transfer, class: 'button success'
+            = link_to 'Edit', edit_transfer_path(transfer), class: 'button warning'
+            = link_to 'Delete', transfer, method: :delete, data: { confirm: 'Are you sure you want to delete this Transfer?' }, class: 'button alert'

@@ -1,10 +1,5 @@
 #offCanvasLeft.off-canvas.position-left{"data-off-canvas" => ""}
   %ul.menu.vertical
-    %li
-      %a{:href => "#"} left One
-    %li
-      %a{:href => "#"} Two
-    %li
-      %a{:href => "#"} Three
-    %li
-      %a{:href => "#"} Four
+    - (ActiveRecord::Base.connection.tables - ['schema_migrations', 'ar_internal_metadata']).each do |model|
+      %li
+        = link_to model.titleize, send("#{model}_path")

@@ -1,0 +1,30 @@
+%h1 Payment Sources
+%span= link_to 'Add New Payment Source', new_payment_source_path, class: 'button primary float-right'
+
+%table.striped.hover.table-striped.stack
+  %thead
+    %tr
+      %th Id
+      %th Amount
+      %th Payment mode
+      %th Transaction
+      %th Account
+      %th Created at
+      %th Updated at
+      %th Actions
+
+  %tbody
+    - @payment_sources.each do |payment_source|
+      %tr
+        %td= payment_source.id
+        %td= payment_source.amount
+        %td= payment_source.payment_mode
+        %td= payment_source.transaction_id
+        %td= payment_source.account_id
+        %td= payment_source.created_at
+        %td= payment_source.updated_at
+        %td
+          .button-group
+            = link_to 'Show', payment_source, class: 'button success'
+            = link_to 'Edit', edit_payment_source_path(payment_source), class: 'button warning'
+            = link_to 'Delete', payment_source, method: :delete, data: { confirm: 'Are you sure you want to delete payment_source?' }, class: 'button alert'

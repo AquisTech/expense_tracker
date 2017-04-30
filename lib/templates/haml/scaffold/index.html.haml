@@ -1,0 +1,22 @@
+%h1 <%= plural_table_name.titleize %>
+%span= link_to 'Add New <%= singular_table_name.titleize %>', new_<%= singular_table_name %>_path, class: 'button primary float-right'
+<%- attributes = singular_table_name.classify.constantize.column_names %>
+%table.striped.hover.table-striped.stack
+  %thead
+    %tr
+<% attributes.each do |attribute| -%>
+      %th <%= attribute.humanize %>
+<% end -%>
+      %th Actions
+
+  %tbody
+    - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+      %tr
+<% attributes.each do |attribute| -%>
+        %td= <%= singular_table_name %>.<%= attribute %>
+<% end -%>
+        %td
+          .button-group
+            = link_to 'Show', <%= singular_table_name %>, class: 'button success'
+            = link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'button warning'
+            = link_to 'Delete', <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure you want to delete <%= singular_table_name %>?' }, class: 'button alert'

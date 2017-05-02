@@ -19,4 +19,16 @@
 
 $(document).on('turbolinks:load', function() {
   $(document).foundation();
+  $('[data-open="ajax-reveal"]').on('click', function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: $(this).data('url'),
+      success: function(result) {
+        $(".reveal-content").html(result);
+      },
+      error: function(result) {
+        $(".reveal-content").html('Error loading content. Please close popup and retry.');
+      }
+    });
+  });
 });

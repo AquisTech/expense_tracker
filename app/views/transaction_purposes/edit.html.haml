@@ -1,7 +1,3 @@
-%h1 Editing transaction_purpose
+%h1= "Editing Transaction Purpose: ##{@transaction_purpose.id}"
 
-= render 'form'
-
-= link_to 'Show', @transaction_purpose
-\|
-= link_to 'Back', transaction_purposes_path
+= render 'form', transaction_purpose: @transaction_purpose

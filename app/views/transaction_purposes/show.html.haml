@@ -1,6 +1,30 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_transaction_purpose_path(@transaction_purpose)
-\|
-= link_to 'Back', transaction_purposes_path
+%p
+  %strong Id:
+  = @transaction_purpose.id
+
+
+%p
+  %strong Name:
+  = @transaction_purpose.name
+
+
+%p
+  %strong Sub category:
+  = @transaction_purpose.sub_category_id
+
+
+%p
+  %strong Created at:
+  = @transaction_purpose.created_at
+
+
+%p
+  %strong Updated at:
+  = @transaction_purpose.updated_at
+
+
+.row
+  = link_to 'Edit', edit_transaction_purpose_path(@transaction_purpose), class: 'button primary'
+  = link_to 'Back', transaction_purposes_path, class: 'button warning'

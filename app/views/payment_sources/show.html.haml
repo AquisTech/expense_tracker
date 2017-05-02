@@ -1,40 +1,32 @@
 
-
-%p
+.row
   %strong Id:
   = @payment_source.id
 
-
-%p
+.row
   %strong Amount:
   = @payment_source.amount
 
-
-%p
+.row
   %strong Payment mode:
   = @payment_source.payment_mode
 
-
-%p
+.row
   %strong Transaction:
   = @payment_source.transaction_id
 
-
-%p
+.row
   %strong Account:
   = @payment_source.account_id
 
-
-%p
+.row
   %strong Created at:
   = @payment_source.created_at
 
-
-%p
+.row
   %strong Updated at:
   = @payment_source.updated_at
 
-
 .row
-  = link_to 'Edit', edit_payment_source_path(@payment_source), class: 'button primary'
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_payment_source_path(@payment_source)}
   = link_to 'Back', payment_sources_path, class: 'button warning'

@@ -1,25 +1,20 @@
 
-
-%p
+.row
   %strong Id:
   = @category.id
 
-
-%p
+.row
   %strong Name:
   = @category.name
 
-
-%p
+.row
   %strong Created at:
   = @category.created_at
 
-
-%p
+.row
   %strong Updated at:
   = @category.updated_at
 
-
 .row
-  = link_to 'Edit', edit_category_path(@category), class: 'button primary'
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_category_path(@category)}
   = link_to 'Back', categories_path, class: 'button warning'

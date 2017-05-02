@@ -1,6 +1,30 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_sub_category_path(@sub_category)
-\|
-= link_to 'Back', sub_categories_path
+%p
+  %strong Id:
+  = @sub_category.id
+
+
+%p
+  %strong Name:
+  = @sub_category.name
+
+
+%p
+  %strong Category:
+  = @sub_category.category_id
+
+
+%p
+  %strong Created at:
+  = @sub_category.created_at
+
+
+%p
+  %strong Updated at:
+  = @sub_category.updated_at
+
+
+.row
+  = link_to 'Edit', edit_sub_category_path(@sub_category), class: 'button primary'
+  = link_to 'Back', sub_categories_path, class: 'button warning'

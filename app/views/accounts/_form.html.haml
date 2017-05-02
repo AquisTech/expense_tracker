@@ -20,7 +20,7 @@
 
   .row
     = f.label :account_type
-    = f.text_field :account_type, id: :account_account_type
+    = f.select :account_type, Account::ACCOUNT_TYPES.map { |code, name| [name, code] }, selected: account.account_type_code, id: :account_account_type
 
   - if account.persisted?
     .row

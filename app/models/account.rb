@@ -10,4 +10,13 @@ class Account < ApplicationRecord
     EW: 'E-Wallet',
     CS: 'Cash'
   }
+
+  # getter method
+  def account_type
+    ACCOUNT_TYPES[self[:account_type].to_sym]
+  end
+
+  def account_type_code
+    self[:account_type]
+  end
 end

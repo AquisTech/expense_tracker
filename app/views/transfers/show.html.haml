@@ -1,6 +1,40 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_transfer_path(@transfer)
-\|
-= link_to 'Back', transfers_path
+%p
+  %strong Id:
+  = @transfer.id
+
+
+%p
+  %strong Amount:
+  = @transfer.amount
+
+
+%p
+  %strong Description:
+  = @transfer.description
+
+
+%p
+  %strong Source account:
+  = @transfer.source_account_id
+
+
+%p
+  %strong Destination account:
+  = @transfer.destination_account_id
+
+
+%p
+  %strong Created at:
+  = @transfer.created_at
+
+
+%p
+  %strong Updated at:
+  = @transfer.updated_at
+
+
+.row
+  = link_to 'Edit', edit_transfer_path(@transfer), class: 'button primary'
+  = link_to 'Back', transfers_path, class: 'button warning'

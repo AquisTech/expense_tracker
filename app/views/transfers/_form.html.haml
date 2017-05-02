@@ -1,10 +1,36 @@
-= form_for @transfer do |f|
-  - if @transfer.errors.any?
+= form_with(model: transfer, remote: true) do |f|
+  - if transfer.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@transfer.errors.count, "error")} prohibited this transfer from being saved:"
+      %h2= "#{pluralize(transfer.errors.count, "error")} prohibited this transfer from being saved:"
       %ul
-        - @transfer.errors.full_messages.each do |msg|
-          %li= msg
+        - transfer.errors.full_messages.each do |message|
+          %li= message
 
-  .actions
-    = f.submit 'Save'
+  .row
+    = f.label :amount
+    = f.number_field :amount, id: :transfer_amount
+
+  .row
+    = f.label :description
+    = f.text_field :description, id: :transfer_description
+
+  .row
+    = f.label :source_account_id
+    = f.number_field :source_account_id, id: :transfer_source_account_id
+
+  .row
+    = f.label :destination_account_id
+    = f.number_field :destination_account_id, id: :transfer_destination_account_id
+
+  - if transfer.persisted?
+    .row
+      = f.label :created_at
+      = f.datetime_select :created_at, id: :transfer_created_at
+
+    .row
+      = f.label :updated_at
+      = f.datetime_select :updated_at, id: :transfer_updated_at
+
+  .row
+    = f.submit transfer.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', transfers_path, class: 'button warning'

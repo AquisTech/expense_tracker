@@ -4,17 +4,17 @@
 %table.striped.hover.table-striped.stack
   %thead
     %tr
-<% attributes.each do |attribute| -%>
+      <%- attributes.each do |attribute| -%>
       %th <%= attribute.humanize %>
-<% end -%>
+      <%- end -%>
       %th Actions
 
   %tbody
     - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
       %tr
-<% attributes.each do |attribute| -%>
+        <%- attributes.each do |attribute| -%>
         %td= <%= singular_table_name %>.<%= attribute %>
-<% end -%>
+        <%- end -%>
         %td
           .button-group
             = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: <%= singular_table_name %>_path(<%= singular_table_name %>)}

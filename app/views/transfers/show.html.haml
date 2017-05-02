@@ -1,31 +1,24 @@
 .row
   %strong Id:
   = @transfer.id
-
 .row
   %strong Amount:
   = @transfer.amount
-
 .row
   %strong Description:
   = @transfer.description
-
 .row
   %strong Source account:
-  = @transfer.source_account_id
-
+  = @transfer.source_account.name
 .row
   %strong Destination account:
-  = @transfer.destination_account_id
-
+  = @transfer.destination_account.name
 .row
   %strong Created at:
   = @transfer.created_at
-
 .row
   %strong Updated at:
   = @transfer.updated_at
-
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_transfer_path(@transfer)}
   = link_to 'Back', transfers_path, class: 'button warning'

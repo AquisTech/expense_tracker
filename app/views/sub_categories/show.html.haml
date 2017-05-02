@@ -1,23 +1,18 @@
 .row
   %strong Id:
   = @sub_category.id
-
 .row
   %strong Name:
   = @sub_category.name
-
 .row
   %strong Category:
-  = @sub_category.category_id
-
+  = @sub_category.category.name
 .row
   %strong Created at:
   = @sub_category.created_at
-
 .row
   %strong Updated at:
   = @sub_category.updated_at
-
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_sub_category_path(@sub_category)}
   = link_to 'Back', sub_categories_path, class: 'button warning'

@@ -13,10 +13,10 @@
     = f.text_field :description, id: :transfer_description
   .row
     = f.label :source_account_id
-    = f.number_field :source_account_id, id: :transfer_source_account_id
+    = f.collection_select :source_account_id, SourceAccount.all, :id, :name, id: :transfer_source_account_id
   .row
     = f.label :destination_account_id
-    = f.number_field :destination_account_id, id: :transfer_destination_account_id
+    = f.collection_select :destination_account_id, DestinationAccount.all, :id, :name, id: :transfer_destination_account_id
   - if transfer.persisted?
     .row
       = f.label :created_at

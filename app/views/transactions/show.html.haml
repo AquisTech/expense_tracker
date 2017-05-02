@@ -1,31 +1,24 @@
 .row
   %strong Id:
   = @transaction.id
-
 .row
   %strong Amount:
   = @transaction.amount
-
 .row
   %strong Description:
   = @transaction.description
-
 .row
   %strong Transaction purpose:
-  = @transaction.transaction_purpose_id
-
+  = @transaction.transaction_purpose.name
 .row
   %strong Transfer:
-  = @transaction.transfer_id
-
+  = @transaction.transfer.name
 .row
   %strong Created at:
   = @transaction.created_at
-
 .row
   %strong Updated at:
   = @transaction.updated_at
-
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_transaction_path(@transaction)}
   = link_to 'Back', transactions_path, class: 'button warning'

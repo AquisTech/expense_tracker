@@ -1,31 +1,24 @@
 .row
   %strong Id:
   = @account.id
-
 .row
   %strong Name:
   = @account.name
-
 .row
   %strong Description:
   = @account.description
-
 .row
   %strong Details:
   = @account.details
-
 .row
   %strong Account type:
   = @account.account_type
-
 .row
   %strong Created at:
   = @account.created_at
-
 .row
   %strong Updated at:
   = @account.updated_at
-
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_account_path(@account)}
   = link_to 'Back', accounts_path, class: 'button warning'

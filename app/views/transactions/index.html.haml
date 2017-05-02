@@ -19,8 +19,8 @@
         %td= transaction.id
         %td= transaction.amount
         %td= transaction.description
-        %td= transaction.transaction_purpose_id
-        %td= transaction.transfer_id
+        %td= transaction.transaction_purpose.name
+        %td= transaction.transfer.name
         %td= transaction.created_at
         %td= transaction.updated_at
         %td

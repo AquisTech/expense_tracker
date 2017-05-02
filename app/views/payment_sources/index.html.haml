@@ -19,8 +19,8 @@
         %td= payment_source.id
         %td= payment_source.amount
         %td= payment_source.payment_mode
-        %td= payment_source.transaction_id
-        %td= payment_source.account_id
+        %td= payment_source.transaction.name
+        %td= payment_source.account.name
         %td= payment_source.created_at
         %td= payment_source.updated_at
         %td

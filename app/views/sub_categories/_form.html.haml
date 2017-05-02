@@ -10,7 +10,7 @@
     = f.text_field :name, id: :sub_category_name
   .row
     = f.label :category_id
-    = f.number_field :category_id, id: :sub_category_category_id
+    = f.collection_select :category_id, Category.all, :id, :name, id: :sub_category_category_id
   - if sub_category.persisted?
     .row
       = f.label :created_at

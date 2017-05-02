@@ -1,23 +1,18 @@
 .row
   %strong Id:
   = @transaction_purpose.id
-
 .row
   %strong Name:
   = @transaction_purpose.name
-
 .row
   %strong Sub category:
-  = @transaction_purpose.sub_category_id
-
+  = @transaction_purpose.sub_category.name
 .row
   %strong Created at:
   = @transaction_purpose.created_at
-
 .row
   %strong Updated at:
   = @transaction_purpose.updated_at
-
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_transaction_purpose_path(@transaction_purpose)}
   = link_to 'Back', transaction_purposes_path, class: 'button warning'

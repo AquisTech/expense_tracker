@@ -22,7 +22,7 @@
     = f.number_field :year, id: :account_balance_year
   .row
     = f.label :account_id
-    = f.number_field :account_id, id: :account_balance_account_id
+    = f.collection_select :account_id, Account.all, :id, :name, id: :account_balance_account_id
   - if account_balance.persisted?
     .row
       = f.label :created_at

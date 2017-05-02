@@ -13,10 +13,10 @@
     = f.text_field :description, id: :transaction_description
   .row
     = f.label :transaction_purpose_id
-    = f.number_field :transaction_purpose_id, id: :transaction_transaction_purpose_id
+    = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :transaction_transaction_purpose_id
   .row
     = f.label :transfer_id
-    = f.number_field :transfer_id, id: :transaction_transfer_id
+    = f.collection_select :transfer_id, Transfer.all, :id, :name, id: :transaction_transfer_id
   - if transaction.persisted?
     .row
       = f.label :created_at

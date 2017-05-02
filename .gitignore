@@ -40,3 +40,6 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore system test files until I start writing them
+/test/system/*

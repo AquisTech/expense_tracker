@@ -14,6 +14,9 @@
   .row
     = f.label :password_confirmation
     = f.password_field :password_confirmation, id: :<%= field_id(:password_confirmation) %>
+  <%- elsif attribute.name =~ /_id$/ -%>
+    = f.label :<%= attribute.name %>
+    = f.collection_select :<%= attribute.name %>, <%= attribute.name.classify.gsub(/Id$/, '') %>.all, :id, :name, id: :<%= field_id(attribute.name) %>
   <%- else -%>
     = f.label :<%= attribute.name %>
     = f.<%= field_type(attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>

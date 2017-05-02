@@ -2,8 +2,11 @@
 <% attributes.each do |attribute| -%>
 .row
   %strong <%= attribute.human_name %>:
+  <%- if attribute.name =~ /_id$/ -%>
+  = @<%= singular_table_name %>.<%= attribute.name.gsub(/_id$/, '') %>.name
+  <%- else -%>
   = @<%= singular_table_name %>.<%= attribute.name %>
-
+  <%- end -%>
 <% end -%>
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_<%= singular_table_name %>_path(@<%= singular_table_name %>)}

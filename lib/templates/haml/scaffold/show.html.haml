@@ -1,0 +1,10 @@
+<%- attributes = singular_table_name.classify.constantize.columns %>
+<%- attributes.each do |attribute| %>
+%p
+  %strong <%= attribute.human_name %>:
+  = @<%= singular_table_name %>.<%= attribute.name %>
+
+<% end %>
+.row
+  = link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'button primary'
+  = link_to 'Back', <%= index_helper %>_path, class: 'button warning'

@@ -1,0 +1,27 @@
+= form_with(model: <%= singular_table_name %>, remote: true) do |f|
+  - if <%= singular_table_name %>.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
+      %ul
+        - <%= singular_table_name %>.errors.full_messages.each do |message|
+          %li= message
+<%- attributes = singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') %><% attributes.values.each do |attribute| %>
+  .row<% if attribute.name =~ /password/ %>
+    = f.label :password
+    = f.password_field :password, id: :<%= field_id(:password) %>
+
+  .row
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, id: :<%= field_id(:password_confirmation) %>
+<% else %>
+    = f.label :<%= attribute.name %>
+    = f.<%= field_type(attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>
+<% end %><% end %>
+  - if <%= singular_table_name %>.persisted?<%- ['created_at', 'updated_at'].each do |attribute| %>
+    .row
+      = f.label :<%= attribute %>
+      = f.datetime_select :<%= attribute %>, id: :<%= field_id(attribute) %>
+    <%- end %>
+  .row
+    = f.submit <%= singular_table_name %>.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', <%= index_helper %>_path, class: 'button warning'

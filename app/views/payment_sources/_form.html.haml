@@ -1,10 +1,36 @@
-= form_for @payment_source do |f|
-  - if @payment_source.errors.any?
+= form_with(model: payment_source, remote: true) do |f|
+  - if payment_source.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@payment_source.errors.count, "error")} prohibited this payment_source from being saved:"
+      %h2= "#{pluralize(payment_source.errors.count, "error")} prohibited this payment_source from being saved:"
       %ul
-        - @payment_source.errors.full_messages.each do |msg|
-          %li= msg
+        - payment_source.errors.full_messages.each do |message|
+          %li= message
 
-  .actions
-    = f.submit 'Save'
+  .row
+    = f.label :amount
+    = f.number_field :amount, id: :payment_source_amount
+
+  .row
+    = f.label :payment_mode
+    = f.text_field :payment_mode, id: :payment_source_payment_mode
+
+  .row
+    = f.label :transaction_id
+    = f.number_field :transaction_id, id: :payment_source_transaction_id
+
+  .row
+    = f.label :account_id
+    = f.number_field :account_id, id: :payment_source_account_id
+
+  - if payment_source.persisted?
+    .row
+      = f.label :created_at
+      = f.datetime_select :created_at, id: :payment_source_created_at
+
+    .row
+      = f.label :updated_at
+      = f.datetime_select :updated_at, id: :payment_source_updated_at
+
+  .row
+    = f.submit payment_source.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', payment_sources_path, class: 'button warning'

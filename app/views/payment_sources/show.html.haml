@@ -1,6 +1,40 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_payment_source_path(@payment_source)
-\|
-= link_to 'Back', payment_sources_path
+%p
+  %strong Id:
+  = @payment_source.id
+
+
+%p
+  %strong Amount:
+  = @payment_source.amount
+
+
+%p
+  %strong Payment mode:
+  = @payment_source.payment_mode
+
+
+%p
+  %strong Transaction:
+  = @payment_source.transaction_id
+
+
+%p
+  %strong Account:
+  = @payment_source.account_id
+
+
+%p
+  %strong Created at:
+  = @payment_source.created_at
+
+
+%p
+  %strong Updated at:
+  = @payment_source.updated_at
+
+
+.row
+  = link_to 'Edit', edit_payment_source_path(@payment_source), class: 'button primary'
+  = link_to 'Back', payment_sources_path, class: 'button warning'

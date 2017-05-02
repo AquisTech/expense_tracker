@@ -1,6 +1,40 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_account_path(@account)
-\|
-= link_to 'Back', accounts_path
+%p
+  %strong Id:
+  = @account.id
+
+
+%p
+  %strong Name:
+  = @account.name
+
+
+%p
+  %strong Description:
+  = @account.description
+
+
+%p
+  %strong Details:
+  = @account.details
+
+
+%p
+  %strong Account type:
+  = @account.account_type
+
+
+%p
+  %strong Created at:
+  = @account.created_at
+
+
+%p
+  %strong Updated at:
+  = @account.updated_at
+
+
+.row
+  = link_to 'Edit', edit_account_path(@account), class: 'button primary'
+  = link_to 'Back', accounts_path, class: 'button warning'

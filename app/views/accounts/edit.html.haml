@@ -1,7 +1,3 @@
-%h1 Editing account
+%h1= "Editing Account: ##{@account.id}"
 
-= render 'form'
-
-= link_to 'Show', @account
-\|
-= link_to 'Back', accounts_path
+= render 'form', account: @account

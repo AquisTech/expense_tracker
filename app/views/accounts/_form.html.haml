@@ -1,10 +1,36 @@
-= form_for @account do |f|
-  - if @account.errors.any?
+= form_with(model: account, remote: true) do |f|
+  - if account.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
+      %h2= "#{pluralize(account.errors.count, "error")} prohibited this account from being saved:"
       %ul
-        - @account.errors.full_messages.each do |msg|
-          %li= msg
+        - account.errors.full_messages.each do |message|
+          %li= message
 
-  .actions
-    = f.submit 'Save'
+  .row
+    = f.label :name
+    = f.text_field :name, id: :account_name
+
+  .row
+    = f.label :description
+    = f.text_field :description, id: :account_description
+
+  .row
+    = f.label :details
+    = f.text_field :details, id: :account_details
+
+  .row
+    = f.label :account_type
+    = f.text_field :account_type, id: :account_account_type
+
+  - if account.persisted?
+    .row
+      = f.label :created_at
+      = f.datetime_select :created_at, id: :account_created_at
+
+    .row
+      = f.label :updated_at
+      = f.datetime_select :updated_at, id: :account_updated_at
+
+  .row
+    = f.submit account.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', accounts_path, class: 'button warning'

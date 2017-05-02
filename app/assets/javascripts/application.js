@@ -19,7 +19,7 @@
 
 $(document).on('turbolinks:load', function() {
   $(document).foundation();
-  $('[data-open="ajax-reveal"]').on('click', function(e) {
+  $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();
     $.ajax({
       url: $(this).data('url'),

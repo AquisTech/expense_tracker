@@ -1,7 +1,3 @@
-%h1 Editing account_balance
+%h1= "Editing Account Balance: ##{@account_balance.id}"
 
-= render 'form'
-
-= link_to 'Show', @account_balance
-\|
-= link_to 'Back', account_balances_path
+= render 'form', account_balance: @account_balance

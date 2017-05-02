@@ -1,6 +1,50 @@
-%p#notice= notice
 
 
-= link_to 'Edit', edit_account_balance_path(@account_balance)
-\|
-= link_to 'Back', account_balances_path
+%p
+  %strong Id:
+  = @account_balance.id
+
+
+%p
+  %strong Opening balance:
+  = @account_balance.opening_balance
+
+
+%p
+  %strong Calculated closing balance:
+  = @account_balance.calculated_closing_balance
+
+
+%p
+  %strong Actual closing balance:
+  = @account_balance.actual_closing_balance
+
+
+%p
+  %strong Month:
+  = @account_balance.month
+
+
+%p
+  %strong Year:
+  = @account_balance.year
+
+
+%p
+  %strong Account:
+  = @account_balance.account_id
+
+
+%p
+  %strong Created at:
+  = @account_balance.created_at
+
+
+%p
+  %strong Updated at:
+  = @account_balance.updated_at
+
+
+.row
+  = link_to 'Edit', edit_account_balance_path(@account_balance), class: 'button primary'
+  = link_to 'Back', account_balances_path, class: 'button warning'

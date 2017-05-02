@@ -1,5 +1,5 @@
 %h1 Account Balances
-%span= link_to 'Add New Account Balance', new_account_balance_path, class: 'button primary float-right'
+%span= link_to 'Add New Account Balance', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_account_balance_path}
 
 %table.striped.hover.table-striped.stack
   %thead
@@ -29,6 +29,6 @@
         %td= account_balance.updated_at
         %td
           .button-group
-            = link_to 'Show', account_balance, class: 'button success'
-            = link_to 'Edit', edit_account_balance_path(account_balance), class: 'button warning'
+            = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: account_balance_path(account_balance)}
+            = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_account_balance_path(account_balance)}
             = link_to 'Delete', account_balance, method: :delete, data: { confirm: 'Are you sure you want to delete this Account Balance?' }, class: 'button alert'

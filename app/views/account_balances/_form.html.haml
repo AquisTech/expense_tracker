@@ -1,10 +1,44 @@
-= form_for @account_balance do |f|
-  - if @account_balance.errors.any?
+= form_with(model: account_balance, remote: true) do |f|
+  - if account_balance.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@account_balance.errors.count, "error")} prohibited this account_balance from being saved:"
+      %h2= "#{pluralize(account_balance.errors.count, "error")} prohibited this account_balance from being saved:"
       %ul
-        - @account_balance.errors.full_messages.each do |msg|
-          %li= msg
+        - account_balance.errors.full_messages.each do |message|
+          %li= message
 
-  .actions
-    = f.submit 'Save'
+  .row
+    = f.label :opening_balance
+    = f.number_field :opening_balance, id: :account_balance_opening_balance
+
+  .row
+    = f.label :calculated_closing_balance
+    = f.number_field :calculated_closing_balance, id: :account_balance_calculated_closing_balance
+
+  .row
+    = f.label :actual_closing_balance
+    = f.number_field :actual_closing_balance, id: :account_balance_actual_closing_balance
+
+  .row
+    = f.label :month
+    = f.number_field :month, id: :account_balance_month
+
+  .row
+    = f.label :year
+    = f.number_field :year, id: :account_balance_year
+
+  .row
+    = f.label :account_id
+    = f.number_field :account_id, id: :account_balance_account_id
+
+  - if account_balance.persisted?
+    .row
+      = f.label :created_at
+      = f.datetime_select :created_at, id: :account_balance_created_at
+
+    .row
+      = f.label :updated_at
+      = f.datetime_select :updated_at, id: :account_balance_updated_at
+
+  .row
+    = f.submit account_balance.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', account_balances_path, class: 'button warning'

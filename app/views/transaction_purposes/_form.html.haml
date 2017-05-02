@@ -5,24 +5,19 @@
       %ul
         - transaction_purpose.errors.full_messages.each do |message|
           %li= message
-
   .row
     = f.label :name
     = f.text_field :name, id: :transaction_purpose_name
-
   .row
     = f.label :sub_category_id
     = f.number_field :sub_category_id, id: :transaction_purpose_sub_category_id
-
   - if transaction_purpose.persisted?
     .row
       = f.label :created_at
       = f.datetime_select :created_at, id: :transaction_purpose_created_at
-
     .row
       = f.label :updated_at
       = f.datetime_select :updated_at, id: :transaction_purpose_updated_at
-
   .row
     = f.submit transaction_purpose.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', transaction_purposes_path, class: 'button warning'

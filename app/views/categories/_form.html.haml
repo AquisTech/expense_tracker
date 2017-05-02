@@ -5,20 +5,16 @@
       %ul
         - category.errors.full_messages.each do |message|
           %li= message
-
   .row
     = f.label :name
     = f.text_field :name, id: :category_name
-
   - if category.persisted?
     .row
       = f.label :created_at
       = f.datetime_select :created_at, id: :category_created_at
-
     .row
       = f.label :updated_at
       = f.datetime_select :updated_at, id: :category_updated_at
-
   .row
     = f.submit category.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', categories_path, class: 'button warning'

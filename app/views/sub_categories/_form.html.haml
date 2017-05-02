@@ -5,24 +5,19 @@
       %ul
         - sub_category.errors.full_messages.each do |message|
           %li= message
-
   .row
     = f.label :name
     = f.text_field :name, id: :sub_category_name
-
   .row
     = f.label :category_id
     = f.number_field :category_id, id: :sub_category_category_id
-
   - if sub_category.persisted?
     .row
       = f.label :created_at
       = f.datetime_select :created_at, id: :sub_category_created_at
-
     .row
       = f.label :updated_at
       = f.datetime_select :updated_at, id: :sub_category_updated_at
-
   .row
     = f.submit sub_category.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', sub_categories_path, class: 'button warning'

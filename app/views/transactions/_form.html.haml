@@ -5,32 +5,25 @@
       %ul
         - transaction.errors.full_messages.each do |message|
           %li= message
-
   .row
     = f.label :amount
     = f.number_field :amount, id: :transaction_amount
-
   .row
     = f.label :description
     = f.text_field :description, id: :transaction_description
-
   .row
     = f.label :transaction_purpose_id
     = f.number_field :transaction_purpose_id, id: :transaction_transaction_purpose_id
-
   .row
     = f.label :transfer_id
     = f.number_field :transfer_id, id: :transaction_transfer_id
-
   - if transaction.persisted?
     .row
       = f.label :created_at
       = f.datetime_select :created_at, id: :transaction_created_at
-
     .row
       = f.label :updated_at
       = f.datetime_select :updated_at, id: :transaction_updated_at
-
   .row
     = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', transactions_path, class: 'button warning'

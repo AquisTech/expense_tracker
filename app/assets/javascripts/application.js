@@ -24,10 +24,10 @@ $(document).on('turbolinks:load', function() {
     $.ajax({
       url: $(this).data('url'),
       success: function(result) {
-        $(".reveal-content").html(result);
+        $('.reveal-content').html(result);
       },
       error: function(result) {
-        $(".reveal-content").html('Error loading content. Please close popup and retry.');
+        $('.reveal-content').html('Error loading content. Please close popup and retry.');
       }
     });
   });

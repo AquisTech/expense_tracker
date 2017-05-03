@@ -10,7 +10,7 @@
     = f.text_field :name, id: :transaction_purpose_name
   .row
     = f.label :sub_category_id
-    = f.collection_select :sub_category_id, SubCategory.all, :id, :name, id: :transaction_purpose_sub_category_id
+    = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
   - if transaction_purpose.persisted?
     .row
       = f.label :created_at

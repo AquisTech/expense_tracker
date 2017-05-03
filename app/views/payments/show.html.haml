@@ -1,0 +1,24 @@
+.row
+  %strong Id:
+  = @payment.id
+.row
+  %strong Amount:
+  = @payment.amount
+.row
+  %strong Payment mode:
+  = @payment.payment_mode
+.row
+  %strong Transaction:
+  = @payment.transaction.name
+.row
+  %strong Account:
+  = @payment.account.name
+.row
+  %strong Created at:
+  = @payment.created_at
+.row
+  %strong Updated at:
+  = @payment.updated_at
+.row
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_payment_path(@payment)}
+  = link_to 'Back', payments_path, class: 'button warning'

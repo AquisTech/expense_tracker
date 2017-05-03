@@ -1,0 +1,30 @@
+%h1 Payments
+%span= link_to 'Add New Payment', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_payment_path}
+
+%table.striped.hover.table-striped.stack
+  %thead
+    %tr
+      %th Id
+      %th Amount
+      %th Payment mode
+      %th Transaction
+      %th Account
+      %th Created at
+      %th Updated at
+      %th Actions
+
+  %tbody
+    - @payments.each do |payment|
+      %tr
+        %td= payment.id
+        %td= payment.amount
+        %td= payment.payment_mode
+        %td= payment.transaction.name
+        %td= payment.account.name
+        %td= payment.created_at
+        %td= payment.updated_at
+        %td
+          .button-group
+            = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: payment_path(payment)}
+            = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_payment_path(payment)}
+            = link_to 'Delete', payment, method: :delete, data: { confirm: 'Are you sure you want to delete this Payment?' }, class: 'button alert'

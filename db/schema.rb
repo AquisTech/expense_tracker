@@ -39,15 +39,15 @@ ActiveRecord::Schema.define(version: 2017_04_23_205937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payment_sources", force: :cascade do |t|
+  create_table "payments", force: :cascade do |t|
     t.integer "amount", default: 0
     t.string "payment_mode"
     t.integer "transaction_id", null: false
     t.integer "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_payment_sources_on_account_id"
-    t.index ["transaction_id"], name: "index_payment_sources_on_transaction_id"
+    t.index ["account_id"], name: "index_payments_on_account_id"
+    t.index ["transaction_id"], name: "index_payments_on_transaction_id"
   end
 
   create_table "sub_categories", force: :cascade do |t|

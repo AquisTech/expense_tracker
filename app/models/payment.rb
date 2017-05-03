@@ -1,4 +1,4 @@
-class PaymentSource < ApplicationRecord
+class Payment < ApplicationRecord
   PAYMENT_MODES = {
     OT: 'Online Transfer',
     DC: 'Debit Card',

@@ -5,6 +5,7 @@ class PaymentSource < ApplicationRecord
     CC: 'Credit Card',
     EC: 'ECS',
     UP: 'UPI',
+    CQ: 'Cheque',
     CS: 'Cash'
   }
 end

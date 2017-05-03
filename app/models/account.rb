@@ -7,6 +7,7 @@ class Account < ApplicationRecord
     SB: 'Saving Bank Account',
     CB: 'Current Bank Account',
     CC: 'Credit Card',
+    SC: 'Smart Card',
     EW: 'E-Wallet',
     CS: 'Cash'
   }

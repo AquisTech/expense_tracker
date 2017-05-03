@@ -24,7 +24,7 @@ end
 {
   # Expenses / Debits
   'Automobile': [],
-  'Entertainment': ['Concert', 'Movie', 'Drama/Play', 'Party', 'Sports', 'Other'],
+  'Entertainment': ['Concert', 'Movie', 'Drama/Play', 'Party', 'Sports'],
   'Family': [],
   'Food': ['Breakfast', 'Lunch', 'Snacks', 'Dinner', 'Groceries', 'Tea/Coffee/Juice'],
   'Health Care': ['Dental Care', 'Eye Care', 'Health Insurance', 'Medicines', 'Nutrition', 'Skin Care'],
@@ -42,7 +42,7 @@ end
   'Interest': ['Savings Account', 'Fixed Deposit', 'Recurring Deposit']
 }.each do |category, sub_categories|
   c = Category.where(name: category).first_or_create
-  sub_categories.each do |sub_category|
+  (sub_categories << 'Other').each do |sub_category|
     c.sub_categories.where(name: sub_category).first_or_create
   end
 end

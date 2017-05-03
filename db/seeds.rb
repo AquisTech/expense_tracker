@@ -21,11 +21,28 @@
     details: acc[:details] || acc[:name]
   ).first_or_create
 end
-['Food', 'Travel'].each do |cat|
-  Category.where(name: cat).first_or_create
-end
-[
-
-].each do |sub_cat|
-  SubCategory.create()
+{
+  # Expenses / Debits
+  'Automobile': [],
+  'Entertainment': ['Concert', 'Movie', 'Drama/Play', 'Party', 'Sports', 'Other'],
+  'Family': [],
+  'Food': ['Breakfast', 'Lunch', 'Snacks', 'Dinner', 'Groceries', 'Tea/Coffee/Juice'],
+  'Health Care': ['Dental Care', 'Eye Care', 'Health Insurance', 'Medicines', 'Nutrition', 'Skin Care'],
+  'Household': ['Appliances', 'Home Maintenance', 'Household Tools', 'Miscellaneous Household Items', 'Rent', 'Home Loan EMI', 'Home Insurance', 'Servant'],
+  'Insurance': ['Automobile', 'Health', 'Home', 'Life'],
+  'Loan': ['Automobile', 'Home', 'Mortgage', 'Education', 'Business', 'Property'],
+  'Personal': ['Clothing', 'Gift', 'Personal Care'],
+  'Tax': ['Property Tax', 'Income Tax'],
+  'Travel': ['Aeroplane', 'Train', 'Metro', 'Monorail', 'Bullet Train', 'Bus', 'Auto-rikshaw', 'Taxi', 'Cab', 'Rented Vehicle', 'Toll'],
+  'Utilities': ['Cable TV', 'Dish TV', 'Electricity', 'Gas', 'Internet', 'Water', 'Telephone', 'Mobile'],
+  'Vacation': ['Aeroplane', 'Train', 'Metro', 'Monorail', 'Bullet Train', 'Bus', 'Auto-rikshaw', 'Taxi', 'Cab', 'Rented Vehicle', 'Toll', 'Hotel'],
+  # Incomes / Credits
+  'Salary': ['Full-time Job', 'Part-time Job'],
+  'Rent': ['Office', 'House', 'Farm-house', 'Vehicle'],
+  'Interest': ['Savings Account', 'Fixed Deposit', 'Recurring Deposit']
+}.each do |category, sub_categories|
+  c = Category.where(name: category).first_or_create
+  sub_categories.each do |sub_category|
+    c.sub_categories.where(name: sub_category).first_or_create
+  end
 end

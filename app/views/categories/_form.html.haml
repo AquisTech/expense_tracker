@@ -11,10 +11,12 @@
   - if category.persisted?
     .row
       = f.label :created_at
-      = f.datetime_select :created_at, id: :category_created_at
+      .input-group
+        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :category_created_at, class: 'input-group-field small-2'
     .row
       = f.label :updated_at
-      = f.datetime_select :updated_at, id: :category_updated_at
+      .input-group
+        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :category_updated_at, class: 'input-group-field small-2'
   .row
     = f.submit category.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', categories_path, class: 'button warning'

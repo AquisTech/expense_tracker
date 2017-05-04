@@ -14,10 +14,12 @@
   - if transaction_purpose.persisted?
     .row
       = f.label :created_at
-      = f.datetime_select :created_at, id: :transaction_purpose_created_at
+      .input-group
+        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
     .row
       = f.label :updated_at
-      = f.datetime_select :updated_at, id: :transaction_purpose_updated_at
+      .input-group
+        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_updated_at, class: 'input-group-field small-2'
   .row
     = f.submit transaction_purpose.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', transaction_purposes_path, class: 'button warning'

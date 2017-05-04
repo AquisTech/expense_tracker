@@ -7,7 +7,7 @@
           %li= message
   .row
     = f.label :amount
-    = f.number_field :amount, id: :payment_amount
+    = f.amount_field :amount, id: :payment_amount, currency: '&#8377;'
   .row
     = f.label :payment_mode
     = f.text_field :payment_mode, id: :payment_payment_mode

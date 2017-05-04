@@ -20,6 +20,9 @@
     = f.collection_select :<%= attribute.name %>, <%= attribute.name.classify.gsub(/Id$/, '') %>.all, :id, :name, id: :<%= field_id(attribute.name) %>
     <%- elsif attribute.name =~ /amount/ -%>
     = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>, currency: '&#8377;'
+    <%- elsif attribute.type =~ /datetime|timestamp/ -%>
+    .input-group
+      = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute.name) %>, class: 'input-group-field small-2'
     <%- else -%>
     = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>
     <%- end -%>
@@ -29,7 +32,8 @@
   <%- ['created_at', 'updated_at'].each do |attribute| -%>
     .row
       = f.label :<%= attribute %>
-      = f.datetime_select :<%= attribute %>, id: :<%= field_id(attribute) %>
+      .input-group
+        = f.datetime_select :<%= attribute %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute) %>, class: 'input-group-field small-2'
   <%- end -%>
   .row
     = f.submit <%= singular_table_name %>.new_record? ? 'Create' : 'Update', class: 'button success'

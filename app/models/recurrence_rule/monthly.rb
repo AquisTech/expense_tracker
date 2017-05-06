@@ -1,0 +1,3 @@
+class Monthly < RecurrenceRule
+
+end

@@ -46,3 +46,48 @@ end
     c.sub_categories.where(name: sub_category).first_or_create
   end
 end
+{
+  Daily:   [{interval: [1,2,7]}],
+  Weekly:  [ # 0 = Sunday, 1 = Monday, ....., 6 = Saturday
+             {interval: [1,3], rules: [1]},
+             {interval: [1,3], rules: [1, 3]},
+             {interval: [1,3], rules: [1, 3, 4]},
+             {interval: [1,3], rules: [1, 2, 3, 4, 5]},
+             {interval: [1,3], rules: [0, 6]}
+           ],
+  Monthly: [
+            {interval: [1,2], rules: [1]},
+            {interval: [1,2], rules: [3]},
+            {interval: [1,2], rules: [-1]},
+            {interval: [1,2], rules: [3, 9]},
+            {interval: [1,2], rules: [3, 9, 10]},
+            {interval: [1,2], rules: [3, 9, -1]},
+            # {day_number => [week_numbers]}
+            {interval: [1,2], rules: {5 => [2]}},
+            {interval: [1,2], rules: {5 => [-1]}},
+            {interval: [1,2], rules: {5 => [2, 4]}},
+            {interval: [1,2], rules: {5 => [1, 2, 4]}},
+            {interval: [1,2], rules: {5 => [2], 4 => [2]}},
+            {interval: [1,2], rules: {5 => [-1], 4 => [-1]}},
+            {interval: [1,2], rules: {5 => [2, 4], 4 => [2, 4]}},
+            {interval: [1,2], rules: {1 => [2], 2 => [3]}},
+            {interval: [1,2], rules: {0 => [2], 6 => [2]}},
+            {interval: [1,2], rules: {0 => [-1], 6 => [-1]}},
+            {interval: [1,2], rules: {0 => [2,4], 6 => [2,4]}},
+            {interval: [3,6], rules: [15]}
+           ],
+  Yearly: [ # {month_number => [day_numbers]}
+            {interval: [1,2], rules: {2 => [1]}},
+            {interval: [1,2], rules: {2 => [1, 5]}},
+            {interval: [1,2], rules: {2 => [1, 5], 4 => [1, 5]}},
+            {interval: [1,2], rules: {2 => [1], 3 => [3]}},
+            {interval: [1,2], rules: {2 => [1, 6], 3 => [3, 9]}},
+          ]
+}.each do |type, conditions_array|
+  conditions_array.each do |conditions|
+    conditions[:interval].each do |interval|
+      r = RecurrenceRule.create(type: type, interval: interval, rules: conditions[:rules])
+      puts r.humanize
+    end
+  end
+end

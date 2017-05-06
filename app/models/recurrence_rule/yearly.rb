@@ -1,0 +1,3 @@
+class Yearly < RecurrenceRule
+
+end

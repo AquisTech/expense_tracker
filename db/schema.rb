@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_04_23_205937) do
+ActiveRecord::Schema.define(version: 2017_05_06_093959) do
 
   create_table "account_balances", force: :cascade do |t|
     t.integer "opening_balance", default: 0
@@ -39,6 +39,21 @@ ActiveRecord::Schema.define(version: 2017_04_23_205937) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "occurrences", force: :cascade do |t|
+    t.string "recurrence_type"
+    t.integer "interval"
+    t.integer "days"
+    t.integer "weeks"
+    t.integer "months"
+    t.datetime "starts_on"
+    t.datetime "ends_on"
+    t.integer "count"
+    t.integer "recurrence_rule_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recurrence_rule_id"], name: "index_occurrences_on_recurrence_rule_id"
+  end
+
   create_table "payments", force: :cascade do |t|
     t.integer "amount", default: 0
     t.string "payment_mode"
@@ -48,6 +63,19 @@ ActiveRecord::Schema.define(version: 2017_04_23_205937) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["transaction_id"], name: "index_payments_on_transaction_id"
+  end
+
+  create_table "recurrence_rules", force: :cascade do |t|
+    t.string "type"
+    t.integer "interval"
+    t.datetime "starts_on"
+    t.datetime "ends_on"
+    t.integer "count"
+    t.text "rules"
+    t.integer "transaction_purpose_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transaction_purpose_id"], name: "index_recurrence_rules_on_transaction_purpose_id"
   end
 
   create_table "sub_categories", force: :cascade do |t|

@@ -1,0 +1,3 @@
+class Daily < RecurrenceRule
+
+end

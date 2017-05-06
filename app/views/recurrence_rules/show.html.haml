@@ -1,0 +1,33 @@
+.row
+  %strong Id:
+  = @recurrence_rule.id
+.row
+  %strong Type:
+  = @recurrence_rule.type
+.row
+  %strong Interval:
+  = @recurrence_rule.interval
+.row
+  %strong Starts on:
+  = @recurrence_rule.starts_on
+.row
+  %strong Ends on:
+  = @recurrence_rule.ends_on
+.row
+  %strong Count:
+  = @recurrence_rule.count
+.row
+  %strong Rules:
+  = @recurrence_rule.rules
+.row
+  %strong Transaction purpose:
+  = @recurrence_rule.transaction_purpose.name
+.row
+  %strong Created at:
+  = @recurrence_rule.created_at
+.row
+  %strong Updated at:
+  = @recurrence_rule.updated_at
+.row
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_recurrence_rule_path(@recurrence_rule)}
+  = link_to 'Back', recurrence_rules_path, class: 'button warning'

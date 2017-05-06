@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :recurrence_rules
   resources :payments
   resources :accounts
   resources :transfers

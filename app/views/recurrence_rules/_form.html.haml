@@ -1,0 +1,42 @@
+= form_with(model: recurrence_rule, remote: true) do |f|
+  - if recurrence_rule.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(recurrence_rule.errors.count, "error")} prohibited this recurrence_rule from being saved:"
+      %ul
+        - recurrence_rule.errors.full_messages.each do |message|
+          %li= message
+  .row
+    = f.label :type
+    = f.text_field :type, id: :recurrence_rule_type
+  .row
+    = f.label :interval
+    = f.number_field :interval, id: :recurrence_rule_interval
+  .row
+    = f.label :starts_on
+    .input-group
+      = f.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :recurrence_rule_starts_on, class: 'input-group-field small-2'
+  .row
+    = f.label :ends_on
+    .input-group
+      = f.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :recurrence_rule_ends_on, class: 'input-group-field small-2'
+  .row
+    = f.label :count
+    = f.number_field :count, id: :recurrence_rule_count
+  .row
+    = f.label :rules
+    = f.text_area :rules, id: :recurrence_rule_rules
+  .row
+    = f.label :transaction_purpose_id
+    = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :recurrence_rule_transaction_purpose_id
+  - if recurrence_rule.persisted?
+    .row
+      = f.label :created_at
+      .input-group
+        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :recurrence_rule_created_at, class: 'input-group-field small-2'
+    .row
+      = f.label :updated_at
+      .input-group
+        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :recurrence_rule_updated_at, class: 'input-group-field small-2'
+  .row
+    = f.submit recurrence_rule.new_record? ? 'Create' : 'Update', class: 'button success'
+    = link_to 'Back', recurrence_rules_path, class: 'button warning'

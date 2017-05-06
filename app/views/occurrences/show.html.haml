@@ -1,0 +1,39 @@
+.row
+  %strong Id:
+  = @occurrence.id
+.row
+  %strong Recurrence type:
+  = @occurrence.recurrence_type
+.row
+  %strong Interval:
+  = @occurrence.interval
+.row
+  %strong Days:
+  = @occurrence.days
+.row
+  %strong Weeks:
+  = @occurrence.weeks
+.row
+  %strong Months:
+  = @occurrence.months
+.row
+  %strong Starts on:
+  = @occurrence.starts_on
+.row
+  %strong Ends on:
+  = @occurrence.ends_on
+.row
+  %strong Count:
+  = @occurrence.count
+.row
+  %strong Recurrence rule:
+  = @occurrence.recurrence_rule.name
+.row
+  %strong Created at:
+  = @occurrence.created_at
+.row
+  %strong Updated at:
+  = @occurrence.updated_at
+.row
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_occurrence_path(@occurrence)}
+  = link_to 'Back', occurrences_path, class: 'button warning'

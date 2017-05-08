@@ -7,6 +7,7 @@ class TransactionPurposesController < ApplicationController
 
   def new
     @transaction_purpose = TransactionPurpose.new
+    @transaction_purpose.build_recurrence_rule
     render layout: false
   end
 

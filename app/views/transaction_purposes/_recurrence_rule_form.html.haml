@@ -1,0 +1,29 @@
+= f.fields_for :recurrence_rule do |rr|
+  = rr.label :recurrence
+  .input-group
+    %label.input-group-label Repeat
+    = rr.select :type, ['Daily', 'Weekly', 'Monthly', 'Yearly'], {}, {class: 'input-group-field'}
+  .input-group
+    %label.input-group-label Every
+    = rr.number_field :interval, class: 'input-group-field'
+    %label.input-group-label day(s)
+  = weekday_select_bar
+  .fieldset
+    = radio_button_tag :day_of_month_or_week, 1
+    %label Day of Month
+    = radio_button_tag :day_of_month_or_week, 0
+    %label Day of Week
+  .input-group
+    = day_of_month_selection
+  .input-group
+    = day_of_week_selection
+  = rr.label :starts_on
+  .input-group
+    = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+  = rr.label :ends_on
+  .input-group
+    = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+  = rr.label :count
+  = rr.number_field :count
+  = rr.label :rules
+  = rr.text_area :rules

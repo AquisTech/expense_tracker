@@ -1,4 +1,4 @@
-#offCanvasLeft.off-canvas.position-left{"data-off-canvas" => ""}
+#offCanvasLeft.off-canvas.position-left{'data-off-canvas': '', 'data-transition': 'overlap'}
   %ul.menu.vertical
     - (ActiveRecord::Base.connection.tables - ['schema_migrations', 'ar_internal_metadata']).each do |model|
       %li

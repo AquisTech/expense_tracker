@@ -13,10 +13,10 @@
 
   %body
     .off-canvas-wrapper
+      = render 'layouts/titlebar'
       = render 'layouts/left_sidebar'
       = render 'layouts/right_sidebar'
       .off-canvas-content{"data-off-canvas-content" => ""}
-        = render 'layouts/titlebar'
         = # TODO : Create class and styling for .container and use instead of .row
         .row
           - flash.each do |key, message|

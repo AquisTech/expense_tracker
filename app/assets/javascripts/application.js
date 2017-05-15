@@ -18,7 +18,9 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
+  // Initialize Zurb Foundation JS
   $(document).foundation();
+  // Remote modal with AJAX and Reveal
   $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();
     $.ajax({
@@ -31,4 +33,21 @@ $(document).on('turbolinks:load', function() {
       }
     });
   });
+  // Recurrence Rule Section: Toggling as per type
+  $('.reveal-content').on('change', 'select#transaction_purpose_recurrence_rule_attributes_type', function(e) {
+    $('#weekly, #monthly, #yearly').hide();
+    $('#' + $(this).val().toLowerCase()).removeClass('hide').show();
+    if($(this).val().toLowerCase() == 'daily') {
+      var intervalUnit = 'day(s)';
+    } else {
+      var intervalUnit = $(this).val().toLowerCase().replace(/ly$/, '(s)');
+    }
+    $('#interval-unit').text(intervalUnit);
+  });
+  // Monthly Rule Section: toggling as per radio selection
+  $('.reveal-content').on('change', 'input[name=day_of_month_or_week]', function(e) {
+    $('#day_of_month, #day_of_week').toggleClass('hide');
+  });
+  // Weekly Rule Section: Selection of Day of week
+
 });

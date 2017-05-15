@@ -4,6 +4,8 @@ class RecurrenceRule < ApplicationRecord
 
   after_create :create_occurrences
 
+  TYPES = ['Daily', 'Weekly', 'Monthly', 'Yearly']
+
   def create_occurrences
     case type
     when 'Daily'
@@ -25,6 +27,20 @@ class RecurrenceRule < ApplicationRecord
     else
       raise 'Invalid Rule. TODO: Support custom rule'
     end
+  end
+
+  RecurrenceRule::TYPES.each do |recurrence_type|
+    define_method "#{recurrence_type.downcase}?" do
+      type == recurrence_type
+    end
+  end
+
+  def monthly_days_of_month?
+    type == 'Monthly' && rules.is_a?(Array)
+  end
+
+  def monthly_days_of_week?
+    type == 'Monthly' && rules.is_a?(Hash)
   end
 
   def create_occurrence(days, weeks: nil, months: nil)

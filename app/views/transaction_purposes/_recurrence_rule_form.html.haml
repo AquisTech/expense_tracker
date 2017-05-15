@@ -2,28 +2,50 @@
   = rr.label :recurrence
   .input-group
     %label.input-group-label Repeat
-    = rr.select :type, ['Daily', 'Weekly', 'Monthly', 'Yearly'], {}, {class: 'input-group-field'}
-  .input-group
-    %label.input-group-label Every
-    = rr.number_field :interval, class: 'input-group-field'
-    %label.input-group-label day(s)
-  = weekday_select_bar
-  .fieldset
-    = radio_button_tag :day_of_month_or_week, 1
-    %label Day of Month
-    = radio_button_tag :day_of_month_or_week, 0
-    %label Day of Week
-  .input-group
-    = day_of_month_selection
-  .input-group
-    = day_of_week_selection
-  = rr.label :starts_on
-  .input-group
-    = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
-  = rr.label :ends_on
-  .input-group
-    = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
-  = rr.label :count
-  = rr.number_field :count
+    = rr.select :type, RecurrenceRule::TYPES, {}, {class: 'input-group-field'}
+
+  #interval
+    .input-group
+      %label.input-group-label Every
+      = rr.number_field :interval, class: 'input-group-field'
+      %label#interval-unit.input-group-label= "#{rr.object.new_record? ? 'day' : {'Daily': 'day', 'Weekly': 'week', 'Monthly': 'month', 'Yearly': 'year'}[rr.object.type]}(s)"
+
+  #weekly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.weekly?}" }
+    = weekday_select_bar
+    = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][weekly][]',
+      options_for_select(0..6, rr.object.rules.try(:[], :weekly)), {multiple: true, class: :hide}
+
+  #monthly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly?}" }
+    .fieldset
+      = radio_button_tag :day_of_month_or_week, :day_of_month, rr.object.new_record? || rr.object.monthly_days_of_month?
+      %label Day of Month
+      = radio_button_tag :day_of_month_or_week, :day_of_week
+      %label Day of Week
+
+    #day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.monthly_days_of_month?}" }
+      = day_of_month_selection
+      = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][monthly][]',
+        options_for_select((1..31).to_a << -1, rr.object.rules.try(:[], :monthly)), {multiple: true, class: :hide}
+    #day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
+      = day_of_week_selection
+      - [0..6].each do |day|
+        = select_tag "transaction_purpose[recurrence_rule_attributes][rules][monthly][#{day}]",
+          options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], :monthly).try(:[], day)), {multiple: true, class: :hide}
+
+  #yearly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly?}" }
+    = 'TODO: Yearly'
+
+  #duration
+    = rr.label :starts_on
+    .input-group
+      = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+    = rr.label :ends_on
+    .input-group
+      = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+
+  #count
+    = rr.label :count
+    = rr.number_field :count
+
   = rr.label :rules
-  = rr.text_area :rules
+  = # rr.text_area :rules, disabled: true

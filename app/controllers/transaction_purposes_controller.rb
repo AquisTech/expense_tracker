@@ -47,6 +47,6 @@ class TransactionPurposesController < ApplicationController
     end
 
     def transaction_purpose_params
-      params.require(:transaction_purpose).permit(:name, :sub_category_id)
+      params.require(:transaction_purpose).permit(:name, :sub_category_id, recurrence_rule_attributes: {} )
     end
 end

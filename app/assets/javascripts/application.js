@@ -49,5 +49,15 @@ $(document).on('turbolinks:load', function() {
     $('#day_of_month, #day_of_week').toggleClass('hide');
   });
   // Weekly Rule Section: Selection of Day of week
-
+  $('.reveal-content').on('click', '#weekly label', function(e) {
+    $(this).toggleClass('selected');
+    var option = $('#weekly select').find('option[value=' + $(this).attr('for') + ']');
+    option.attr('selected', !option.attr('selected'));
+  // Monthly Rule Section: Selection of Day of month
+  });$('.reveal-content').on('click', '#monthly #day_of_month .columns', function(e) {
+    console.log('-------------')
+    $(this).toggleClass('selected');
+    var option = $('#monthly #day_of_month select').find('option[value=' + $(this).attr('for') + ']');
+    option.attr('selected', !option.attr('selected'));
+  });
 });

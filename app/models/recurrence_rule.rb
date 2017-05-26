@@ -29,7 +29,7 @@ class RecurrenceRule < ApplicationRecord
     end
   end
 
-  RecurrenceRule::TYPES.each do |recurrence_type|
+  TYPES.each do |recurrence_type|
     define_method "#{recurrence_type.downcase}?" do
       type == recurrence_type
     end

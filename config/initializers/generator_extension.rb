@@ -16,8 +16,8 @@ module GeneratorExtension
 
   def field_type_by_name(name)
     case name
-    when 'amount'  then :amount_field
-    when 'email'   then :email_field
+    when /amount/  then :amount_field
+    when /email/   then :email_field
     end
   end
 end

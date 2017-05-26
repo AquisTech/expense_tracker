@@ -1,26 +1,28 @@
-%h1 <%= plural_table_name.titleize %>
-%span= link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_<%= singular_table_name %>_path}
+%h1
+  <%= plural_table_name.titleize %>
+  = link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_<%= singular_table_name %>_path}
 <%- attributes = singular_table_name.classify.constantize.column_names %>
-%table.striped.hover.table-striped.stack
-  %thead
-    %tr
-      <%- attributes.each do |attribute| -%>
-      %th <%= attribute.humanize %>
-      <%- end -%>
-      %th Actions
-
-  %tbody
-    - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+.table-scroll
+  %table.striped.hover.table-striped.stack
+    %thead
       %tr
         <%- attributes.each do |attribute| -%>
-        <%- if attribute =~ /_id$/ -%>
-        %td= <%= singular_table_name %>.<%= attribute.gsub(/_id$/, '') %>.name
-        <%- else -%>
-        %td= <%= singular_table_name %>.<%= attribute %>
+        %th <%= attribute.humanize %>
         <%- end -%>
-        <%- end -%>
-        %td
-          .button-group
-            = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: <%= singular_table_name %>_path(<%= singular_table_name %>)}
-            = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_<%= singular_table_name %>_path(<%= singular_table_name %>)}
-            = link_to 'Delete', <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure you want to delete this <%= singular_table_name.titleize %>?' }, class: 'button alert'
+        %th Actions
+
+    %tbody
+      - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+        %tr
+          <%- attributes.each do |attribute| -%>
+          <%- if attribute =~ /_id$/ -%>
+          %td= <%= singular_table_name %>.<%= attribute.gsub(/_id$/, '') %>.name
+          <%- else -%>
+          %td= <%= singular_table_name %>.<%= attribute %>
+          <%- end -%>
+          <%- end -%>
+          %td
+            .button-group
+              = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: <%= singular_table_name %>_path(<%= singular_table_name %>)}
+              = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_<%= singular_table_name %>_path(<%= singular_table_name %>)}
+              = link_to 'Delete', <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure you want to delete this <%= singular_table_name.titleize %>?' }, class: 'button alert'

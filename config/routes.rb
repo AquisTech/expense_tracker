@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :payments
   resources :accounts
   resources :transfers
-  resources :transaction_purposes
+  resources :transaction_purposes do
+    get :display_recurrence_rule_text, on: :collection
+  end
   resources :transactions
   resources :sub_categories
   resources :categories

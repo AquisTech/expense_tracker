@@ -8,6 +8,8 @@
   {name: 'StanC Saving Bank Account', account_type: 'SB'},
   {name: 'HDFC Credit Card Account', account_type: 'CC'},
   {name: 'CITI Credit Card Account', account_type: 'CC'},
+  {name: 'TATA Croma Credit Card Account', account_type: 'CC'},
+  {name: 'SBI FBB Credit Card Account', account_type: 'CC'},
   {name: 'PayTM', account_type: 'EW'},
   {name: 'Mobikwik', account_type: 'EW'},
   {name: 'OlaMoney', account_type: 'EW'},
@@ -43,7 +45,8 @@ end
   # Incomes / Credits
   'Salary': ['Full-time Job', 'Part-time Job'],
   'Rent': ['Office', 'House', 'Farm-house', 'Vehicle'],
-  'Interest': ['Savings Account', 'Fixed Deposit', 'Recurring Deposit']
+  'Interest': ['Savings Account', 'Fixed Deposit', 'Recurring Deposit'],
+  'Share Market': ['Mutual Funds Dividend']
 }.each do |category, sub_categories|
   c = Category.where(name: category).first_or_create
   (sub_categories << 'Other').each do |sub_category|

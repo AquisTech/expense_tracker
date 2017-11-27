@@ -53,11 +53,30 @@ $(document).on('turbolinks:load', function() {
     $(this).toggleClass('selected');
     var option = $('#weekly select').find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));
+  });
   // Monthly Rule Section: Selection of Day of month
-  });$('.reveal-content').on('click', '#monthly #day_of_month .columns', function(e) {
+  $('.reveal-content').on('click', '#monthly #day_of_month .columns', function(e) {
     console.log('-------------')
     $(this).toggleClass('selected');
     var option = $('#monthly #day_of_month select').find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));
+  });
+  // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
+  $('.reveal-content').on('change', '.recurrence_rule_form select, .recurrence_rule_form input[type="number"]', function(e) {
+    console.log('==========================')
+    $.ajax({
+      url: '/transaction_purposes/display_recurrence_rule_text',
+      data: {
+        type: $('#transaction_purpose_recurrence_rule_attributes_type').val(),
+        interval: $('#transaction_purpose_recurrence_rule_attributes_interval').val(),
+        rules: {}
+      },
+      success: function(result) {
+        $('.reveal-content').html(result);
+      },
+      error: function(result) {
+        $('.reveal-content').html('Error loading content. Please close popup and retry.');
+      }
+    });
   });
 });

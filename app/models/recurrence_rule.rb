@@ -1,6 +1,7 @@
 class RecurrenceRule < ApplicationRecord
   serialize :rules
   has_many :occurrences, dependent: :destroy
+  belongs_to :transaction_purpose
 
   after_create :create_occurrences
 

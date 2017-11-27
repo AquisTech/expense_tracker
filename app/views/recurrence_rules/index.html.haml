@@ -26,11 +26,11 @@
         %td= recurrence_rule.ends_on
         %td= recurrence_rule.count
         %td= recurrence_rule.rules
-        %td= recurrence_rule.transaction_purpose.name
+        %td= recurrence_rule.transaction_purpose.try(:name)
         %td= recurrence_rule.created_at
         %td= recurrence_rule.updated_at
         %td
           .button-group
             = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: recurrence_rule_path(recurrence_rule)}
             = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_recurrence_rule_path(recurrence_rule)}
-            = link_to 'Delete', recurrence_rule, method: :delete, data: { confirm: 'Are you sure you want to delete this Recurrence Rule?' }, class: 'button alert'
+            = link_to 'Delete', recurrence_rule_path(recurrence_rule), method: :delete, data: { confirm: 'Are you sure you want to delete this Recurrence Rule?' }, class: 'button alert'

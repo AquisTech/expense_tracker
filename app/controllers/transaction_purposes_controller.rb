@@ -41,6 +41,13 @@ class TransactionPurposesController < ApplicationController
     redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully destroyed.'
   end
 
+  def display_recurrence_rule_text
+    byebug
+    rule = RecurrenceRule.new(type: params[:type], interval: params[:interval].to_i, rules: params[:rules])
+    msg = rule.humanize
+    puts '----------------', msg, '------------------------------'
+  end
+
   private
     def set_transaction_purpose
       @transaction_purpose = TransactionPurpose.find(params[:id])

@@ -44,6 +44,14 @@ class RecurrenceRule < ApplicationRecord
     type == 'Monthly' && rules.is_a?(Hash)
   end
 
+  def duration_bound?
+    starts_on?
+  end
+
+  def count_bound?
+    count?
+  end
+
   def create_occurrence(days, weeks: nil, months: nil)
     o = occurrences.build
     o.recurrence_type = type

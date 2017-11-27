@@ -35,17 +35,23 @@
   #yearly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly?}" }
     = 'TODO: Yearly'
 
-  #duration
-    = rr.label :starts_on
-    .input-group
-      = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
-    = rr.label :ends_on
-    .input-group
-      = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+  .fieldset
+    / Limit by
+    = radio_button_tag :duration_or_count, :duration, rr.object.new_record? || rr.object.duration_bound?
+    %label Duration
+    = radio_button_tag :duration_or_count, :count
+    %label Number of occurrences
+    #duration{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.duration_bound?}" }
+      = rr.label :starts_on
+      .input-group
+        = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+      = rr.label :ends_on
+      .input-group
+        = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
 
-  #count
-    = rr.label :count
-    = rr.number_field :count
+    #count{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.count_bound?}" }
+      = rr.label :count
+      = rr.number_field :count
 
   = rr.label :rules
   %label.rules_text

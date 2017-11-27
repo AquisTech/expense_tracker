@@ -67,8 +67,12 @@ $(document).on('turbolinks:load', function() {
   $('.reveal-content').on('click', '#monthly #day_of_week .day', function(e) {
     console.log('-------------')
     $(this).toggleClass('selected');
-    var option = $('#monthly #day_of_week select').find('option[value=' + $(this).attr('for') + ']');
+    var option = $('#monthly #day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_monthly_' + $(this).attr('for')).find('option[value=' + $(this).attr('week') + ']');
     option.attr('selected', !option.attr('selected'));
+  });
+  // Duration or Count Section: Toggling as per radio selection
+  $('.reveal-content').on('change', 'input[name=duration_or_count]', function(e) {
+    $('#duration, #count').toggleClass('hide');
   });
   // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
   $('.reveal-content').on('change', '.recurrence_rule_form select, .recurrence_rule_form input[type="number"]', function(e) {
@@ -81,10 +85,10 @@ $(document).on('turbolinks:load', function() {
         rules: {}
       },
       success: function(result) {
-        $('.rules_text').html(result);
+        $('.rules_text').text(result);
       },
       error: function(result) {
-        $('.reveal-content').html('Error loading content. Please close popup and retry.');
+        $('.rules_text').html('Error loading content. Please close popup and retry.');
       }
     });
   });

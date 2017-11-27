@@ -99,7 +99,7 @@ class RecurrenceRule < ApplicationRecord
       "#{day_names(rules_hash.keys)} of #{rules_hash.values.first.to_ordinalized_collection_sentence} #{'week'.pluralize(rules_hash.values.first.count)}"
     else
       rules_hash.map do |day_number, week_numbers|
-        "#{week_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::DAYNAMES[day_number].pluralize(week_numbers.count)}"
+        "#{week_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::DAYNAMES[day_number.to_i].pluralize(week_numbers.count)}"
       end.to_sentence
     end
   end

@@ -15,3 +15,12 @@
  *= require foundation_and_overrides
 
  */
+#weekly label.selected {
+  background: #1779ba; // $primary-color
+}
+#day_of_month, #day_of_week {
+  .day {
+    border: 1px solid #767676; // $secondary-color
+    &.selected { background: #1779ba } // $primary-color
+  }
+}

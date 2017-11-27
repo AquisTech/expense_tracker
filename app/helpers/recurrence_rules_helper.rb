@@ -12,9 +12,9 @@ module RecurrenceRulesHelper
       content_tag :div, class: 'row columns' do
         days_of_week.compact.map do |day|
           if day == -1
-            content_tag :div, 'Last day of month', for: day, class: 'small-4 columns end'
+            content_tag :div, 'Last day of month', for: day, class: 'small-4 columns day end'
           else
-            content_tag :div, day, for: day, class: "small-1 columns #{'end' if (day % 7).zero?}"
+            content_tag :div, day, for: day, class: "small-1 columns day #{'end' if (day % 7).zero?}"
           end
         end.join.html_safe
       end
@@ -26,7 +26,7 @@ module RecurrenceRulesHelper
       content_tag :div, class: 'row columns' do
         content_tag(:div, (week_number == -1 ? 'Last' : week_number.ordinalize), class: "small-1 columns") +
         Date::ABBR_DAYNAMES.map do |day|
-          content_tag(:div, day, class: "small-1 columns #{'end' if Date::ABBR_DAYNAMES.index(day) == 6}")
+          content_tag(:div, day, week: week_number, for: Date::ABBR_DAYNAMES.index(day), class: "small-1 columns day #{'end' if Date::ABBR_DAYNAMES.index(day) == 6}")
         end.join.html_safe
       end
     end.join.html_safe

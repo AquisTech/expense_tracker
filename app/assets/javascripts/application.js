@@ -36,7 +36,9 @@ $(document).on('turbolinks:load', function() {
   // Recurrence Rule Section: Toggling as per type
   $('.reveal-content').on('change', 'select#transaction_purpose_recurrence_rule_attributes_type', function(e) {
     $('#weekly, #monthly, #yearly').hide();
+    $('#weekly, #monthly, #yearly').find('select, input').attr({readonly: true, disabled: true});
     $('#' + $(this).val().toLowerCase()).removeClass('hide').show();
+    $('#' + $(this).val().toLowerCase()).find('select, input').attr({readonly: false, disabled: false});
     if($(this).val().toLowerCase() == 'daily') {
       var intervalUnit = 'day(s)';
     } else {
@@ -55,10 +57,17 @@ $(document).on('turbolinks:load', function() {
     option.attr('selected', !option.attr('selected'));
   });
   // Monthly Rule Section: Selection of Day of month
-  $('.reveal-content').on('click', '#monthly #day_of_month .columns', function(e) {
+  $('.reveal-content').on('click', '#monthly #day_of_month .day', function(e) {
     console.log('-------------')
     $(this).toggleClass('selected');
     var option = $('#monthly #day_of_month select').find('option[value=' + $(this).attr('for') + ']');
+    option.attr('selected', !option.attr('selected'));
+  });
+  // Monthly Rule Section: Selection of Day of week
+  $('.reveal-content').on('click', '#monthly #day_of_week .day', function(e) {
+    console.log('-------------')
+    $(this).toggleClass('selected');
+    var option = $('#monthly #day_of_week select').find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));
   });
   // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
@@ -72,7 +81,7 @@ $(document).on('turbolinks:load', function() {
         rules: {}
       },
       success: function(result) {
-        $('.reveal-content').html(result);
+        $('.rules_text').html(result);
       },
       error: function(result) {
         $('.reveal-content').html('Error loading content. Please close popup and retry.');

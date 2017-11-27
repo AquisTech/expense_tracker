@@ -42,10 +42,12 @@ class TransactionPurposesController < ApplicationController
   end
 
   def display_recurrence_rule_text
-    byebug
+    # byebug
     rule = RecurrenceRule.new(type: params[:type], interval: params[:interval].to_i, rules: params[:rules])
-    msg = rule.humanize
+    msg = 'aaaa'
+    msg = rule.humanize rescue 'rescue'
     puts '----------------', msg, '------------------------------'
+    render json: {msg: msg}, status: :ok
   end
 
   private

@@ -28,7 +28,7 @@
         options_for_select((1..31).to_a << -1, rr.object.rules.try(:[], :monthly)), {multiple: true, class: :hide}
     #day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
       = day_of_week_selection
-      - [0..6].each do |day|
+      - (0..6).to_a.each do |day|
         = select_tag "transaction_purpose[recurrence_rule_attributes][rules][monthly][#{day}]",
           options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], :monthly).try(:[], day)), {multiple: true, class: :hide}
 
@@ -48,4 +48,4 @@
     = rr.number_field :count
 
   = rr.label :rules
-  = # rr.text_area :rules, disabled: true
+  %label.rules_text

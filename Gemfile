@@ -5,8 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '2.4.0'
+
 gem 'rails', github: 'rails/rails'
-gem 'arel', github: "rails/arel"
+gem 'arel', github: 'rails/arel'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

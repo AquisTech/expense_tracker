@@ -7,12 +7,12 @@
   #interval
     .input-group
       %label.input-group-label Every
-      = rr.number_field :interval, class: 'input-group-field'
+      = rr.number_field :interval, value: rr.object.new_record? ? 1 : rr.object.interval, min: 1, class: 'input-group-field'
       %label#interval-unit.input-group-label= "#{rr.object.new_record? ? 'day' : {'Daily': 'day', 'Weekly': 'week', 'Monthly': 'month', 'Yearly': 'year'}[rr.object.type]}(s)"
 
   #weekly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.weekly?}" }
     = weekday_select_bar
-    = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][weekly][]',
+    = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
       options_for_select(0..6, rr.object.rules.try(:[], :weekly)), {multiple: true, class: :hide}
 
   #monthly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly?}" }
@@ -24,19 +24,19 @@
 
     #day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.monthly_days_of_month?}" }
       = day_of_month_selection
-      = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][monthly][]',
+      = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
         options_for_select((1..31).to_a << -1, rr.object.rules.try(:[], :monthly)), {multiple: true, class: :hide}
     #day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
       = day_of_week_selection
       - (0..6).to_a.each do |day|
-        = select_tag "transaction_purpose[recurrence_rule_attributes][rules][monthly][#{day}]",
+        = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{day}]",
           options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], :monthly).try(:[], day)), {multiple: true, class: :hide}
 
   #yearly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly?}" }
     = 'TODO: Yearly'
 
-  .fieldset
-    / Limit by
+  %fieldset.fieldset
+    %legend Limit by
     = radio_button_tag :duration_or_count, :duration, rr.object.new_record? || rr.object.duration_bound?
     %label Duration
     = radio_button_tag :duration_or_count, :count
@@ -44,14 +44,14 @@
     #duration{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.duration_bound?}" }
       = rr.label :starts_on
       .input-group
-        = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+        = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_starts_on, class: 'input-group-field small-2'
       = rr.label :ends_on
       .input-group
-        = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_created_at, class: 'input-group-field small-2'
+        = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_ends_on, class: 'input-group-field small-2'
 
     #count{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.count_bound?}" }
       = rr.label :count
-      = rr.number_field :count
+      = rr.number_field :count, min: 1
 
   = rr.label :rules
   %label.rules_text

@@ -42,11 +42,8 @@ class TransactionPurposesController < ApplicationController
   end
 
   def display_recurrence_rule_text
-    # byebug
-    rule = RecurrenceRule.new(type: params[:type], interval: params[:interval].to_i, rules: params[:rules])
-    msg = 'aaaa'
-    msg = rule.humanize rescue 'rescue'
-    puts '----------------', msg, '------------------------------'
+    tp = TransactionPurpose.new(transaction_purpose_params)
+    msg = tp.humanize rescue 'Please select remaining criteria'
     render json: {msg: msg}, status: :ok
   end
 

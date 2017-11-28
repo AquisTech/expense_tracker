@@ -4,4 +4,8 @@ class TransactionPurpose < ApplicationRecord
   has_many :transactions
 
   accepts_nested_attributes_for :recurrence_rule
+
+  def humanize
+    recurrence_rule.humanize
+  end
 end

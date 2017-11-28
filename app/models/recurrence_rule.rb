@@ -66,12 +66,12 @@ class RecurrenceRule < ApplicationRecord
   end
 
   def humanize
-    case type
+    msg = case type
     when 'Daily'
       interval == 1 ? 'Daily' : "Every #{interval} days"
     when 'Weekly'
       s = interval == 1 ? 'Weekly' : "Every #{interval} weeks"
-      s += " on #{day_names(rules)}"
+      s += " on #{day_names(rules.map(&:to_i))}"
     when 'Monthly'
       s = { 1 => 'Monthly', 3 => 'Quarterly', 6 => 'Half Yearly' }[interval] || "Every #{interval} months"
       s += " on #{ordinalized_day_numbers(rules)} #{'day'.pluralize(rules.count)}" if rules.is_a?(Array)
@@ -83,6 +83,9 @@ class RecurrenceRule < ApplicationRecord
     else
       'Invalid Rule. TODO: Support custom rule'
     end
+    msg += " from #{starts_on} to #{ends_on}" if duration_bound?
+    msg += ' ' + ({ 1 => 'once', 2 => 'twice', 3 => 'thrice' }[count] || "#{count} times") if count_bound?
+    msg
   end
 
   def day_names(day_numbers)

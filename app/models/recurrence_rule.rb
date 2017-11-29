@@ -107,7 +107,7 @@ class RecurrenceRule < ApplicationRecord
 
   def weekly_rules_text(rules_hash)
     if rules_hash.values.count > 1 && rules_hash.values.uniq.count == 1
-      "#{day_names(rules_hash.keys)} of #{rules_hash.values.first.to_ordinalized_collection_sentence} #{'week'.pluralize(rules_hash.values.first.count)}"
+      "#{day_names(rules_hash.keys.map(&:to_i))} of #{rules_hash.values.first.to_ordinalized_collection_sentence} #{'week'.pluralize(rules_hash.values.first.count)}"
     else
       rules_hash.map do |day_number, week_numbers|
         "#{week_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::DAYNAMES[day_number.to_i].pluralize(week_numbers.count)}"

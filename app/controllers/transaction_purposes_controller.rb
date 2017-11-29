@@ -44,7 +44,7 @@ class TransactionPurposesController < ApplicationController
   def display_recurrence_rule_text
     tp = TransactionPurpose.new(transaction_purpose_params)
     msg = tp.humanize rescue 'Please select remaining criteria'
-    render json: {msg: msg}, status: :ok
+    render json: { msg: msg }, status: :ok
   end
 
   private

@@ -44,6 +44,14 @@ class RecurrenceRule < ApplicationRecord
     type == 'Monthly' && rules.is_a?(Hash)
   end
 
+  def yearly_days_of_month?
+    type == 'Yearly' && rules.values.first.is_a?(Array)
+  end
+
+  def yearly_days_of_week?
+    type == 'Yearly' && rules.values.first.is_a?(Hash)
+  end
+
   def duration_bound?
     starts_on?
   end
@@ -116,11 +124,17 @@ class RecurrenceRule < ApplicationRecord
   end
 
   def yearly_rules_text(rules_hash)
-    if rules_hash.values.count > 1 && rules_hash.values.uniq.count == 1
-      "#{rules_hash.values.first.to_ordinalized_collection_sentence} of #{month_names(rules_hash.keys)}"
+    if rules_hash.values.first.is_a?(Array)
+      if rules_hash.values.count > 1 && rules_hash.values.uniq.count == 1
+        "#{rules_hash.values.first.to_ordinalized_collection_sentence} of #{month_names(rules_hash.keys)}"
+      else
+        rules_hash.map do |month_number, day_numbers|
+          "#{day_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::MONTHNAMES[month_number]}"
+        end.to_sentence
+      end
     else
-      rules_hash.map do |month_number, day_numbers|
-        "#{day_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::MONTHNAMES[month_number]}"
+      rules_hash.map do |month_number, weekly_hash|
+        "#{weekly_rules_text(weekly_hash)} of #{Date::MONTHNAMES[month_number]}"
       end.to_sentence
     end
   end

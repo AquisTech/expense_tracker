@@ -13,7 +13,7 @@
   #weekly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.weekly?}" }
     = weekday_select_bar
     = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
-      options_for_select(0..6, rr.object.rules.try(:[], :weekly)), {multiple: true, class: :hide}
+      options_for_select(0..6, rr.object.rules), {multiple: true, class: :hide}
 
   #monthly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly?}" }
     .fieldset
@@ -22,18 +22,37 @@
       = radio_button_tag :day_of_month_or_week, :day_of_week
       %label Day of Week
 
-    #day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.monthly_days_of_month?}" }
-      = day_of_month_selection
-      = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
-        options_for_select((1..31).to_a << -1, rr.object.rules.try(:[], :monthly)), {multiple: true, class: :hide}
-    #day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
-      = day_of_week_selection
-      - (0..6).to_a.each do |day|
-        = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{day}]",
-          options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], :monthly).try(:[], day)), {multiple: true, class: :hide}
+      .day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.monthly_days_of_month?}" }
+        = day_of_month_selection
+        = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
+          options_for_select((1..31).to_a << -1, rr.object.rules), {multiple: true, class: :hide}
+      .day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
+        = day_of_week_selection
+        - (0..6).to_a.each do |day|
+          = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{day}]",
+            options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {multiple: true, class: :hide}
 
   #yearly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly?}" }
-    = 'TODO: Yearly'
+    - (1..12).to_a.each do |month|
+      %fieldset.fieldset.month.hide{ class: month }
+        .input-group
+          %label.input-group-label.prev-month{ month: month - 1, disabled: month == 1 } < Previous Month
+          %label.input-group-label= Date::MONTHNAMES[month]
+          %label.input-group-label.next-month{ month: month + 1, disabled: month == 12 } Next Month >
+        = radio_button_tag "day_of_month_or_week_#{month}", :day_of_month, rr.object.new_record? || rr.object.yearly_days_of_month?
+        %label Day of Month
+        = radio_button_tag "day_of_month_or_week_#{month}", :day_of_week
+        %label Day of Week
+
+        .day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.yearly_days_of_month?}" }
+          = day_of_month_selection(month)
+          = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{month}][]",
+            options_for_select((1..31).to_a << -1, rr.object.rules), {multiple: true, class: :hide}
+        .day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly_days_of_week?}" }
+          = day_of_week_selection(month)
+          - (0..6).to_a.each do |day|
+            = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{month}][#{day}]",
+              options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {multiple: true, class: :hide}
 
   %fieldset.fieldset
     %legend Limit by

@@ -1,4 +1,4 @@
-= f.fields_for :recurrence_rule do |rr|
+= f.fields :recurrence_rule do |rr|
   = rr.label :recurrence
   .input-group
     %label.input-group-label Repeat
@@ -12,8 +12,7 @@
 
   #weekly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.weekly?}" }
     = weekday_select_bar
-    = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
-      options_for_select(0..6, rr.object.rules), {multiple: true, class: :hide}
+    = rr.select :rules, options_for_select(0..6, rr.object.rules), {}, { multiple: true, class: :hide }
 
   #monthly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly?}" }
     .fieldset
@@ -24,13 +23,12 @@
 
       .day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.monthly_days_of_month?}" }
         = day_of_month_selection
-        = select_tag 'transaction_purpose[recurrence_rule_attributes][rules][]',
-          options_for_select((1..31).to_a << -1, rr.object.rules), {multiple: true, class: :hide}
+        = rr.select :rules, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide }
       .day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.monthly_days_of_week?}" }
         = day_of_week_selection
-        - (0..6).to_a.each do |day|
-          = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{day}]",
-            options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {multiple: true, class: :hide}
+        = rr.fields :rules do |r|
+          - (0..6).to_a.each do |day|
+            = r.select day, options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), { include_hidden: false }, { multiple: true, class: :hide } # TODO: Check in db if using include_hidden in case when all selected elements are deselected
 
   #yearly{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly?}" }
     - (1..12).to_a.each do |month|
@@ -46,8 +44,8 @@
 
         .day_of_month.input-group{ class: rr.object.new_record? ? '' : "#{'hide' unless rr.object.yearly_days_of_month?}" }
           = day_of_month_selection(month)
-          = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{month}][]",
-            options_for_select((1..31).to_a << -1, rr.object.rules), {multiple: true, class: :hide}
+          = rr.fields :rules do |r|
+            = r.select month, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide }
         .day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly_days_of_week?}" }
           = day_of_week_selection(month)
           - (0..6).to_a.each do |day|

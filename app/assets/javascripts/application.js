@@ -49,18 +49,18 @@ $(document).on('turbolinks:load', function() {
     }
     $('#interval-unit').text(intervalUnit);
   });
-  // Monthly Rule Section: toggling as per radio selection
-  $('.reveal-content').on('change', '#monthly input[name=day_of_month_or_week]', function(e) {
-    $('#monthly .day_of_month, #monthly .day_of_week').toggleClass('hide');
-    $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
-    $('#monthly .' + $(this).val()).find('select, input').attr('disabled', false);
-  });
   // Weekly Rule Section: Selection of Day of week
   $('.reveal-content').on('click', '#weekly label', function(e) {
     $(this).toggleClass('selected');
     var option = $('#weekly select').find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));
     $('#weekly select').change();
+  });
+  // Monthly Rule Section: toggling as per radio selection
+  $('.reveal-content').on('change', '#monthly input[name=day_of_month_or_week]', function(e) {
+    $('#monthly .day_of_month, #monthly .day_of_week').toggleClass('hide');
+    $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
+    $('#monthly .' + $(this).val()).find('select, input').attr('disabled', false);
   });
   // Monthly Rule Section: Selection of Day of month
   $('.reveal-content').on('click', '#monthly .day_of_month .day', function(e) {

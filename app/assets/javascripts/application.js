@@ -35,13 +35,20 @@ $(document).on('turbolinks:load', function() {
   });
   // Recurrence Rule Section: Toggling as per type
   $('.reveal-content').on('change', 'select#transaction_purpose_recurrence_rule_attributes_type', function(e) {
-    $('#weekly, #monthly, #yearly').hide();
+    $('#weekly, #monthly, #yearly').addClass('hide');
     $('#weekly, #monthly, #yearly').find('select, input').prop('disabled', true);
-    $('#' + $(this).val().toLowerCase()).removeClass('hide').show();
+    $('#' + $(this).val().toLowerCase()).removeClass('hide');
     if($(this).val().toLowerCase() == 'yearly') {
       $('.month.1').removeClass('hide');
+      $('#yearly input[name*=day_of_month_or_week_]:checked').each(function(e) {
+        debugger
+        var target_month = $(this).parents('.month');
+        target_month.find('input[type=radio]').attr('disabled', false);
+        target_month.find('.' + $(this).val()).find('select, input').attr('disabled', false);
+      });
+    } else {
+      $('#' + $(this).val().toLowerCase()).find('select, input').attr('disabled', false);
     }
-    $('#' + $(this).val().toLowerCase()).find('select, input').attr('disabled', false);
     if($(this).val().toLowerCase() == 'daily') {
       var intervalUnit = 'day(s)';
     } else {
@@ -93,7 +100,7 @@ $(document).on('turbolinks:load', function() {
   $('.reveal-content').on('click', '#yearly .day_of_month .day', function(e) {
     $(this).toggleClass('selected');
     debugger
-    var target_select_list = $('#yearly .day_of_month select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '_')
+    var target_select_list = $('#yearly .day_of_month select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month'))
     var option = target_select_list.find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));
     target_select_list.change();
@@ -101,7 +108,7 @@ $(document).on('turbolinks:load', function() {
   // Yearly Rule Section: Selection of Day of week
   $('.reveal-content').on('click', '#yearly .day_of_week .day', function(e) {
     $(this).toggleClass('selected');
-    var target_select_list = $('#yearly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '_' + $(this).attr('for'));
+    var target_select_list = $('#yearly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '][' + $(this).attr('for'));
     var option = target_select_list.find('option[value=' + $(this).attr('week') + ']');
     option.attr('selected', !option.attr('selected'));
     target_select_list.change();
@@ -115,6 +122,7 @@ $(document).on('turbolinks:load', function() {
   // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
   $('.reveal-content').on('change', '.recurrence_rule_form select, .recurrence_rule_form input', function(e) {
     var data = $(this).parents('form').serialize();
+    console.log(data)
     $.ajax({
       url: '/transaction_purposes/display_recurrence_rule_text',
       data: data,

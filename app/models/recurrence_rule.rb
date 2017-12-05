@@ -124,18 +124,22 @@ class RecurrenceRule < ApplicationRecord
   end
 
   def yearly_rules_text(rules_hash)
-    if rules_hash.values.first.is_a?(Array)
-      if rules_hash.values.count > 1 && rules_hash.values.uniq.count == 1
-        "#{rules_hash.values.first.to_ordinalized_collection_sentence} of #{month_names(rules_hash.keys)}"
+    byebug
+    array_rules_keys = []
+    rules_hash.each { |key, value| array_rules_keys << key if value.is_a?(Array) }
+    array_rules_hash = rules_hash.slice(*array_rules_keys)
+    hash_rules_hash = rules_hash.except(*array_rules_keys)
+    msg = if array_rules_hash.values.count > 1 && array_rules_hash.values.uniq.count == 1
+        "#{array_rules_hash.values.first.to_ordinalized_collection_sentence} of #{month_names(array_rules_hash.keys.map(&:to_i))}"
       else
-        rules_hash.map do |month_number, day_numbers|
-          "#{day_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::MONTHNAMES[month_number]}"
+        array_rules_hash.map do |month_number, day_numbers|
+          "#{day_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::MONTHNAMES[month_number.to_i]}"
         end.to_sentence
       end
-    else
-      rules_hash.map do |month_number, weekly_hash|
-        "#{weekly_rules_text(weekly_hash)} of #{Date::MONTHNAMES[month_number]}"
+    msg += ' and ' if msg.present?
+    msg += hash_rules_hash.map do |month_number, weekly_hash|
+        "#{weekly_rules_text(weekly_hash)} of #{Date::MONTHNAMES[month_number.to_i]}"
       end.to_sentence
-    end
+    msg
   end
 end

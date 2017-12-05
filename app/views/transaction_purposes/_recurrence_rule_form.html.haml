@@ -37,6 +37,7 @@
           %label.input-group-label.prev-month{ month: month - 1, disabled: month == 1 } < Previous Month
           %label.input-group-label= Date::MONTHNAMES[month]
           %label.input-group-label.next-month{ month: month + 1, disabled: month == 12 } Next Month >
+
         = radio_button_tag "day_of_month_or_week_#{month}", :day_of_month, rr.object.new_record? || rr.object.yearly_days_of_month?
         %label Day of Month
         = radio_button_tag "day_of_month_or_week_#{month}", :day_of_week
@@ -48,9 +49,9 @@
             = r.select month, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide }
         .day_of_week.input-group{ class: rr.object.new_record? ? 'hide' : "#{'hide' unless rr.object.yearly_days_of_week?}" }
           = day_of_week_selection(month)
-          - (0..6).to_a.each do |day|
-            = select_tag "transaction_purpose[recurrence_rule_attributes][rules][#{month}][#{day}]",
-              options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {multiple: true, class: :hide}
+          = rr.fields :rules do |r|
+            - (0..6).to_a.each do |day|
+              = r.select "#{month}][#{day}", options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {}, { multiple: true, class: :hide }
 
   %fieldset.fieldset
     %legend Limit by

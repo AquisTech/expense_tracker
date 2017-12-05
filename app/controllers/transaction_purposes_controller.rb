@@ -43,7 +43,11 @@ class TransactionPurposesController < ApplicationController
 
   def display_recurrence_rule_text
     tp = TransactionPurpose.new(transaction_purpose_params)
-    msg = tp.humanize rescue 'Please select remaining criteria'
+    begin
+      msg = tp.humanize #rescue 'Please select remaining criteria'
+    rescue Exception => e
+      msg = "#{e.message} | #{e.backtrace}"
+    end
     render json: { msg: msg }, status: :ok
   end
 
@@ -53,6 +57,7 @@ class TransactionPurposesController < ApplicationController
     end
 
     def transaction_purpose_params
+      puts '------------------------------------', params.inspect, '-------------------------------'
       params.require(:transaction_purpose).permit(:name, :sub_category_id, recurrence_rule_attributes: {} )
     end
 end

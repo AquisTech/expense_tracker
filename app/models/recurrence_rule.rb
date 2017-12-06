@@ -44,12 +44,12 @@ class RecurrenceRule < ApplicationRecord
     type == 'Monthly' && rules.is_a?(Hash)
   end
 
-  def yearly_days_of_month?
-    type == 'Yearly' && rules.values.first.is_a?(Array)
+  def yearly_days_of_month?(month)
+    type == 'Yearly' && rules[month].is_a?(Array)
   end
 
-  def yearly_days_of_week?
-    type == 'Yearly' && rules.values.first.is_a?(Hash)
+  def yearly_days_of_week?(month)
+    type == 'Yearly' && rules[month].is_a?(Hash)
   end
 
   def duration_bound?

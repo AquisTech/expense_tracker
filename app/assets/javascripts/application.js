@@ -41,7 +41,6 @@ $(document).on('turbolinks:load', function() {
     if($(this).val().toLowerCase() == 'yearly') {
       $('.month.1').removeClass('hide');
       $('#yearly input[name*=day_of_month_or_week_]:checked').each(function(e) {
-        debugger
         var target_month = $(this).parents('.month');
         target_month.find('input[type=radio]').attr('disabled', false);
         target_month.find('.' + $(this).val()).find('select, input').attr('disabled', false);
@@ -99,7 +98,6 @@ $(document).on('turbolinks:load', function() {
   // Yearly Rule Section: Selection of Day of month
   $('.reveal-content').on('click', '#yearly .day_of_month .day', function(e) {
     $(this).toggleClass('selected');
-    debugger
     var target_select_list = $('#yearly .day_of_month select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month'))
     var option = target_select_list.find('option[value=' + $(this).attr('for') + ']');
     option.attr('selected', !option.attr('selected'));

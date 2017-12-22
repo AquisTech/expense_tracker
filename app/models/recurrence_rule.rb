@@ -124,7 +124,6 @@ class RecurrenceRule < ApplicationRecord
   end
 
   def yearly_rules_text(rules_hash)
-    byebug
     array_rules_keys = []
     rules_hash.each { |key, value| array_rules_keys << key if value.is_a?(Array) }
     array_rules_hash = rules_hash.slice(*array_rules_keys)

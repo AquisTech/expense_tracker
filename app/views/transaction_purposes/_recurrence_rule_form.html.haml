@@ -21,9 +21,9 @@
       = radio_button_tag :day_of_month_or_week, :day_of_week
       %label Day of Week
 
-      .day_of_month.input-group{ class: hide_if(rr.object.new_record? || !rr.object.monthly_days_of_month?) }
+      .day_of_month.input-group{ class: hide_if(rr.object.persisted? && !rr.object.monthly_days_of_month?) }
         = day_of_month_selection
-        = rr.select :rules, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.monthly_days_of_month? }
+        = rr.select :rules, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide, disabled: rr.object.persisted? || !rr.object.monthly_days_of_month? }
       .day_of_week.input-group{ class: hide_if(rr.object.new_record? || !rr.object.monthly_days_of_week?) }
         = day_of_week_selection
         = rr.fields :rules do |r|
@@ -43,15 +43,15 @@
         = radio_button_tag "day_of_month_or_week_#{month}", :day_of_week
         %label Day of Week
 
-        .day_of_month.input-group{ class: hide_if(rr.object.new_record? || !rr.object.yearly_days_of_month?(month)) }
+        .day_of_month.input-group{ class: hide_if(rr.object.persisted? && !rr.object.yearly_days_of_month?(month)) }
           = day_of_month_selection(month)
           = rr.fields :rules do |r|
-            = r.select month, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide }
+            = r.select month, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide, disabled: rr.object.persisted? && !rr.object.yearly_days_of_month?(month) }
         .day_of_week.input-group{ class: hide_if(rr.object.new_record? || !rr.object.yearly_days_of_week?(month)) }
           = day_of_week_selection(month)
           = rr.fields :rules do |r|
             - (0..6).to_a.each do |day|
-              = r.select "#{month}][#{day}", options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {}, { multiple: true, class: :hide }
+              = r.select "#{month}][#{day}", options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {}, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.yearly_days_of_week?(month) }
 
   %fieldset.fieldset
     %legend Limit by
@@ -69,8 +69,8 @@
 
     #count{ class: hide_if(rr.object.new_record? || !rr.object.count_bound?) }
       = rr.label :count
-      = rr.number_field :count, min: 1
+      = rr.number_field :count, value: rr.object.count || 1, min: 1
 
   %fieldset.fieldset
     %legend Rules summary
-    %label.rules_text
+    %label.rules_text Daily

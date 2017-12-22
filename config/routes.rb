@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :sub_categories
   resources :categories
   resources :account_balances
+  root to: 'transaction_purposes#index'
 end

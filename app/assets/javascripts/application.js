@@ -106,7 +106,7 @@ $(document).on('turbolinks:load', function() {
   // Yearly Rule Section: Selection of Day of week
   $('.reveal-content').on('click', '#yearly .day_of_week .day', function(e) {
     $(this).toggleClass('selected');
-    var target_select_list = $('#yearly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '][' + $(this).attr('for'));
+    var target_select_list = $('#yearly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '_' + $(this).attr('for'));
     var option = target_select_list.find('option[value=' + $(this).attr('week') + ']');
     option.attr('selected', !option.attr('selected'));
     target_select_list.change();

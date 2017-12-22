@@ -78,14 +78,22 @@ class RecurrenceRule < ApplicationRecord
     when 'Daily'
       interval == 1 ? 'Daily' : "Every #{interval} days"
     when 'Weekly'
+      return 'Select day(s) of week' if rules.blank?
       s = interval == 1 ? 'Weekly' : "Every #{interval} weeks"
       s += " on #{day_names(rules.map(&:to_i))}"
     when 'Monthly'
       s = { 1 => 'Monthly', 3 => 'Quarterly', 6 => 'Half Yearly' }[interval] || "Every #{interval} months"
-      s += " on #{ordinalized_day_numbers(rules)} #{'day'.pluralize(rules.count)}" if rules.is_a?(Array)
-      s += " on #{weekly_rules_text(rules)}" if rules.is_a?(Hash)
+      if rules.is_a?(Array)
+        return 'Select day(s) of month' if rules.blank?
+        s += " on #{ordinalized_day_numbers(rules)} #{'day'.pluralize(rules.count)}"
+      end
+      if rules.is_a?(Hash)
+        return 'Select day(s) of week' if rules.blank?
+        s += " on #{weekly_rules_text(rules)}"
+      end
       s += ' of the month'
     when 'Yearly'
+      return 'Select criteria for year' if rules.blank?
       s = interval == 1 ? 'Yearly' : "Every #{interval} years"
       s += " on #{yearly_rules_text(rules)} of the year"
     else
@@ -135,7 +143,7 @@ class RecurrenceRule < ApplicationRecord
           "#{day_numbers.to_ordinalized_collection_sentence(two_words_connector: ', ', last_word_connector: ', ')} #{Date::MONTHNAMES[month_number.to_i]}"
         end.to_sentence
       end
-    msg += ' and ' if msg.present?
+    msg += ' and ' if msg.present? && hash_rules_hash.present?
     msg += hash_rules_hash.map do |month_number, weekly_hash|
         "#{weekly_rules_text(weekly_hash)} of #{Date::MONTHNAMES[month_number.to_i]}"
       end.to_sentence

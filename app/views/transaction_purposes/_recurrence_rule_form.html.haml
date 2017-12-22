@@ -51,7 +51,7 @@
           = day_of_week_selection(month)
           = rr.fields :rules do |r|
             - (0..6).to_a.each do |day|
-              = r.select "#{month}][#{day}", options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {}, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.yearly_days_of_week?(month) }
+              = r.select "#{month}][#{day}", options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), {}, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.yearly_days_of_week?(month), id: "transaction_purpose_recurrence_rule_attributes_rules_#{month}_#{day}" }
 
   %fieldset.fieldset
     %legend Limit by

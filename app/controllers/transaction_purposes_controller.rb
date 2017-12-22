@@ -56,8 +56,17 @@ class TransactionPurposesController < ApplicationController
       @transaction_purpose = TransactionPurpose.find(params[:id])
     end
 
+    def remove_blanks(hash)
+      hash.each { |k, v| v.is_a?(Array) ? hash[k] = v.without('') : remove_blanks(v) }
+      hash.reject! { |k, v| v.blank? }
+      hash
+    end
+
     def transaction_purpose_params
-      puts '------------------------------------', params.inspect, '-------------------------------'
+      rule = params[:transaction_purpose][:recurrence_rule_attributes][:rules].dup
+      rule = rule.without('') if rule.present? && rule.include?('')
+      remove_blanks(rule) unless rule.is_a?(Array)
+      params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rule || []
       params.require(:transaction_purpose).permit(:name, :sub_category_id, recurrence_rule_attributes: {} )
     end
 end

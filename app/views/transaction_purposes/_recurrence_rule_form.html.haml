@@ -69,7 +69,7 @@
 
     #count{ class: hide_if(rr.object.new_record? || !rr.object.count_bound?) }
       = rr.label :count
-      = rr.number_field :count, value: rr.object.count || 1, min: 1
+      = rr.number_field :count, value: rr.object.count || 1, min: 1, disabled: rr.object.new_record? || !rr.object.count_bound?
 
   %fieldset.fieldset
     %legend Rules summary

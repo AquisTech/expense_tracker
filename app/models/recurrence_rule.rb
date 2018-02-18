@@ -22,10 +22,12 @@ class RecurrenceRule < ApplicationRecord
         rules.each { |day_of_month| create_occurrence(day_of_month) }
       end
     when 'Yearly'
+      # TODO: Weekday of the month case missing
       rules.each do |month_number, days_of_month|
         days_of_month.each { |day_of_month| create_occurrence(day_of_month, months: month_number)}
       end
     else
+      # TODO: Add custom rule
       raise 'Invalid Rule. TODO: Support custom rule'
     end
   end
@@ -63,13 +65,13 @@ class RecurrenceRule < ApplicationRecord
   def create_occurrence(days, weeks: nil, months: nil)
     o = occurrences.build
     o.recurrence_type = type
-    o.interval = interval
+    o.interval = interval # TODO: Check interval and days logic
     o.days = days
     o.weeks = weeks
     o.months = months
-    o.starts_on = nil
-    o.ends_on = nil
-    o.count = nil
+    o.starts_on = starts_on
+    o.ends_on = ends_on
+    o.count = count
     o.save
   end
 
@@ -97,7 +99,7 @@ class RecurrenceRule < ApplicationRecord
       s = interval == 1 ? 'Yearly' : "Every #{interval} years"
       s += " on #{yearly_rules_text(rules)} of the year"
     else
-      'Invalid Rule. TODO: Support custom rule'
+      return 'Invalid Rule. TODO: Support custom rule'
     end
     msg += " from #{starts_on} to #{ends_on}" if duration_bound?
     msg += ' ' + ({ 1 => 'once', 2 => 'twice', 3 => 'thrice' }[count] || "#{count} times") if count_bound?

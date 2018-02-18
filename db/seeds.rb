@@ -25,7 +25,7 @@
     name: acc[:name], account_type: acc[:account_type],
     description: acc[:description] || acc[:name],
     details: acc[:details] || acc[:name]
-  ).first_or_create
+  ).first_or_create!
 end
 {
   # Expenses / Debits
@@ -48,53 +48,83 @@ end
   'Interest': ['Savings Account', 'Fixed Deposit', 'Recurring Deposit'],
   'Share Market': ['Mutual Funds Dividend']
 }.each do |category, sub_categories|
-  c = Category.where(name: category).first_or_create
+  c = Category.where(name: category).first_or_create!
   (sub_categories << 'Other').each do |sub_category|
-    c.sub_categories.where(name: sub_category).first_or_create
+    c.sub_categories.where(name: sub_category).first_or_create!
   end
 end
-# {
-#   Daily:   [{interval: [1,2,7]}],
-#   Weekly:  [ # 0 = Sunday, 1 = Monday, ....., 6 = Saturday
-#              {interval: [1,3], rules: [1]},
-#              {interval: [1,3], rules: [1, 3]},
-#              {interval: [1,3], rules: [1, 3, 4]},
-#              {interval: [1,3], rules: [1, 2, 3, 4, 5]},
-#              {interval: [1,3], rules: [0, 6]}
-#            ],
-#   Monthly: [
-#             {interval: [1,2], rules: [1]},
-#             {interval: [1,2], rules: [3]},
-#             {interval: [1,2], rules: [-1]},
-#             {interval: [1,2], rules: [3, 9]},
-#             {interval: [1,2], rules: [3, 9, 10]},
-#             {interval: [1,2], rules: [3, 9, -1]},
-#             # {day_number => [week_numbers]}
-#             {interval: [1,2], rules: {5 => [2]}},
-#             {interval: [1,2], rules: {5 => [-1]}},
-#             {interval: [1,2], rules: {5 => [2, 4]}},
-#             {interval: [1,2], rules: {5 => [1, 2, 4]}},
-#             {interval: [1,2], rules: {5 => [2], 4 => [2]}},
-#             {interval: [1,2], rules: {5 => [-1], 4 => [-1]}},
-#             {interval: [1,2], rules: {5 => [2, 4], 4 => [2, 4]}},
-#             {interval: [1,2], rules: {1 => [2], 2 => [3]}},
-#             {interval: [1,2], rules: {0 => [2], 6 => [2]}},
-#             {interval: [1,2], rules: {0 => [-1], 6 => [-1]}},
-#             {interval: [1,2], rules: {0 => [2,4], 6 => [2,4]}},
-#             {interval: [3,6], rules: [15]}
-#            ],
-#   Yearly: [ # {month_number => [day_numbers]}
-#             {interval: [1,2], rules: {2 => [1]}},
-#             {interval: [1,2], rules: {2 => [1, 5]}},
-#             {interval: [1,2], rules: {2 => [1, 5], 4 => [1, 5]}},
-#             {interval: [1,2], rules: {2 => [1], 3 => [3]}},
-#             {interval: [1,2], rules: {2 => [1, 6], 3 => [3, 9]}},
-#           ]
-# }.each do |type, conditions_array|
-#   conditions_array.each do |conditions|
-#     conditions[:interval].each do |interval|
-#       r = RecurrenceRule.create(type: type, interval: interval, rules: conditions[:rules])
-#       puts r.humanize
-#     end
-#   end
-# end
+# Create TransactionPurposes
+{
+  Daily:   [{interval: [1,2,7]}],
+  Weekly:  [ # 0 = Sunday, 1 = Monday, ....., 6 = Saturday
+             {interval: [1,3], rules: [1]},
+             {interval: [1,3], rules: [1, 3]},
+             {interval: [1,3], rules: [1, 3, 4]},
+             {interval: [1,3], rules: [1, 2, 3, 4, 5]},
+             {interval: [1,3], rules: [0, 6]}
+           ],
+  Monthly: [
+            {interval: [1,2], rules: [1]},
+            {interval: [1,2], rules: [3]},
+            {interval: [1,2], rules: [-1]},
+            {interval: [1,2], rules: [3, 9]},
+            {interval: [1,2], rules: [3, 9, 10]},
+            {interval: [1,2], rules: [3, 9, -1]},
+            # {day_number => [week_numbers]}
+            {interval: [1,2], rules: {5 => [2]}},
+            {interval: [1,2], rules: {5 => [-1]}},
+            {interval: [1,2], rules: {5 => [2, 4]}},
+            {interval: [1,2], rules: {5 => [1, 2, 4]}},
+            {interval: [1,2], rules: {5 => [2], 4 => [2]}},
+            {interval: [1,2], rules: {5 => [-1], 4 => [-1]}},
+            {interval: [1,2], rules: {5 => [2, 4], 4 => [2, 4]}},
+            {interval: [1,2], rules: {1 => [2], 2 => [3]}},
+            {interval: [1,2], rules: {0 => [2], 6 => [2]}},
+            {interval: [1,2], rules: {0 => [-1], 6 => [-1]}},
+            {interval: [1,2], rules: {0 => [2,4], 6 => [2,4]}},
+            {interval: [3,6], rules: [15]}
+           ],
+  Yearly: [ # {month_number => [day_numbers]}
+            {interval: [1,2], rules: {2 => [1]}},
+            {interval: [1,2], rules: {2 => [1, 5]}},
+            {interval: [1,2], rules: {2 => [1, 5], 4 => [1, 5]}},
+            {interval: [1,2], rules: {2 => [1], 3 => [3]}},
+            {interval: [1,2], rules: {2 => [1, 6], 3 => [3, 9]}},
+          ]
+}.each do |type, conditions_array|
+  conditions_array.each do |conditions|
+    conditions[:interval].each do |interval|
+      r = RecurrenceRule.new(type: type, interval: interval, rules: conditions[:rules])
+      params =  {
+        "name"=> r.humanize,
+        "sub_category_id"=>"1",
+        "recurrence_rule_attributes"=>{
+          "type"=> type,
+          "interval"=> interval,
+          "rules"=> conditions[:rules]
+        }
+      }
+
+      duration_params = {"recurrence_rule_attributes" => {
+        "starts_on(3i)"=>"18", "starts_on(2i)"=>"2", "starts_on(1i)"=>"2018", "starts_on(4i)"=>"17", "starts_on(5i)"=>"26",
+        "ends_on(3i)"=>"25", "ends_on(2i)"=>"3", "ends_on(1i)"=>"2018", "ends_on(4i)"=>"17", "ends_on(5i)"=>"26"
+      }}
+      tp = TransactionPurpose.create(params.deep_merge(duration_params))
+      puts tp.humanize
+      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      puts tp.humanize
+      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      puts tp.humanize
+
+      duration_params = {"recurrence_rule_attributes" => {
+        "starts_on(3i)"=>"18", "starts_on(2i)"=>"2", "starts_on(1i)"=>"2018", "starts_on(4i)"=>"17", "starts_on(5i)"=>"26"
+      }}
+      tp = TransactionPurpose.create(params.deep_merge(duration_params))
+      puts tp.humanize
+      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      puts tp.humanize
+      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      puts tp.humanize
+    end
+  end
+end

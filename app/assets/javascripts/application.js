@@ -113,8 +113,13 @@ $(document).on('turbolinks:load', function() {
   });
   // Duration or Count Section: Toggling as per radio selection
   $('.reveal-content').on('change', 'input[name=duration_or_count]', function(e) {
-    $('#duration, #count').toggleClass('hide');
+    $('#duration, #count').addClass('hide');
     $('#duration, #count').find('select, input').attr('disabled', true);
+    if ($(this).val() == 'duration') {
+      $('#duration').removeClass('hide');
+    } else if ($(this).val() == 'count') {
+      $('#count').removeClass('hide');
+    }
     $('#' + $(this).val()).find('select, input').attr('disabled', false);
   });
   // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts

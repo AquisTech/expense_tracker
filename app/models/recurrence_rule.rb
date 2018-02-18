@@ -101,8 +101,11 @@ class RecurrenceRule < ApplicationRecord
     else
       return 'Invalid Rule. TODO: Support custom rule'
     end
-    msg += " from #{starts_on} to #{ends_on}" if duration_bound?
     msg += ' ' + ({ 1 => 'once', 2 => 'twice', 3 => 'thrice' }[count] || "#{count} times") if count_bound?
+    if duration_bound?
+      msg += " from #{starts_on} "
+      msg += ends_on? ? "to #{ends_on}" : 'onwards'
+    end
     msg
   end
 

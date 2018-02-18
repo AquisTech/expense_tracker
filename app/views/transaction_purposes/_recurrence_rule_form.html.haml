@@ -55,17 +55,21 @@
 
   %fieldset.fieldset
     %legend Limit by
-    = radio_button_tag :duration_or_count, :duration, rr.object.new_record? || rr.object.duration_bound?
-    %label Duration
-    = radio_button_tag :duration_or_count, :count
-    %label Number of occurrences
-    #duration{ class: hide_if(rr.object.persisted? && !rr.object.duration_bound?) }
-      = rr.label :starts_on
-      .input-group
-        = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_starts_on, class: 'input-group-field small-2'
+    = rr.label :starts_on
+    .input-group
+      = rr.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_starts_on, class: 'input-group-field small-2'
+
+    = radio_button_tag :duration_or_count, :forever, rr.object.new_record? || rr.object.duration_bound?
+    %label Repeat forever
+    = radio_button_tag :duration_or_count, :duration, rr.object.persisted? && rr.object.end_date?
+    %label Limit by end date
+    = radio_button_tag :duration_or_count, :count, rr.object.persisted? && rr.object.count_bound?
+    %label Limit by occurrences
+
+    #duration{ class: hide_if(rr.object.new_record? || !rr.object.end_date?) }
       = rr.label :ends_on
       .input-group
-        = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_ends_on, class: 'input-group-field small-2'
+        = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_ends_on, class: 'input-group-field small-2', disabled: rr.object.new_record? || !rr.object.end_date?
 
     #count{ class: hide_if(rr.object.new_record? || !rr.object.count_bound?) }
       = rr.label :count

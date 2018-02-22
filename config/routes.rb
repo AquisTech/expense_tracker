@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   resources :occurrences
   resources :recurrence_rules
   resources :payments
@@ -11,5 +12,6 @@ Rails.application.routes.draw do
   resources :sub_categories
   resources :categories
   resources :account_balances
-  root to: 'transaction_purposes#index'
+  resources :home
+  root to: 'home#index'
 end

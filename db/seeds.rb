@@ -96,7 +96,6 @@ end
     conditions[:interval].each do |interval|
       r = RecurrenceRule.new(type: type, interval: interval, rules: conditions[:rules])
       params =  {
-        "name"=> r.humanize,
         "sub_category_id"=>"1",
         "recurrence_rule_attributes"=>{
           "type"=> type,
@@ -109,21 +108,33 @@ end
         "starts_on(3i)"=>"18", "starts_on(2i)"=>"2", "starts_on(1i)"=>"2018", "starts_on(4i)"=>"17", "starts_on(5i)"=>"26",
         "ends_on(3i)"=>"25", "ends_on(2i)"=>"3", "ends_on(1i)"=>"2018", "ends_on(4i)"=>"17", "ends_on(5i)"=>"26"
       }}
-      tp = TransactionPurpose.create(params.deep_merge(duration_params))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
-      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
-      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
 
       duration_params = {"recurrence_rule_attributes" => {
         "starts_on(3i)"=>"18", "starts_on(2i)"=>"2", "starts_on(1i)"=>"2018", "starts_on(4i)"=>"17", "starts_on(5i)"=>"26"
       }}
-      tp = TransactionPurpose.create(params.deep_merge(duration_params))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
-      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 1})))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
-      tp = TransactionPurpose.create(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      tp = TransactionPurpose.new(params.deep_merge(duration_params.deep_merge("recurrence_rule_attributes" => {count: 2})))
+      tp.name = tp.humanize
+      tp.save
       puts tp.humanize
     end
   end

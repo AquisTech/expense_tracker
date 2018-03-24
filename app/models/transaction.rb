@@ -8,4 +8,6 @@ class Transaction < ApplicationRecord
   accepts_nested_attributes_for :payments
 
   # TODO: Add callback for converting amount to paise
+
+  validates :amount, presence: true # TODO: Add gem to handle currency/money related stuff
 end

@@ -10,12 +10,14 @@ class TransactionsController < ApplicationController
     render layout: false
   end
 
+  # TODO: Make this compatible for transcations/form
+  # This action is called from home/index
   def create
     @transaction = Transaction.new(transaction_params)
     if @transaction.save
-      redirect_to transactions_url, notice: 'Transaction was successfully created.'
+      render :success, locals: {tp_id: @transaction.transaction_purpose_id}
     else
-      render :new
+      render :failure, locals: {transaction: @transaction}
     end
   end
 
@@ -23,11 +25,13 @@ class TransactionsController < ApplicationController
     render layout: false
   end
 
+  # TODO: Make this compatible for transcations/form
+  # This action is called from home/index
   def update
     if @transaction.update(transaction_params)
-      redirect_to transactions_url, notice: 'Transaction was successfully updated.'
+      render :success, locals: {tp_id: @transaction.transaction_purpose_id}
     else
-      render :edit
+      render :failure, locals: {transaction: @transaction}
     end
   end
 

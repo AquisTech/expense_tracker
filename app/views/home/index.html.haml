@@ -13,7 +13,7 @@
       %b Action
 %hr
 - @transactions.each do |transaction|
-  = form_with(model: transaction, remote: true) do |f|
+  = form_with(model: transaction, remote: true, class: transaction.transaction_purpose.present? ? "tp#{transaction.transaction_purpose_id}" : 'new_tp') do |f|
     - if transaction.errors.any?
       #error_explanation
         %h2= "#{pluralize(transaction.errors.count, "error")} prohibited this transaction from being saved:"
@@ -25,6 +25,7 @@
         .small-3.cell
           - if transaction.transaction_purpose.present?
             %label= transaction.transaction_purpose.name
+            = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
           - else
             = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :transaction_purpose_id
         .small-2.cell
@@ -39,4 +40,13 @@
         .small-1.cell
           %label
             = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.fields :payments do |p|
+      .grid-container
+        .grid-x.grid-padding-x
+          .small-3.cell
+            = p.amount_field :amount, currency: '&#8377;'
+          .small-3.cell
+            = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last
+          .small-3.cell
+            = p.collection_select :account_id, Account.all, :id, :name
   %hr

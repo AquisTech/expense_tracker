@@ -1,10 +1,12 @@
 class Payment < ApplicationRecord
+
   PAYMENT_MODES = {
     OT: 'Online Transfer',
     DC: 'Debit Card',
     CC: 'Credit Card',
     EC: 'ECS',
     UP: 'UPI',
+    EW: 'E-Wallet',
     CQ: 'Cheque',
     CS: 'Cash'
   }

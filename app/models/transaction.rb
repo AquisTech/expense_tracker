@@ -1,7 +1,11 @@
 class Transaction < ApplicationRecord
-  belongs_to :account
+
   belongs_to :transaction_purpose
-  belongs_to :transfer
+  # belongs_to :transfer # TODO: Make transfer association nullable
+
+  has_many :payments, dependent: :destroy # TODO: Check if destroy is correct or we have to use nullify to maintain history
+
+  accepts_nested_attributes_for :payments
 
   # TODO: Add callback for converting amount to paise
 end

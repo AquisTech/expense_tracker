@@ -137,4 +137,26 @@ $(document).on('turbolinks:load', function() {
       }
     });
   });
+  //
+  // $('body').on('click', '.delete-fragment', function(e) {
+  //   if($(this).parents('.fieldset').find('.input-group').length == 1) {
+  //     alert('Cannot remove all the fields');
+  //   } else {
+  //     $(this).parents('.input-group').remove();
+  //   }
+  // });
+  //
+  $('body').on('click', '.clone-fragment', function(e) {
+    var blueprint = $(this).parents('.clonable-fragment');
+    var clonedFragment = blueprint.clone();
+    clonedFragment.find('input, select').val(null);
+    $.each(clonedFragment.find('input, select'), function() {
+      var name = $(this).attr('name');
+      name = name.replace(/[0-9]/, function(x) {return parseInt(x)+1}) // convert to int then add
+      $(this).attr('name', name);
+    })
+    clonedFragment.find('input:first').focus();
+    blueprint.after(clonedFragment);
+    $(this).remove();
+  });
 });

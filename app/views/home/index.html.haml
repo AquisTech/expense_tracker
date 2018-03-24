@@ -41,7 +41,7 @@
           %label
             = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
     = f.fields :payments do |p|
-      .grid-container
+      .grid-container.clonable-fragment
         .grid-x.grid-padding-x
           .small-3.cell
             = p.amount_field :amount, currency: '&#8377;'
@@ -49,4 +49,8 @@
             = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last
           .small-3.cell
             = p.collection_select :account_id, Account.all, :id, :name
+          .small-1.cell
+            = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert'
+          .small-2.cell
+            = link_to 'Add another payment', 'javascript:void(0)', class: 'clone-fragment button primary'
   %hr

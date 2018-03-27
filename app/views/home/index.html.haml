@@ -50,7 +50,9 @@
           .small-3.cell
             = p.collection_select :account_id, Account.all, :id, :name
           .small-1.cell
+            = p.hidden_field :_destroy
             = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert'
           .small-2.cell
-            = link_to 'Add another payment', 'javascript:void(0)', class: 'clone-fragment button primary'
+            - if f.object.payments.last == p.object
+              = link_to 'Add another payment', 'javascript:void(0)', class: 'clone-fragment button primary'
   %hr

@@ -5,7 +5,7 @@ class Transaction < ApplicationRecord
 
   has_many :payments, dependent: :destroy, inverse_of: :transaxion # TODO: Check if destroy is correct or we have to use nullify to maintain history
 
-  accepts_nested_attributes_for :payments
+  accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: :all_blank
 
   # TODO: Add callback for converting amount to paise
 

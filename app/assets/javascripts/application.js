@@ -137,26 +137,32 @@ $(document).on('turbolinks:load', function() {
       }
     });
   });
-  //
-  // $('body').on('click', '.delete-fragment', function(e) {
-  //   if($(this).parents('.fieldset').find('.input-group').length == 1) {
-  //     alert('Cannot remove all the fields');
-  //   } else {
-  //     $(this).parents('.input-group').remove();
-  //   }
-  // });
-  //
+  // Clone fragment
   $('body').on('click', '.clone-fragment', function(e) {
     var blueprint = $(this).parents('.clonable-fragment');
     var clonedFragment = blueprint.clone();
     clonedFragment.find('input, select').val(null);
     $.each(clonedFragment.find('input, select'), function() {
       var name = $(this).attr('name');
-      name = name.replace(/[0-9]/, function(x) {return parseInt(x)+1}) // convert to int then add
+      name = name.replace(/[0-9]/, function(i) { return parseInt(i) + 1 })
       $(this).attr('name', name);
     })
     clonedFragment.find('input:first').focus();
     blueprint.after(clonedFragment);
     $(this).remove();
   });
+  // Remove clonable fragment
+  $('body').on('click', '.delete-fragment', function(e) {
+    if($(this).parents('.clonable-fragment').length == 2) { // TODO: Improve condition
+      alert('Cannot remove all the fragments');
+    } else {
+      $(this).parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
+      deleteOrRestore($(this).parents('.clonable-fragment'));
+    }
+  });
+  // Delete or restore
+  function deleteOrRestore(element) {
+    var target = element.find('input[name$="[_destroy]"]');
+    target.val(!$.parseJSON(target.val()));
+  }
 });

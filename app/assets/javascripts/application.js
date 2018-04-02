@@ -156,13 +156,20 @@ $(document).on('turbolinks:load', function() {
     if($(this).parents('.clonable-fragment').length == 2) { // TODO: Improve condition
       alert('Cannot remove all the fragments');
     } else {
-      $(this).parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
-      deleteOrRestore($(this).parents('.clonable-fragment'));
+      deleteOrRestore($(this));
     }
   });
   // Delete or restore
   function deleteOrRestore(element) {
-    var target = element.find('input[name$="[_destroy]"]');
-    target.val(!$.parseJSON(target.val()));
+    var target = element.parents('.clonable-fragment:first').find('input[name$="[_destroy]"]');
+    if(target.val() == 'true') {
+      target.val(false)
+      element.removeClass('warning').addClass('alert').html('&times;')
+      element.parents('.clonable-fragment:first').find('input, select').css({'border-color': '#cacaca', 'background': 'white', 'opacity': 1, 'color': '#0a0a0a'}); // TODO: add note as 'Marked for destruction'
+    } else {
+      target.val(true)
+      element.removeClass('alert').addClass('warning').html('&#x27F3;')
+      element.parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
+    }
   }
 });

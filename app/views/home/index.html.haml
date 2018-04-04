@@ -40,8 +40,9 @@
         .small-1.cell
           %label
             = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
+        - clonable_fragment_class = transaction.new_record? ? "new_transaction_for_#{transaction.transaction_purpose_id}" : "transaction_#{transaction.id}"
     = f.fields :payments do |p|
-      .grid-container.clonable-fragment
+      .grid-container.clonable-fragment{ class: clonable_fragment_class }
         .grid-x.grid-padding-x
           .small-3.cell
             = p.amount_field :amount, currency: '&#8377;'
@@ -51,7 +52,7 @@
             = p.collection_select :account_id, Account.all, :id, :name
           .small-1.cell
             = p.hidden_field :_destroy
-            = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert'
+            = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class }
           .small-2.cell
             - if f.object.payments.last == p.object
               = link_to 'Add another payment', 'javascript:void(0)', class: 'clone-fragment button primary'

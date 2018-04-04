@@ -153,8 +153,8 @@ $(document).on('turbolinks:load', function() {
   });
   // Remove clonable fragment
   $('body').on('click', '.delete-fragment', function(e) {
-    if($(this).parents('.clonable-fragment').length == 2) { // TODO: Improve condition
-      alert('Cannot remove all the fragments');
+    if($('.clonable-fragment.' + $(this).data('parent-object')).length == 1) {
+      alert('Cannot remove all the fragments'); // TODO: Customize 'fragment' with data-entity
     } else {
       deleteOrRestore($(this));
     }

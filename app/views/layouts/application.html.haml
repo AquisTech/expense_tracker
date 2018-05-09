@@ -19,11 +19,7 @@
       .off-canvas-content{"data-off-canvas-content" => ""}
         = # TODO : Create class and styling for .container and use instead of .row
         .row
-          - flash.each do |key, message|
-            .callout{class: 'success', 'data-closable': 'slide-out-right'}
-              = message
-              %button.close-button{'aria-label': "Dismiss alert", type: :button, data: {close: true}}
-                %span{'aria-hidden': true} &times;
+          = flash_messages
           = yield
           #ajax-reveal.reveal{'data-reveal': true, 'aria-labelledby':"modalTitle", 'aria-hidden': true, role: "dialog"}
             .reveal-content

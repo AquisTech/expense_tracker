@@ -63,14 +63,14 @@ end
              {interval: [1,3], rules: [1, 2, 3, 4, 5]},
              {interval: [1,3], rules: [0, 6]}
            ],
-  Monthly: [
+  Monthly: [# rules: [day_numbers]
             {interval: [1,2], rules: [1]},
             {interval: [1,2], rules: [3]},
             {interval: [1,2], rules: [-1]},
             {interval: [1,2], rules: [3, 9]},
             {interval: [1,2], rules: [3, 9, 10]},
             {interval: [1,2], rules: [3, 9, -1]},
-            # {day_number => [week_numbers]}
+            # rules: {day_of_week_number => [week_numbers]}
             {interval: [1,2], rules: {5 => [2]}},
             {interval: [1,2], rules: {5 => [-1]}},
             {interval: [1,2], rules: {5 => [2, 4]}},
@@ -84,17 +84,24 @@ end
             {interval: [1,2], rules: {0 => [2,4], 6 => [2,4]}},
             {interval: [3,6], rules: [15]}
            ],
-  Yearly: [ # {month_number => [day_numbers]}
+  Yearly: [ # rules: {month_number => [day_numbers]}
             {interval: [1,2], rules: {2 => [1]}},
             {interval: [1,2], rules: {2 => [1, 5]}},
             {interval: [1,2], rules: {2 => [1, 5], 4 => [1, 5]}},
             {interval: [1,2], rules: {2 => [1], 3 => [3]}},
             {interval: [1,2], rules: {2 => [1, 6], 3 => [3, 9]}},
+            # rules: {month_number => {day_of_week_number => [week_numbers]}}
+            {interval: [1,2], rules: {2 => {4 => [1]}}},
+            {interval: [1,2], rules: {2 => {4 => [1, 3]}}},
+            {interval: [1,2], rules: {2 => {4 => [1, 3]}, 7 => {4 => [1, 3]}}},
+            {interval: [1,2], rules: {2 => {5 => [2, 3]}, 7 => {4 => [1, 3]}}},
+            {interval: [1,2], rules: {2 => {5 => [1, -1]}, 7 => {4 => [2, -1]}}},
+            {interval: [1,2], rules: {2 => {0 => [2, -1]}, 7 => {6 => [2, -1]}}},
+            {interval: [1,2], rules: {2 => {0 => [2, -1], 6 => [2, -1]}, 7 => {0 => [2, -1], 6 => [2, -1]}}},
           ]
 }.each do |type, conditions_array|
   conditions_array.each do |conditions|
     conditions[:interval].each do |interval|
-      r = RecurrenceRule.new(type: type, interval: interval, rules: conditions[:rules])
       params =  {
         "sub_category_id"=>"1",
         "recurrence_rule_attributes"=>{

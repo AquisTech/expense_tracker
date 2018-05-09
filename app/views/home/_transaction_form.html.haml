@@ -39,7 +39,7 @@
           = p.collection_select :account_id, Account.all, :id, :name
         .small-1.cell
           = p.hidden_field :_destroy
-          = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class }
+          = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' }
         .small-2.cell
           - if f.object.payments.last == p.object
             = link_to 'Add another payment', 'javascript:void(0)', class: 'clone-fragment button primary'

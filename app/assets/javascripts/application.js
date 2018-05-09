@@ -154,7 +154,7 @@ $(document).on('turbolinks:load', function() {
   // Remove clonable fragment
   $('body').on('click', '.delete-fragment', function(e) {
     if($('.clonable-fragment.' + $(this).data('parent-object')).length == 1) {
-      alert('Cannot remove all the fragments'); // TODO: Customize 'fragment' with data-entity
+      alert('Cannot remove all the ' + $(this).data('entity') + 's');
     } else {
       deleteOrRestore($(this));
     }

@@ -22,9 +22,16 @@ class RecurrenceRule < ApplicationRecord
         rules.each { |day_of_month| create_occurrence(day_of_month) }
       end
     when 'Yearly'
-      # TODO: Weekday of the month case missing
-      rules.each do |month_number, days_of_month|
-        days_of_month.each { |day_of_month| create_occurrence(day_of_month, months: month_number)}
+      if rules.values.first.is_a?(Hash)
+        rules.each do |month_number, week_rules|
+          week_rules.each do |day_of_week, week_numbers|
+            week_numbers.each { |week_number| create_occurrence(day_of_week, weeks: week_number, months: month_number) }
+          end
+        end
+      else
+        rules.each do |month_number, days_of_month|
+          days_of_month.each { |day_of_month| create_occurrence(day_of_month, months: month_number)}
+        end
       end
     else
       # TODO: Add custom rule

@@ -1,6 +1,5 @@
-%hr
 .grid-container
-  .grid-x.grid-padding-x
+  .grid-x.grid-padding-x.callout.primary
     .small-3.cell
       %b Name
     .small-2.cell
@@ -11,7 +10,6 @@
       %b Transfer
     .small-1.cell
       %b Action
-%hr
 - @transactions.each do |transaction|
   = render 'transaction_form', transaction: transaction
   %hr

@@ -1,2 +1,6 @@
-alert('Success!')
-$('<%= ".tp#{tp_id}" %>').addClass('success');
+<%- if params[:action] == 'create' %>
+  $('<%= ".#{params[:transaction][:unique_id]}" %>').before("<%=j render 'home/transaction_form', transaction: new_transaction %>");
+  $('<%= ".#{params[:transaction][:unique_id]}" %>').before('<hr>');
+<%- end %>
+$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages_with_grid_container %>');
+$('<%= ".#{params[:transaction][:unique_id]}" %>').replaceWith("<%=j render 'home/transaction_form', transaction: transaction %>");

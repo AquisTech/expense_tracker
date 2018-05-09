@@ -1,1 +1,1 @@
-alert('<%=j transaction.errors.full_messages.to_sentence %>');
+$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages_with_grid_container %>');

@@ -14,7 +14,7 @@
           %label= transaction.transaction_purpose.name
           = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
         - else
-          = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :transaction_purpose_id
+          = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name
       .small-2.cell
         %label
           = f.amount_field :amount, id: :transaction_amount, currency: '&#8377;'

@@ -1,6 +1,6 @@
-<%- if params[:action] == 'create' %>
+if($('<%= ".#{params[:transaction][:unique_id]}" %>' + ' select[name="transaction[transaction_purpose_id]"]').length) {
   $('<%= ".#{params[:transaction][:unique_id]}" %>').before("<%=j render 'home/transaction_form', transaction: new_transaction %>");
   $('<%= ".#{params[:transaction][:unique_id]}" %>').before('<hr>');
-<%- end %>
+}
 $('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages_with_grid_container %>');
 $('<%= ".#{params[:transaction][:unique_id]}" %>').replaceWith("<%=j render 'home/transaction_form', transaction: transaction %>");

@@ -17,7 +17,7 @@
           = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name
       .small-2.cell
         %label
-          = f.amount_field :amount, id: :transaction_amount, currency: '&#8377;'
+          = f.amount_field :amount, id: :transaction_amount, currency: '&#8377;', value: transaction.transaction_purpose.try(:estimate)
       .small-4.cell
         %label
           = f.text_field :description, id: :transaction_description

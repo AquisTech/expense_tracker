@@ -104,6 +104,7 @@ end
     conditions[:interval].each do |interval|
       params =  {
         "sub_category_id"=>"1",
+        'estimate' => 10,
         "recurrence_rule_attributes"=>{
           "type"=> type,
           "interval"=> interval,

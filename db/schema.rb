@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2017_05_06_093959) do
 
   create_table "transaction_purposes", force: :cascade do |t|
     t.string "name"
+    t.integer "estimate", default: 0
     t.integer "sub_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

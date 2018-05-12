@@ -186,4 +186,21 @@ $(document).on('turbolinks:load', function() {
   $('body').on('change', '#transaction_transaction_purpose_id', function(e) {
     getEstimateForTransactionPurpose();
   });
+  // Show/hide scroll to top button
+  $(document).on('scroll', function(){
+    if ($(window).scrollTop() > 100) {
+      $('.scroll-to-top').addClass('show');
+    } else {
+      $('.scroll-to-top').removeClass('show');
+    }
+  });
+  // Scroll to top on click
+  function scrollToTop() {
+    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    element = $('body');
+    offset = element.offset();
+    offsetTop = offset.top;
+    $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+  }
+  $('.scroll-to-top').on('click', scrollToTop);
 });

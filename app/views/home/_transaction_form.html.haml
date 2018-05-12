@@ -1,11 +1,5 @@
 - unique_id = SecureRandom.uuid
 = form_with(model: transaction, remote: true, class: unique_id) do |f|
-  - if transaction.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(transaction.errors.count, "error")} prohibited this transaction from being saved:"
-      %ul
-        - transaction.errors.full_messages.each do |message|
-          %li= message
   .grid-container
     .grid-x.grid-padding-x
       .small-3.cell

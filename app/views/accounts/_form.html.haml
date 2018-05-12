@@ -1,9 +1,9 @@
-= form_with(model: account, remote: true) do |f|
-  - if account.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(account.errors.count, "error")} prohibited this account from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this account from being saved:"
       %ul
-        - account.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :name
@@ -23,7 +23,7 @@
       = f.collection_check_boxes :payment_modes, Payment::PAYMENT_MODES, :first, :last, { checked: f.object.payment_modes } do |c|
         %div{style: 'display: block'}
           = c.label { c.check_box  + c.text }
-  - if account.persisted?
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -33,5 +33,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit account.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', accounts_path, class: 'button warning'

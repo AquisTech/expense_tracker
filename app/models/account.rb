@@ -19,7 +19,7 @@ class Account < ApplicationRecord
   validates :description, presence: true
   validates :details, presence: true
   validates :account_type, presence: true, inclusion: { in: ACCOUNT_TYPES.keys.map(&:to_s) }
-  validates :payment_modes, presence: true, inclusion: { in: Payment::PAYMENT_MODES.keys.map(&:to_s) }
+  validates :payment_modes, presence: true #, inclusion: { in: Payment::PAYMENT_MODES.keys.map(&:to_s) } TODO: Validate serialized attributes
 
   def account_type_name
     ACCOUNT_TYPES[account_type.to_sym]

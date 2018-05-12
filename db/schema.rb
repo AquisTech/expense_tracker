@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2017_05_06_093959) do
     t.string "description"
     t.string "details"
     t.string "account_type"
+    t.text "payment_modes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

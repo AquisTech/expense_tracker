@@ -9,6 +9,7 @@
       %th Description
       %th Details
       %th Account type
+      %th Allowed payment modes
       %th Created at
       %th Updated at
       %th Actions
@@ -21,6 +22,7 @@
         %td= account.description
         %td= account.details
         %td= account.account_type
+        %td= account.payment_modes.join(', ')
         %td= account.created_at
         %td= account.updated_at
         %td

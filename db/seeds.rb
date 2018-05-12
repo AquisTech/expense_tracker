@@ -2,29 +2,30 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 [
-  {name: 'SBI Saving Bank Account', account_type: 'SB'},
-  {name: 'HDFC Saving Bank Account', account_type: 'SB'},
-  {name: 'ICICI Saving Bank Account', account_type: 'SB'},
-  {name: 'StanC Saving Bank Account', account_type: 'SB'},
-  {name: 'HDFC Credit Card Account', account_type: 'CC'},
-  {name: 'CITI Credit Card Account', account_type: 'CC'},
-  {name: 'TATA Croma Credit Card Account', account_type: 'CC'},
-  {name: 'SBI FBB Credit Card Account', account_type: 'CC'},
-  {name: 'PayTM', account_type: 'EW'},
-  {name: 'Mobikwik', account_type: 'EW'},
-  {name: 'OlaMoney', account_type: 'EW'},
-  {name: 'R Wallet', account_type: 'EW'},
-  {name: 'ICICI Pockets', account_type: 'EW'},
-  {name: 'HDFC Payzapp', account_type: 'EW'},
-  {name: 'PhonePe', account_type: 'EW'},
-  {name: 'ATVM Card', account_type: 'SC'},
-  {name: 'ICICI Food Card', account_type: 'SC'},
-  {name: 'Cash', account_type: 'CS'}
+  { name: 'SBI Saving Bank Account', account_type: 'SB', payment_modes: ['OT', 'DC', 'CQ'] },
+  { name: 'HDFC Saving Bank Account', account_type: 'SB', payment_modes: ['OT', 'DC', 'CQ'] },
+  { name: 'ICICI Saving Bank Account', account_type: 'SB', payment_modes: ['OT', 'DC', 'EC', 'UP', 'CQ'] },
+  { name: 'StanC Saving Bank Account', account_type: 'SB', payment_modes: ['OT', 'DC', 'UP', 'CQ'] },
+  { name: 'HDFC Credit Card Account', account_type: 'CC', payment_modes: ['CC'] },
+  { name: 'CITI Credit Card Account', account_type: 'CC', payment_modes: ['CC'] },
+  { name: 'TATA Croma Credit Card Account', account_type: 'CC', payment_modes: ['CC'] },
+  { name: 'SBI FBB Credit Card Account', account_type: 'CC', payment_modes: ['CC'] },
+  { name: 'PayTM', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'Mobikwik', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'OlaMoney', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'R Wallet', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'ICICI Pockets', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'HDFC Payzapp', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'PhonePe', account_type: 'EW', payment_modes: ['EW'] },
+  { name: 'ATVM Card', account_type: 'SC', payment_modes: ['EW'] },
+  { name: 'ICICI Food Card', account_type: 'SC', payment_modes: ['EW'] },
+  { name: 'Cash', account_type: 'CS', payment_modes: ['CS'] }
 ].each do |acc|
   Account.where(
     name: acc[:name], account_type: acc[:account_type],
     description: acc[:description] || acc[:name],
-    details: acc[:details] || acc[:name]
+    details: acc[:details] || acc[:name],
+    payment_modes: acc[:payment_modes]
   ).first_or_create!
 end
 {

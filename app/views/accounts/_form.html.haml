@@ -17,6 +17,12 @@
   .row
     = f.label :account_type
     = f.select :account_type, Account::ACCOUNT_TYPES.map { |code, name| [name, code] }, selected: account.account_type_code, id: :account_account_type
+  .row
+    %fieldset.fieldset
+      %legend Allowed Payment Modes:
+      = f.collection_check_boxes :payment_modes, Payment::PAYMENT_MODES, :first, :last, { checked: f.object.payment_modes } do |c|
+        %div{style: 'display: block'}
+          = c.label { c.check_box  + c.text }
   - if account.persisted?
     .row
       = f.label :created_at

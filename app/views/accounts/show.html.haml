@@ -14,6 +14,9 @@
   %strong Account type:
   = @account.account_type
 .row
+  %strong Allowed payment modes:
+  = @account.payment_modes.map { |pm| Payment::PAYMENT_MODES[pm.to_sym] }.join(', ')
+.row
   %strong Created at:
   = @account.created_at
 .row

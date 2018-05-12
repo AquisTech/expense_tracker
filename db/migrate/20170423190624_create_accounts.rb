@@ -5,6 +5,7 @@ class CreateAccounts < ActiveRecord::Migration[5.2]
       t.string :description
       t.string :details
       t.string :account_type
+      t.text :payment_modes
 
       t.timestamps
     end

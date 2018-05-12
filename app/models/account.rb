@@ -1,4 +1,7 @@
 class Account < ApplicationRecord
+
+  serialize :payment_modes
+
   has_many :account_balances
   has_many :transactions
   has_many :transfers

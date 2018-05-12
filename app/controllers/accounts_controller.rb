@@ -46,6 +46,7 @@ class AccountsController < ApplicationController
     end
 
     def account_params
-      params.require(:account).permit(:name, :description, :details, :account_type)
+      params[:account][:payment_modes] = params[:account][:payment_modes].without('')
+      params.require(:account).permit(:name, :description, :details, :account_type, payment_modes: [])
     end
 end

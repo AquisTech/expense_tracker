@@ -44,11 +44,16 @@ class TransactionPurposesController < ApplicationController
   def display_recurrence_rule_text
     tp = TransactionPurpose.new(transaction_purpose_params)
     begin
-      msg = tp.humanize #rescue 'Please select remaining criteria'
+      msg = tp.humanize
     rescue Exception => e
       msg = "#{e.message} | #{e.backtrace}"
     end
     render json: { msg: msg }, status: :ok
+  end
+
+  def get_estimate
+    tp = TransactionPurpose.find(params[:id])
+    render json: tp.estimate, status: :ok
   end
 
   private

@@ -20,6 +20,7 @@
 $(document).on('turbolinks:load', function() {
   // Initialize Zurb Foundation JS
   $(document).foundation();
+  // getEstimateForTransactionPurpose(); TODO: Make it working on page load/reload
   // Remote modal with AJAX and Reveal
   $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();
@@ -172,4 +173,17 @@ $(document).on('turbolinks:load', function() {
       element.parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
     }
   }
+  // Fetch estimate for transaction purpose
+  function getEstimateForTransactionPurpose() {
+    $.ajax({
+      url: '/transaction_purposes/' + $(this).val() + '/get_estimate',
+      success: function(result) {
+        debugger
+        $('#transaction_transaction_purpose_id').parents('form').find('input[name="transaction[amount]"]').val(result);
+      }
+    });
+  }
+  $('body').on('change', '#transaction_transaction_purpose_id', function(e) {
+    getEstimateForTransactionPurpose();
+  });
 });

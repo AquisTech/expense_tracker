@@ -1,29 +1,28 @@
-= form_with(model: account_balance, remote: true) do |f|
-  - if account_balance.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(account_balance.errors.count, "error")} prohibited this account_balance from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this account_balance from being saved:"
       %ul
-        - account_balance.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :opening_balance
-    = f.number_field :opening_balance, id: :account_balance_opening_balance
+    = f.amount_field :opening_balance, currency: '&#8377;', id: :account_balance_opening_balance
   .row
     = f.label :calculated_closing_balance
-    = f.number_field :calculated_closing_balance, id: :account_balance_calculated_closing_balance
+    = f.amount_field :calculated_closing_balance, currency: '&#8377;', id: :account_balance_calculated_closing_balance
   .row
     = f.label :actual_closing_balance
-    = f.number_field :actual_closing_balance, id: :account_balance_actual_closing_balance
+    = f.amount_field :actual_closing_balance, currency: '&#8377;', id: :account_balance_actual_closing_balance
   .row
-    = f.label :month
-    = f.number_field :month, id: :account_balance_month
-  .row
-    = f.label :year
-    = f.number_field :year, id: :account_balance_year
+    = f.label :month_and_year
+    .input-group
+      = select_month Date.today, prefix: :account_balance, class: 'input-group-field small-2'
+      = select_year Date.today, prefix: :account_balance, class: 'input-group-field small-2'
   .row
     = f.label :account_id
     = f.collection_select :account_id, Account.all, :id, :name, id: :account_balance_account_id
-  - if account_balance.persisted?
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -33,5 +32,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_balance_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit account_balance.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', account_balances_path, class: 'button warning'

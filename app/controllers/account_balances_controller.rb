@@ -15,7 +15,7 @@ class AccountBalancesController < ApplicationController
     if @account_balance.save
       redirect_to account_balances_url, notice: 'Account balance was successfully created.'
     else
-      render :new
+      render_failure(@account_balance)
     end
   end
 
@@ -27,7 +27,7 @@ class AccountBalancesController < ApplicationController
     if @account_balance.update(account_balance_params)
       redirect_to account_balances_url, notice: 'Account balance was successfully updated.'
     else
-      render :edit
+      render_failure(@account_balance)
     end
   end
 

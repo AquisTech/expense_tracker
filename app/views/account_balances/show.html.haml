@@ -12,7 +12,7 @@
   = @account_balance.actual_closing_balance
 .row
   %strong Month:
-  = @account_balance.month
+  = Date::MONTHNAMES[@account_balance.month]
 .row
   %strong Year:
   = @account_balance.year

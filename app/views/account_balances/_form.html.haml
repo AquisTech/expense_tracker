@@ -17,8 +17,8 @@
   .row
     = f.label :month_and_year
     .input-group
-      = select_month Date.today, prefix: :account_balance, class: 'input-group-field small-2'
-      = select_year Date.today, prefix: :account_balance, class: 'input-group-field small-2'
+      = select_month object.month || Date.today, prefix: :account_balance, class: 'input-group-field small-2'
+      = select_year object.year || Date.today, prefix: :account_balance, class: 'input-group-field small-2'
   .row
     = f.label :account_id
     = f.collection_select :account_id, Account.all, :id, :name, id: :account_balance_account_id

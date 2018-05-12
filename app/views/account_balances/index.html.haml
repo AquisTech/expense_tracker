@@ -22,7 +22,7 @@
         %td= account_balance.opening_balance
         %td= account_balance.calculated_closing_balance
         %td= account_balance.actual_closing_balance
-        %td= account_balance.month
+        %td= Date::MONTHNAMES[account_balance.month]
         %td= account_balance.year
         %td= account_balance.account.name
         %td= account_balance.created_at

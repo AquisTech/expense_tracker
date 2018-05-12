@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
     if @account.save
       redirect_to accounts_url, notice: 'Account was successfully created.'
     else
-      render 'shared/failure', locals: { object: @account }
+      render_failure(@account)
     end
   end
 
@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
     if @account.update(account_params)
       redirect_to accounts_url, notice: 'Account was successfully updated.'
     else
-      render 'shared/failure', locals: { object: @account }
+      render_failure(@account)
     end
   end
 

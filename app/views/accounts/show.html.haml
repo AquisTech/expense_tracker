@@ -12,7 +12,7 @@
   = @account.details
 .row
   %strong Account type:
-  = @account.account_type
+  = @account.account_type_name
 .row
   %strong Allowed payment modes:
   = @account.payment_modes.map { |pm| Payment::PAYMENT_MODES[pm.to_sym] }.join(', ')

@@ -15,12 +15,13 @@ class Account < ApplicationRecord
     CS: 'Cash'
   }
 
-  # getter method
-  def account_type
-    ACCOUNT_TYPES[self[:account_type].to_sym]
-  end
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :details, presence: true
+  validates :account_type, presence: true, inclusion: { in: ACCOUNT_TYPES.keys.map(&:to_s) }
+  validates :payment_modes, presence: true, inclusion: { in: Payment::PAYMENT_MODES.keys.map(&:to_s) }
 
-  def account_type_code
-    self[:account_type]
+  def account_type_name
+    ACCOUNT_TYPES[account_type.to_sym]
   end
 end

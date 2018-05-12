@@ -1,7 +1,7 @@
 = form_with(model: occurrence, remote: true) do |f|
   - if occurrence.errors.any?
     #error_explanation
-      %h2= "#{pluralize(occurrence.errors.count, "error")} prohibited this occurrence from being saved:"
+      %p= "#{pluralize(occurrence.errors.count, "error")} prohibited this occurrence from being saved:"
       %ul
         - occurrence.errors.full_messages.each do |message|
           %li= message

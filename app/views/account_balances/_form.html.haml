@@ -1,7 +1,7 @@
 = form_with(model: account_balance, remote: true) do |f|
   - if account_balance.errors.any?
     #error_explanation
-      %h2= "#{pluralize(account_balance.errors.count, "error")} prohibited this account_balance from being saved:"
+      %p= "#{pluralize(account_balance.errors.count, "error")} prohibited this account_balance from being saved:"
       %ul
         - account_balance.errors.full_messages.each do |message|
           %li= message

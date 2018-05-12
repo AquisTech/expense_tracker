@@ -27,11 +27,11 @@
     .row
       = f.label :created_at
       .input-group
-        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_balance_created_at, class: 'input-group-field small-2'
+        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_balance_created_at, class: 'input-group-field small-2', disabled: true
     .row
       = f.label :updated_at
       .input-group
-        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_balance_updated_at, class: 'input-group-field small-2'
+        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_balance_updated_at, class: 'input-group-field small-2', disabled: true
   .row
     = f.submit account_balance.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', account_balances_path, class: 'button warning'

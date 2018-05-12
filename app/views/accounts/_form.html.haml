@@ -13,7 +13,7 @@
     = f.text_field :description, id: :account_description
   .row
     = f.label :details
-    = f.text_field :details, id: :account_details
+    = f.text_area :details, id: :account_details
   .row
     = f.label :account_type
     = f.select :account_type, Account::ACCOUNT_TYPES.map { |code, name| [name, code] }, selected: account.account_type_code, id: :account_account_type
@@ -27,11 +27,11 @@
     .row
       = f.label :created_at
       .input-group
-        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_created_at, class: 'input-group-field small-2'
+        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_created_at, class: 'input-group-field small-2', disabled: true
     .row
       = f.label :updated_at
       .input-group
-        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_updated_at, class: 'input-group-field small-2'
+        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :account_updated_at, class: 'input-group-field small-2', disabled: true
   .row
     = f.submit account.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', accounts_path, class: 'button warning'

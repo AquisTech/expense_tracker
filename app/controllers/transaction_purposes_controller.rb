@@ -72,6 +72,6 @@ class TransactionPurposesController < ApplicationController
       rule = rule.without('') if rule.present? && rule.include?('')
       remove_blanks(rule) unless rule.is_a?(Array)
       params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rule || []
-      params.require(:transaction_purpose).permit(:name, :sub_category_id, recurrence_rule_attributes: {} )
+      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, recurrence_rule_attributes: {} )
     end
 end

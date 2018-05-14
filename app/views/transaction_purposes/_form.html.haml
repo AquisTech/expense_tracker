@@ -11,6 +11,9 @@
   .row
     = f.label :sub_category_id
     = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
+  .row
+    = f.label :estimate
+    = f.amount_field :estimate, id: :payment_amount, currency: '&#8377;'
   .row.recurrence_rule_form
     = render 'recurrence_rule_form', f: f
   - if transaction_purpose.persisted?

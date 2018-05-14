@@ -12,8 +12,15 @@ class Payment < ApplicationRecord
   }
 
   belongs_to :transaxion, class_name: 'Transaction', inverse_of: :payments # Workaround for error "You tried to define an association named transaction on the model Payment, but this will conflict with a method transaction already defined by Active Record. Please choose a different association name."
+  # TODO: Change `Transaxion` must exists message appropriately
+  belongs_to :account
 
   # TODO: Add callback for converting amount to paise
 
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 } # TODO: Add gem to handle currency/money related stuff
+  validates :payment_mode, presence: true, inclusion: { in: PAYMENT_MODES.keys.map(&:to_s) }
+  validates :payment_mode, inclusion: {
+                             in: proc { |p| p.account.payment_modes },
+                             message: proc { |p| "is invalid for selected account. Supported payment modes are #{p.account.payment_modes.map { |pm| "'#{PAYMENT_MODES[pm.to_sym]}'" }.to_sentence }" }
+                           }
 end

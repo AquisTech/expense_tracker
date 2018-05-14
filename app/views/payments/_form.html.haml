@@ -1,23 +1,23 @@
-= form_with(model: payment, remote: true) do |f|
-  - if payment.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(payment.errors.count, "error")} prohibited this payment from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this payment from being saved:"
       %ul
-        - payment.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
+  .row
+    = f.label :transaction_id
+    = f.collection_select :transaction_id, Transaction.all, :id, :description, id: :payment_transaction_id
   .row
     = f.label :amount
     = f.amount_field :amount, id: :payment_amount, currency: '&#8377;'
   .row
-    = f.label :payment_mode
-    = f.text_field :payment_mode, id: :payment_payment_mode
-  .row
-    = f.label :transaction_id
-    = f.collection_select :transaction_id, Transaction.all, :id, :name, id: :payment_transaction_id
-  .row
     = f.label :account_id
     = f.collection_select :account_id, Account.all, :id, :name, id: :payment_account_id
-  - if payment.persisted?
+  .row
+    = f.label :payment_mode
+    = f.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, id: :payment_payment_mode
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -27,5 +27,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :payment_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit payment.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', payments_path, class: 'button warning'

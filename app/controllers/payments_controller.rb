@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
     if @payment.save
       redirect_to payments_url, notice: 'Payment was successfully created.'
     else
-      render :new
+      render_failure(@payment)
     end
   end
 
@@ -27,7 +27,7 @@ class PaymentsController < ApplicationController
     if @payment.update(payment_params)
       redirect_to payments_url, notice: 'Payment was successfully updated.'
     else
-      render :edit
+      render_failure(@payment)
     end
   end
 

@@ -2,17 +2,17 @@
   %strong Id:
   = @payment.id
 .row
+  %strong Transaction:
+  = @payment.transaction.description
+.row
   %strong Amount:
   = @payment.amount
 .row
-  %strong Payment mode:
-  = @payment.payment_mode
-.row
-  %strong Transaction:
-  = @payment.transaction.name
-.row
   %strong Account:
   = @payment.account.name
+.row
+  %strong Payment mode:
+  = @payment.payment_mode
 .row
   %strong Created at:
   = @payment.created_at

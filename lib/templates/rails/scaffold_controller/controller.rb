@@ -20,7 +20,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     if @<%= orm_instance.save %>
       redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully created.'" %>
     else
-      render :new
+      render_failure(@<%= singular_table_name %>)
     end
   end
 
@@ -32,7 +32,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     if @<%= orm_instance.update("#{singular_table_name}_params") %>
       redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully updated.'" %>
     else
-      render :edit
+      render_failure(@<%= singular_table_name %>)
     end
   end
 

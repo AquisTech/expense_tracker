@@ -1,9 +1,9 @@
-= form_with(model: <%= singular_table_name %>, remote: true) do |f|
-  - if <%= singular_table_name %>.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this <%= singular_table_name.titleize %> from being saved:"
       %ul
-        - <%= singular_table_name %>.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
 <%- attributes = singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') %><% attributes.values.each do |attribute| -%>
   .row
@@ -28,7 +28,7 @@
     <%- end -%>
   <%- end -%>
 <%- end -%>
-  - if <%= singular_table_name %>.persisted?
+  - if object.persisted?
   <%- ['created_at', 'updated_at'].each do |attribute| -%>
     .row
       = f.label :<%= attribute %>
@@ -36,5 +36,5 @@
         = f.datetime_select :<%= attribute %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute) %>, class: 'input-group-field small-2'
   <%- end -%>
   .row
-    = f.submit <%= singular_table_name %>.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', <%= index_helper %>_path, class: 'button warning'

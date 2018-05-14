@@ -1,9 +1,9 @@
-= form_with(model: sub_category, remote: true) do |f|
-  - if sub_category.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(sub_category.errors.count, "error")} prohibited this sub_category from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this sub_category from being saved:"
       %ul
-        - sub_category.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :name
@@ -11,7 +11,7 @@
   .row
     = f.label :category_id
     = f.collection_select :category_id, Category.all, :id, :name, id: :sub_category_category_id
-  - if sub_category.persisted?
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -21,5 +21,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :sub_category_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit sub_category.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', sub_categories_path, class: 'button warning'

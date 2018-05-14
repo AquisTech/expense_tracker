@@ -15,7 +15,7 @@ class SubCategoriesController < ApplicationController
     if @sub_category.save
       redirect_to sub_categories_url, notice: 'Sub category was successfully created.'
     else
-      render :new
+      render_failure(@sub_category)
     end
   end
 
@@ -27,7 +27,7 @@ class SubCategoriesController < ApplicationController
     if @sub_category.update(sub_category_params)
       redirect_to sub_categories_url, notice: 'Sub category was successfully updated.'
     else
-      render :edit
+      render_failure(@sub_category)
     end
   end
 

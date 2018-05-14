@@ -1,9 +1,9 @@
-= form_with(model: transaction_purpose, remote: true) do |f|
-  - if transaction_purpose.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(transaction_purpose.errors.count, "error")} prohibited this transaction_purpose from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this transaction_purpose from being saved:"
       %ul
-        - transaction_purpose.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :name
@@ -13,10 +13,10 @@
     = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
   .row
     = f.label :estimate
-    = f.amount_field :estimate, id: :payment_amount, currency: '&#8377;'
+    = f.amount_field :estimate, id: :transaction_purpose_estimate, currency: '&#8377;'
   .row.recurrence_rule_form
     = render 'recurrence_rule_form', f: f
-  - if transaction_purpose.persisted?
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -26,5 +26,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_purpose_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit transaction_purpose.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', transaction_purposes_path, class: 'button warning'

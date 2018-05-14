@@ -6,6 +6,11 @@ class TransactionPurpose < ApplicationRecord
 
   accepts_nested_attributes_for :recurrence_rule
 
+  validates :name, presence: true
+  # TODO: Add callback for converting estimate to paise
+  # TODO: Add gem to handle currency/money related stuff
+  validates :estimate, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
   def humanize
     recurrence_rule.humanize
   end

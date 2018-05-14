@@ -16,7 +16,7 @@ class TransactionPurposesController < ApplicationController
     if @transaction_purpose.save
       redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully created.'
     else
-      render :new
+      render_failure(@transaction_purpose)
     end
   end
 
@@ -28,7 +28,7 @@ class TransactionPurposesController < ApplicationController
     if @transaction_purpose.update(transaction_purpose_params)
       redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully updated.'
     else
-      render :edit
+      render_failure(@transaction_purpose)
     end
   end
 

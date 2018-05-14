@@ -1,25 +1,25 @@
-= form_with(model: occurrence, remote: true) do |f|
-  - if occurrence.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(occurrence.errors.count, "error")} prohibited this occurrence from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this occurrence from being saved:"
       %ul
-        - occurrence.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :recurrence_type
-    = f.text_field :recurrence_type, id: :occurrence_recurrence_type
+    = f.select :recurrence_type, RecurrenceRule::TYPES, id: :occurrence_recurrence_type
   .row
     = f.label :interval
-    = f.number_field :interval, id: :occurrence_interval
+    = f.number_field :interval, min: 1, id: :occurrence_interval
   .row
     = f.label :days
-    = f.number_field :days, id: :occurrence_days
+    = f.number_field :days, min: -1, id: :occurrence_days
   .row
     = f.label :weeks
-    = f.number_field :weeks, id: :occurrence_weeks
+    = f.select :weeks, [[nil, nil], [1, 1], [2, 2], [3, 3], [4, 4], ['Last', -1]], id: :occurrence_weeks
   .row
     = f.label :months
-    = f.number_field :months, id: :occurrence_months
+    = select_month object.new_record? ? Date.today : object.months, prefix: :occurrence, prompt: 'None'
   .row
     = f.label :starts_on
     .input-group
@@ -27,14 +27,14 @@
   .row
     = f.label :ends_on
     .input-group
-      = f.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :occurrence_ends_on, class: 'input-group-field small-2'
+      = f.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / ', include_blank: true}, id: :occurrence_ends_on, class: 'input-group-field small-2'
   .row
     = f.label :count
     = f.number_field :count, id: :occurrence_count
   .row
     = f.label :recurrence_rule_id
-    = f.collection_select :recurrence_rule_id, RecurrenceRule.all, :id, :name, id: :occurrence_recurrence_rule_id
-  - if occurrence.persisted?
+    = f.collection_select :recurrence_rule_id, RecurrenceRule.all, :id, :humanize, id: :occurrence_recurrence_rule_id
+  - if object.persisted?
     .row
       = f.label :created_at
       .input-group
@@ -44,5 +44,5 @@
       .input-group
         = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :occurrence_updated_at, class: 'input-group-field small-2', disabled: true
   .row
-    = f.submit occurrence.new_record? ? 'Create' : 'Update', class: 'button success'
+    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', occurrences_path, class: 'button warning'

@@ -15,7 +15,7 @@ class OccurrencesController < ApplicationController
     if @occurrence.save
       redirect_to occurrences_url, notice: 'Occurrence was successfully created.'
     else
-      render :new
+      render_failure(@occurrence)
     end
   end
 
@@ -27,7 +27,7 @@ class OccurrencesController < ApplicationController
     if @occurrence.update(occurrence_params)
       redirect_to occurrences_url, notice: 'Occurrence was successfully updated.'
     else
-      render :edit
+      render_failure(@occurrence)
     end
   end
 

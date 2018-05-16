@@ -18,4 +18,4 @@
   = @transaction_purpose.updated_at
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_transaction_purpose_path(@transaction_purpose)}
-  = link_to 'Back', transaction_purposes_path, class: 'button warning'
+  = close_reveal_button

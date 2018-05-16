@@ -27,4 +27,4 @@
   = @account_balance.updated_at
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_account_balance_path(@account_balance)}
-  = link_to 'Back', account_balances_path, class: 'button warning'
+  = close_reveal_button

@@ -8,6 +8,8 @@ class RecurrenceRule < ApplicationRecord
   validates :interval, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :count, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :rules, rules_hash_format: true
+  validates :starts_on, presence: true, timeliness: true
+  validates :ends_on, timeliness: { after: :starts_on }, allow_nil: true
 
   after_create :create_occurrences
 

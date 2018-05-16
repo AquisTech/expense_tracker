@@ -10,4 +10,4 @@
 <% end -%>
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_<%= singular_table_name %>_path(@<%= singular_table_name %>)}
-  = link_to 'Back', <%= index_helper %>_path, class: 'button warning'
+  = close_reveal_button # TODO: Add this method to be copied via generator

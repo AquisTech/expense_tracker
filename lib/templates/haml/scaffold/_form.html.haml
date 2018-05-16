@@ -19,7 +19,7 @@
     <%- if attribute.name =~ /_id$/ -%>
     = f.collection_select :<%= attribute.name %>, <%= attribute.name.classify.gsub(/Id$/, '') %>.all, :id, :name, id: :<%= field_id(attribute.name) %>
     <%- elsif attribute.name =~ /amount/ -%>
-    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>, currency: '&#8377;'
+    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>, currency: '&#8377;' # TODO: Check if `id` passed is correctly used
     <%- elsif attribute.type =~ /datetime|timestamp/ -%>
     .input-group
       = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute.name) %>, class: 'input-group-field small-2'
@@ -28,13 +28,5 @@
     <%- end -%>
   <%- end -%>
 <%- end -%>
-  - if object.persisted?
-  <%- ['created_at', 'updated_at'].each do |attribute| -%>
-    .row
-      = f.label :<%= attribute %>
-      .input-group
-        = f.datetime_select :<%= attribute %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute) %>, class: 'input-group-field small-2'
-  <%- end -%>
-  .row
-    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', <%= index_helper %>_path, class: 'button warning'
+  = render 'shared/timestamps', f: f # TODO: Add this partial to generator
+  = render 'shared/reveal_footer', f: f # TODO: Add this partial to generator

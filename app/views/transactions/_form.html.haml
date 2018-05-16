@@ -17,15 +17,7 @@
   .row
     = f.label :transfer_id
     = f.collection_select :transfer_id, Transfer.all, :id, :name, id: :transaction_transfer_id
-  - if transaction.persisted?
-    .row
-      = f.label :created_at
-      .input-group
-        = f.datetime_select :created_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_created_at, class: 'input-group-field small-2', disabled: true
-    .row
-      = f.label :updated_at
-      .input-group
-        = f.datetime_select :updated_at, {order: [:day, :month, :year], date_separator: ' / '}, id: :transaction_updated_at, class: 'input-group-field small-2', disabled: true
+  = render 'shared/timestamps', f: f
   .row
     = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
     = link_to 'Back', transactions_path, class: 'button warning'

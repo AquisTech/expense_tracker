@@ -37,6 +37,7 @@ gem 'jbuilder', '2.7.0'
 gem 'haml-rails'
 
 gem 'foundation-rails'
+gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
 

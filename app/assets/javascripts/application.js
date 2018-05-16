@@ -24,6 +24,7 @@ $(document).on('turbolinks:load', function() {
   // Remote modal with AJAX and Reveal
   $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();
+    $('.reveal-content').html('<div class="loader"></div>');
     $.ajax({
       url: $(this).data('url'),
       success: function(result) {

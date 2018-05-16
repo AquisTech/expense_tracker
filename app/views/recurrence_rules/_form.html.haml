@@ -21,11 +21,11 @@
   .row
     = f.label :starts_on
     .input-group
-      = f.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / '}, id: :recurrence_rule_starts_on, class: 'input-group-field small-2'
+      = f.datetime_select :starts_on, {order: [:day, :month, :year], date_separator: ' / ', selected: f.object.starts_on || DateTime.now}, id: :recurrence_rule_starts_on, class: 'input-group-field small-2'
   .row
     = f.label :ends_on
     .input-group
-      = f.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / ', include_blank: true}, id: :recurrence_rule_ends_on, class: 'input-group-field small-2'
+      = f.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / ', include_blank: true, selected: f.object.ends_on}, id: :recurrence_rule_ends_on, class: 'input-group-field small-2'
   .row
     = f.label :count
     = f.number_field :count, value: f.object.count || 1, min: 1, id: :recurrence_rule_count

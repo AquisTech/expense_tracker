@@ -24,6 +24,36 @@ class RecurrenceRule < ApplicationRecord
     super
   end
 
+  TYPES.each do |recurrence_type|
+    define_method "#{recurrence_type.downcase}?" do
+      type == recurrence_type
+    end
+  end
+
+  def monthly_days_of_month?
+    monthly? && rules.is_a?(Array)
+  end
+
+  def monthly_days_of_week?
+    monthly? && rules.is_a?(Hash)
+  end
+
+  def yearly_days_of_month?(month)
+    yearly? && rules[month].is_a?(Array)
+  end
+
+  def yearly_days_of_week?(month)
+    yearly? && rules[month].is_a?(Hash)
+  end
+
+  def duration_bound?
+    starts_on?
+  end
+
+  def count_bound?
+    count?
+  end
+
   # TODO: #FutureScope occurrence between starts_on and (ends_on or count whichever comes first)
   def create_occurrences
     case type
@@ -55,36 +85,6 @@ class RecurrenceRule < ApplicationRecord
       # TODO: #FutureScope Add custom rule
       raise 'Invalid Rule. TODO: Support custom rule'
     end
-  end
-
-  TYPES.each do |recurrence_type|
-    define_method "#{recurrence_type.downcase}?" do
-      type == recurrence_type
-    end
-  end
-
-  def monthly_days_of_month?
-    type == 'Monthly' && rules.is_a?(Array)
-  end
-
-  def monthly_days_of_week?
-    type == 'Monthly' && rules.is_a?(Hash)
-  end
-
-  def yearly_days_of_month?(month)
-    type == 'Yearly' && rules[month].is_a?(Array)
-  end
-
-  def yearly_days_of_week?(month)
-    type == 'Yearly' && rules[month].is_a?(Hash)
-  end
-
-  def duration_bound?
-    starts_on?
-  end
-
-  def count_bound?
-    count?
   end
 
   def create_occurrence(days, weeks: nil, months: nil)

@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function() {
     });
   });
   // Recurrence Rule Section: Toggling as per type
-  $('.reveal-content').on('change', 'select#transaction_purpose_recurrence_rule_attributes_type', function(e) {
+  $('.reveal-content').on('change', 'select#recurrence_rule_type', function(e) {
     $('#weekly, #monthly, #yearly').addClass('hide');
     $('#weekly, #monthly, #yearly').find('select, input').prop('disabled', true);
     $('#' + $(this).val().toLowerCase()).removeClass('hide');

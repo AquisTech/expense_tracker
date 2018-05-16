@@ -1,12 +1,29 @@
 class RecurrenceRule < ApplicationRecord
-  serialize :rules
-  has_many :occurrences, dependent: :destroy
-  belongs_to :transaction_purpose
-
-  after_create :create_occurrences
 
   TYPES = ['Daily', 'Weekly', 'Monthly', 'Yearly']
 
+  serialize :rules
+
+  validates :type, presence: true, inclusion: { in: TYPES }
+  validates :interval, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :count, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
+
+  after_create :create_occurrences
+
+  has_many :occurrences, dependent: :destroy
+  belongs_to :transaction_purpose # TODO: Remove transaction_purpose_id from RecurrenceRule
+
+  # Workaround to get forms working with STI child object
+  def self.inherited(child)
+    child.instance_eval do
+      def model_name
+        RecurrenceRule.model_name
+      end
+    end
+    super
+  end
+
+  # TODO: #FutureScope occurrence between starts_on and (ends_on or count whichever comes first)
   def create_occurrences
     case type
     when 'Daily'
@@ -34,7 +51,7 @@ class RecurrenceRule < ApplicationRecord
         end
       end
     else
-      # TODO: Add custom rule
+      # TODO: #FutureScope Add custom rule
       raise 'Invalid Rule. TODO: Support custom rule'
     end
   end

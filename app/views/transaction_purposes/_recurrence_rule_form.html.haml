@@ -2,7 +2,7 @@
   = rr.label :recurrence
   .input-group
     %label.input-group-label Repeat
-    = rr.select :type, RecurrenceRule::TYPES, {}, {class: 'input-group-field'}
+    = rr.select :type, RecurrenceRule::TYPES, {}, {class: 'input-group-field', id: :recurrence_rule_type}
 
   #interval
     .input-group

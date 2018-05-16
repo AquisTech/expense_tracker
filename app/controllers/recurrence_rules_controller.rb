@@ -15,7 +15,7 @@ class RecurrenceRulesController < ApplicationController
     if @recurrence_rule.save
       redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully created.'
     else
-      render :new
+      render_failure(@recurrence_rule)
     end
   end
 
@@ -27,7 +27,7 @@ class RecurrenceRulesController < ApplicationController
     if @recurrence_rule.update(recurrence_rule_params)
       redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully updated.'
     else
-      render :edit
+      render_failure(@recurrence_rule)
     end
   end
 

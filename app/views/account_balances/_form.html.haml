@@ -23,6 +23,4 @@
     = f.label :account_id
     = f.collection_select :account_id, Account.all, :id, :name, id: :account_balance_account_id
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', account_balances_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

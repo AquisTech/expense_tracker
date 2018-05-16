@@ -36,6 +36,4 @@
     = f.label :transaction_purpose_id
     = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :recurrence_rule_transaction_purpose_id
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', recurrence_rules_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

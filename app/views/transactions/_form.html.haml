@@ -18,6 +18,4 @@
     = f.label :transfer_id
     = f.collection_select :transfer_id, Transfer.all, :id, :name, id: :transaction_transfer_id
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit transaction.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', transactions_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

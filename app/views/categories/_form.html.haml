@@ -9,6 +9,4 @@
     = f.label :name
     = f.text_field :name, id: :category_name
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', categories_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

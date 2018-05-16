@@ -18,6 +18,4 @@
     = f.label :payment_mode
     = f.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, id: :payment_payment_mode
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit object.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', payments_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

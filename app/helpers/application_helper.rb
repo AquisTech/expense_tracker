@@ -22,4 +22,8 @@ module ApplicationHelper
       flash_messages
     end
   end
+
+  def close_reveal_button(text = 'Cancel')
+    content_tag(:div, text, class: 'button warning', data: {close: ''})
+  end
 end

@@ -18,6 +18,4 @@
     = f.label :destination_account_id
     = f.collection_select :destination_account_id, DestinationAccount.all, :id, :name, id: :transfer_destination_account_id
   = render 'shared/timestamps', f: f
-  .row
-    = f.submit transfer.new_record? ? 'Create' : 'Update', class: 'button success'
-    = link_to 'Back', transfers_path, class: 'button warning'
+  = render 'shared/reveal_footer', f: f

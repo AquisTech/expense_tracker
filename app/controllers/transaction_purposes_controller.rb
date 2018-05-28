@@ -42,7 +42,9 @@ class TransactionPurposesController < ApplicationController
   end
 
   def display_recurrence_rule_text
-    tp = TransactionPurpose.new(transaction_purpose_params)
+    tp_params = transaction_purpose_params
+    tp_params[:recurrence_rule_attributes].delete(:id)
+    tp = TransactionPurpose.new(tp_params)
     begin
       msg = tp.humanize
     rescue Exception => e
@@ -68,10 +70,9 @@ class TransactionPurposesController < ApplicationController
     end
 
     def transaction_purpose_params
-      rule = params[:transaction_purpose][:recurrence_rule_attributes][:rules].dup
-      rule = rule.without('') if rule.present? && rule.include?('')
-      remove_blanks(rule) unless rule.is_a?(Array)
-      params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rule || []
-      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, recurrence_rule_attributes: {} )
+      rule = params[:transaction_purpose][:recurrence_rule_attributes][:rules] || []
+      rule = rule.is_a?(Array) ? rule.without('') : remove_blanks(rule)
+      params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rule
+      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
     end
 end

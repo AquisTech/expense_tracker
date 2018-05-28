@@ -8,27 +8,38 @@
     .input-group
       %label.input-group-label Every
       = rr.number_field :interval, value: rr.object.interval || 1, min: 1, class: 'input-group-field'
-      %label#interval-unit.input-group-label= "#{rr.object.new_record? ? 'day' : {'Daily': 'day', 'Weekly': 'week', 'Monthly': 'month', 'Yearly': 'year'}[rr.object.type]}(s)"
+      %label#interval-unit.input-group-label= "#{rr.object.new_record? ? 'day' : {Daily: 'day', Weekly: 'week', Monthly: 'month', Yearly: 'year'}[rr.object.type.to_sym]}(s)"
 
-  #weekly{ class: hide_if(rr.object.new_record? || !rr.object.weekly?) }
-    = weekday_select_bar
-    = rr.select :rules, options_for_select(0..6, rr.object.rules), {}, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.weekly? }
+  - disable_weekly_inputs = !rr.object.weekly?
+  #weekly{ class: hide_if(disable_weekly_inputs) }
+    .fieldset
+      = rr.collection_check_boxes :rules, Date::ABBR_DAYNAMES.map.with_index.to_h, :last, :first, { checked: rr.object.rules, include_hidden: false }, disabled: disable_weekly_inputs
 
-  #monthly{ class: hide_if(rr.object.new_record? || !rr.object.monthly?) }
+  #monthly{ class: hide_if(!rr.object.monthly?) }
     .fieldset
       = radio_button_tag :day_of_month_or_week, :day_of_month, rr.object.new_record? || rr.object.monthly_days_of_month?
       %label Day of Month
-      = radio_button_tag :day_of_month_or_week, :day_of_week
+      = radio_button_tag :day_of_month_or_week, :day_of_week, rr.object.monthly_days_of_week?
       %label Day of Week
 
-      .day_of_month.input-group{ class: hide_if(rr.object.persisted? && !rr.object.monthly_days_of_month?) }
-        = day_of_month_selection
-        = rr.select :rules, options_for_select((1..31).to_a << -1, rr.object.rules), {}, { multiple: true, class: :hide, disabled: rr.object.persisted? || !rr.object.monthly_days_of_month? }
-      .day_of_week.input-group{ class: hide_if(rr.object.new_record? || !rr.object.monthly_days_of_week?) }
-        = day_of_week_selection
+      - disable_dom_monthly = rr.object.persisted? ? !rr.object.monthly_days_of_month? : !(rr.object.rules.blank? || rr.object.monthly_days_of_month?)
+      .day_of_month.input-group{ class: hide_if(disable_dom_monthly) }
+        - ((1..31).to_a << -1).in_groups_of(7).map do |days_of_week|
+          .row.columns
+            = rr.collection_check_boxes :rules, days_of_week.compact, :to_s, :to_s, { checked: rr.object.rules, include_hidden: false }, disabled: disable_dom_monthly do |day|
+              %div= day.check_box + (day.value == '-1' ? day.label { 'Last day of month' } : day.label)
+
+      - disable_dow_monthly = !rr.object.monthly_days_of_week?
+      .day_of_week.input-group{ class: hide_if(disable_dow_monthly) }
         = rr.fields :rules do |r|
+          .row.columns
+            - [1, 2, 3, 4, -1].each do |n|
+              %div
+                %label= (n == -1 ? 'Last' : n.ordinalize) + ' Week'
           - (0..6).to_a.each do |day|
-            = r.select day, options_for_select((1..4).to_a << -1, rr.object.rules.try(:[], day)), { include_hidden: false }, { multiple: true, class: :hide, disabled: rr.object.new_record? || !rr.object.monthly_days_of_week? } # TODO: Check in db if using include_hidden in case when all selected elements are deselected
+            .row.columns
+              = r.collection_check_boxes day.to_s, [1, 2, 3, 4, -1], :to_s, :to_s, { checked: !rr.object.rules.is_a?(Array) && rr.object.rules.try(:[], day.to_s), include_hidden: false }, disabled: disable_dow_monthly do |week|
+                %div= week.check_box + week.label { Date::ABBR_DAYNAMES[day] }
 
   #yearly{ class: hide_if(rr.object.new_record? || !rr.object.yearly?) }
     - (1..12).to_a.each do |month|
@@ -61,12 +72,12 @@
 
     = radio_button_tag :duration_or_count, :forever, rr.object.new_record? || rr.object.duration_bound?
     %label Repeat forever
-    = radio_button_tag :duration_or_count, :duration, rr.object.persisted? && rr.object.end_date?
+    = radio_button_tag :duration_or_count, :duration, rr.object.persisted? && rr.object.ends_on?
     %label Limit by end date
     = radio_button_tag :duration_or_count, :count, rr.object.persisted? && rr.object.count_bound?
     %label Limit by occurrences
 
-    #duration{ class: hide_if(rr.object.new_record? || !rr.object.end_date?) }
+    #duration{ class: hide_if(rr.object.new_record? || !rr.object.ends_on?) }
       = rr.label :ends_on
       .input-group
         = rr.datetime_select :ends_on, {order: [:day, :month, :year], date_separator: ' / ', selected: rr.object.ends_on || DateTime.now}, id: :transaction_purpose_ends_on, class: 'input-group-field small-2', disabled: rr.object.new_record? || !rr.object.ends_on?
@@ -77,4 +88,4 @@
 
   %fieldset.fieldset
     %legend Rules summary
-    %label.rules_text Daily
+    %label.rules_text= f.object.new_record? ? 'Daily' : f.object.humanize

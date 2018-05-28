@@ -7,7 +7,6 @@ class RulesHashFormatValidator < ActiveModel::EachValidator
 
   def valid_rules_hash_format?(record, rules_hash)
     return rules_hash.blank? if record.daily?
-    return false if rules_hash.blank?
     valid_rule = case record.type
     when 'Weekly'
       rules_hash.is_a?(Array)

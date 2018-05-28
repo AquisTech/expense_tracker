@@ -47,44 +47,19 @@ $(document).on('turbolinks:load', function() {
         target_month.find('input[type=radio]').attr('disabled', false);
         target_month.find('.' + $(this).val()).find('select, input').attr('disabled', false);
       });
+    } else if($(this).val().toLowerCase() == 'monthly') {
+      $('#monthly').find('select, input').attr('disabled', false);
+      toggleMonthlyDayOfMonthOrWeek($('#monthly input[name=day_of_month_or_week]').val());
     } else {
       $('#' + $(this).val().toLowerCase()).find('select, input').attr('disabled', false);
     }
-    if($(this).val().toLowerCase() == 'daily') {
-      var intervalUnit = 'day(s)';
-    } else {
-      var intervalUnit = $(this).val().toLowerCase().replace(/ly$/, '(s)');
-    }
-    $('#interval-unit').text(intervalUnit);
-  });
-  // Weekly Rule Section: Selection of Day of week
-  $('.reveal-content').on('click', '#weekly label', function(e) {
-    $(this).toggleClass('selected');
-    var option = $('#weekly select').find('option[value=' + $(this).attr('for') + ']');
-    option.attr('selected', !option.attr('selected'));
-    $('#weekly select').change();
+    $('#interval-unit').text($(this).val().toLowerCase().replace(/i/, 'y').replace(/ly$/, '(s)'));
   });
   // Monthly Rule Section: toggling as per radio selection
   $('.reveal-content').on('change', '#monthly input[name=day_of_month_or_week]', function(e) {
-    $('#monthly .day_of_month, #monthly .day_of_week').toggleClass('hide');
-    $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
-    $('#monthly .' + $(this).val()).find('select, input').attr('disabled', false);
+    toggleMonthlyDayOfMonthOrWeek($(this).val());
   });
-  // Monthly Rule Section: Selection of Day of month
-  $('.reveal-content').on('click', '#monthly .day_of_month .day', function(e) {
-    $(this).toggleClass('selected');
-    var option = $('#monthly .day_of_month select').find('option[value=' + $(this).attr('for') + ']');
-    option.attr('selected', !option.attr('selected'));
-    $('#monthly .day_of_month select').change();
-  });
-  // Monthly Rule Section: Selection of Day of week
-  $('.reveal-content').on('click', '#monthly .day_of_week .day', function(e) {
-    $(this).toggleClass('selected');
-    var target_select_list = $('#monthly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('for'));
-    var option = target_select_list.find('option[value=' + $(this).attr('week') + ']');
-    option.attr('selected', !option.attr('selected'));
-    target_select_list.change();
-  });
+
   // Yearly Rule Section: Toggle Month
   $('.reveal-content').on('click', '#yearly .prev-month:not([disabled]), #yearly .next-month:not([disabled])', function(e) {
     $(this).parents('.month').addClass('hide');
@@ -127,7 +102,8 @@ $(document).on('turbolinks:load', function() {
   // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
   $('.reveal-content').on('change', '.recurrence_rule_form select, .recurrence_rule_form input', function(e) {
     var data = $(this).parents('form').serialize();
-    console.log(data)
+    console.log(data.replace(/%5B/g, '[').replace(/%5D/g, ']').replace(/&/g, ' , '));
+
     $.ajax({
       url: '/transaction_purposes/display_recurrence_rule_text',
       data: data,
@@ -179,7 +155,6 @@ $(document).on('turbolinks:load', function() {
     $.ajax({
       url: '/transaction_purposes/' + $(this).val() + '/get_estimate',
       success: function(result) {
-        debugger
         $('#transaction_transaction_purpose_id').parents('form').find('input[name="transaction[amount]"]').val(result);
       }
     });
@@ -205,3 +180,11 @@ $(document).on('turbolinks:load', function() {
   }
   $('.scroll-to-top').on('click', scrollToTop);
 });
+function toggleMonthlyDayOfMonthOrWeek(selection) {
+  var other_class = selection == 'day_of_month' ? 'day_of_week' : 'day_of_month';
+  console.log(selection, other_class)
+  $('#monthly .' + selection).removeClass('hide');
+  $('#monthly .' + other_class).addClass('hide');
+  $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
+  $('#monthly .' + selection).find('select, input').attr('disabled', false);
+}

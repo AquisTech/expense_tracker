@@ -1,12 +1,4 @@
 module RecurrenceRulesHelper
-  def weekday_select_bar
-    content_tag :div, class: 'input-group' do
-      Date::ABBR_DAYNAMES.map.with_index do |day, i|
-        label_tag i, day, class: 'input-group-label'
-      end.join.html_safe
-    end
-  end
-
   def day_of_month_selection(month = nil)
     ((1..31).to_a << -1).in_groups_of(7).map do |days_of_week|
       content_tag :div, class: 'row columns' do

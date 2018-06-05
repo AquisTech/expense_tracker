@@ -41,12 +41,12 @@ class RecurrenceRule < ApplicationRecord
     monthly? && rules.is_a?(Hash)
   end
 
-  def yearly_days_of_month?(month)
-    yearly? && rules[month].is_a?(Array)
+  def yearly_days_of_month?
+    yearly? && rules.values.first.is_a?(Array)
   end
 
-  def yearly_days_of_week?(month)
-    yearly? && rules[month].is_a?(Hash)
+  def yearly_days_of_week?
+    yearly? && rules.is_a?(Hash) && rules.values.first.is_a?(Hash)
   end
 
   def duration_bound?
@@ -64,7 +64,7 @@ class RecurrenceRule < ApplicationRecord
       create_occurrence(interval)
     when 'Weekly'
       rules.each { |day_of_week| create_occurrence(day_of_week) }
-    when 'Monthly'
+    when 'Monthly' # TODO: Consider 28-31 to be month end while calculating
       if rules.is_a?(Hash)
         rules.each do |day_of_week, week_numbers|
           week_numbers.each { |week_number| create_occurrence(day_of_week, weeks: week_number) }
@@ -103,7 +103,18 @@ class RecurrenceRule < ApplicationRecord
     o.save
   end
 
+  def sanitize_rules(rules_hash = rules)
+    if rules_hash.is_a?(Array)
+      rules_hash = rules_hash.without('')
+    elsif rules_hash.is_a?(Hash)
+      rules_hash.each { |k, v| v.is_a?(Array) ? rules_hash[k] = v.without('') : sanitize_rules(v) }
+      rules_hash.reject! { |k, v| v.blank? }
+    end
+    rules_hash
+  end
+
   def humanize
+    rules = sanitize_rules
     msg = case type
     when 'Daily'
       interval == 1 ? 'Daily' : "Every #{interval} days"

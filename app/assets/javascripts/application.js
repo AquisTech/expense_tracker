@@ -42,21 +42,20 @@ $(document).on('turbolinks:load', function() {
     $('#' + $(this).val().toLowerCase()).removeClass('hide');
     if($(this).val().toLowerCase() == 'yearly') {
       $('.month.1').removeClass('hide');
-      $('#yearly input[name*=day_of_month_or_week_]:checked').each(function(e) {
-        var target_month = $(this).parents('.month');
-        target_month.find('input[type=radio]').attr('disabled', false);
-        target_month.find('.' + $(this).val()).find('select, input').attr('disabled', false);
+      $('#yearly input[name=day_of_month_or_week_yearly]:checked').each(function(e) {
+        $('#yearly').find('input[type=radio]').attr('disabled', false);
+        $('#yearly').find('.' + $(this).val()).find('select, input').attr('disabled', false);
       });
     } else if($(this).val().toLowerCase() == 'monthly') {
       $('#monthly').find('select, input').attr('disabled', false);
-      toggleMonthlyDayOfMonthOrWeek($('#monthly input[name=day_of_month_or_week]').val());
+      toggleMonthlyDayOfMonthOrWeek($('#monthly input[name=day_of_month_or_week_monthly]').val());
     } else {
       $('#' + $(this).val().toLowerCase()).find('select, input').attr('disabled', false);
     }
     $('#interval-unit').text($(this).val().toLowerCase().replace(/i/, 'y').replace(/ly$/, '(s)'));
   });
   // Monthly Rule Section: toggling as per radio selection
-  $('.reveal-content').on('change', '#monthly input[name=day_of_month_or_week]', function(e) {
+  $('.reveal-content').on('change', '#monthly input[name=day_of_month_or_week_monthly]', function(e) {
     toggleMonthlyDayOfMonthOrWeek($(this).val());
   });
 
@@ -66,40 +65,18 @@ $(document).on('turbolinks:load', function() {
     $('.month.' + $(this).attr('month')).removeClass('hide');
   });
   // Yearly Rule Section: toggling as per radio selection
-  $('.reveal-content').on('change', '#yearly input[name*=day_of_month_or_week_]', function(e) {
-    var target_month = $(this).parents('.month').find('.day_of_month, .day_of_week')
+  $('.reveal-content').on('change', '#yearly input[name=day_of_month_or_week_yearly]', function(e) {
+    var target_month = $('#yearly').find('.day_of_month, .day_of_week')
     target_month.toggleClass('hide');
     target_month.find('select, input').attr('disabled', true);
-    $(this).parents('.month').find('.' + $(this).val()).find('select, input').attr('disabled', false);
-  });
-  // Yearly Rule Section: Selection of Day of month
-  $('.reveal-content').on('click', '#yearly .day_of_month .day', function(e) {
-    $(this).toggleClass('selected');
-    var target_select_list = $('#yearly .day_of_month select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month'))
-    var option = target_select_list.find('option[value=' + $(this).attr('for') + ']');
-    option.attr('selected', !option.attr('selected'));
-    target_select_list.change();
-  });
-  // Yearly Rule Section: Selection of Day of week
-  $('.reveal-content').on('click', '#yearly .day_of_week .day', function(e) {
-    $(this).toggleClass('selected');
-    var target_select_list = $('#yearly .day_of_week select#transaction_purpose_recurrence_rule_attributes_rules_' + $(this).attr('month') + '_' + $(this).attr('for'));
-    var option = target_select_list.find('option[value=' + $(this).attr('week') + ']');
-    option.attr('selected', !option.attr('selected'));
-    target_select_list.change();
+    $('#yearly').find('.' + $(this).val()).find('select, input').attr('disabled', false);
   });
   // Duration or Count Section: Toggling as per radio selection
   $('.reveal-content').on('change', 'input[name=duration_or_count]', function(e) {
-    $('#duration, #count').addClass('hide');
-    $('#duration, #count').find('select, input').attr('disabled', true);
-    if ($(this).val() == 'duration') {
-      $('#duration').removeClass('hide');
-    } else if ($(this).val() == 'count') {
-      $('#count').removeClass('hide');
-    }
-    $('#' + $(this).val()).find('select, input').attr('disabled', false);
+    $('#duration, #count').addClass('hide').find('select, input').attr('disabled', true);
+    $('#' + $(this).val()).removeClass('hide').find('select, input').attr('disabled', false);
   });
-  // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inouts
+  // Recurrence Rule Section: Display applied rule as per changes in Recurrence Rule Inputs
   $('.reveal-content').on('change', '.recurrence_rule_form select, .recurrence_rule_form input', function(e) {
     var data = $(this).parents('form').serialize();
     console.log(data.replace(/%5B/g, '[').replace(/%5D/g, ']').replace(/&/g, ' , '));

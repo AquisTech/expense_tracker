@@ -7,7 +7,7 @@ class TransactionPurposesController < ApplicationController
 
   def new
     @transaction_purpose = TransactionPurpose.new
-    @transaction_purpose.build_recurrence_rule
+    @transaction_purpose.build_recurrence_rule(type: 'Daily', interval: 1)
     render layout: false
   end
 
@@ -63,16 +63,12 @@ class TransactionPurposesController < ApplicationController
       @transaction_purpose = TransactionPurpose.find(params[:id])
     end
 
-    def remove_blanks(hash)
-      hash.each { |k, v| v.is_a?(Array) ? hash[k] = v.without('') : remove_blanks(v) }
-      hash.reject! { |k, v| v.blank? }
-      hash
-    end
-
     def transaction_purpose_params
-      rule = params[:transaction_purpose][:recurrence_rule_attributes][:rules] || []
-      rule = rule.is_a?(Array) ? rule.without('') : remove_blanks(rule)
-      params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rule
+      rules = params[:transaction_purpose][:recurrence_rule_attributes][:rules]
+      type = params[:transaction_purpose][:recurrence_rule_attributes][:type]
+      rules = params[:day_of_month_or_week_monthly] == 'day_of_month' ? [] : {} if type == 'Monthly' && rules.blank?
+      rules = { '1' => (params[:day_of_month_or_week_yearly] == 'day_of_month' ? [] : {}) } if type == 'Yearly' && rules.blank?
+      params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rules
       params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
     end
 end

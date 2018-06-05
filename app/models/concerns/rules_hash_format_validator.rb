@@ -13,7 +13,7 @@ class RulesHashFormatValidator < ActiveModel::EachValidator
     when 'Monthly'
       (rules_hash.is_a?(Array) || (rules_hash.is_a?(Hash) && rules_hash.values.all? {|v| v.is_a?(Array) }))
     when 'Yearly'
-      rules_hash.is_a?(Hash) && ((rules_hash.values.all? {|v| v.is_a?(Array) }) || (rules_hash.values.all? {|value_hash| value_hash.is_a?(Hash) && value_hash.values.all? {|v| v.is_a?(Array)} }))
+      rules_hash.is_a?(Hash) && ((rules_hash.values.all? { |v| v.is_a?(Array) }) || (rules_hash.values.all? { |value_hash| value_hash.is_a?(Hash) && value_hash.values.all? { |v| v.is_a?(Array)} }))
     else
       false
     end

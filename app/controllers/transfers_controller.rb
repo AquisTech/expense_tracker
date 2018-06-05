@@ -15,7 +15,7 @@ class TransfersController < ApplicationController
     if @transfer.save
       redirect_to transfers_url, notice: 'Transfer was successfully created.'
     else
-      render :new
+      render_failure(@transfer)
     end
   end
 
@@ -27,7 +27,7 @@ class TransfersController < ApplicationController
     if @transfer.update(transfer_params)
       redirect_to transfers_url, notice: 'Transfer was successfully updated.'
     else
-      render :edit
+      render_failure(@transfer)
     end
   end
 

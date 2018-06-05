@@ -1,9 +1,9 @@
-= form_with(model: transfer, remote: true) do |f|
-  - if transfer.errors.any?
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
     #error_explanation
-      %p= "#{pluralize(transfer.errors.count, "error")} prohibited this transfer from being saved:"
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this transfer from being saved:"
       %ul
-        - transfer.errors.full_messages.each do |message|
+        - object.errors.full_messages.each do |message|
           %li= message
   .row
     = f.label :amount
@@ -13,9 +13,9 @@
     = f.text_field :description, id: :transfer_description
   .row
     = f.label :source_account_id
-    = f.collection_select :source_account_id, SourceAccount.all, :id, :name, id: :transfer_source_account_id
+    = f.collection_select :source_account_id, Account.all, :id, :name, id: :transfer_source_account_id
   .row
     = f.label :destination_account_id
-    = f.collection_select :destination_account_id, DestinationAccount.all, :id, :name, id: :transfer_destination_account_id
+    = f.collection_select :destination_account_id, Account.all, :id, :name, id: :transfer_destination_account_id
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

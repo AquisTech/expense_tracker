@@ -41,7 +41,7 @@ gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
 
-gem 'validates_timeliness', git: 'https://github.com/AquisTech/validates_timeliness.git', branch: 'fix-issue170-value-method-issue'
+gem 'validates_timeliness', '~> 5.0.0.alpha2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

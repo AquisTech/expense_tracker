@@ -15,4 +15,5 @@ class Transaction < ApplicationRecord
   def total_payments_amount
     payments.sum(:amount)
   end
+  # TODO: Add tags to transactions
 end

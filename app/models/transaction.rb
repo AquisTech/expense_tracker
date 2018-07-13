@@ -13,7 +13,7 @@ class Transaction < ApplicationRecord
   validates :description, presence: true
 
   def total_payments_amount
-    payments.sum(:amount)
+    payments.sum(&:amount)
   end
   # TODO: Add tags to transactions
 end

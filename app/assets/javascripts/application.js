@@ -118,11 +118,11 @@ $(document).on('turbolinks:load', function() {
     var target = element.parents('.clonable-fragment:first').find('input[name$="[_destroy]"]');
     if(target.val() == 'true') {
       target.val(false)
-      element.removeClass('warning').addClass('alert').html('&times;')
+      element.removeClass('warning').addClass('alert').html('&times;');
       element.parents('.clonable-fragment:first').find('input, select').css({'border-color': '#cacaca', 'background': 'white', 'opacity': 1, 'color': '#0a0a0a'}); // TODO: add note as 'Marked for destruction'
     } else {
       target.val(true)
-      element.removeClass('alert').addClass('warning').html('&#x27F3;')
+      element.removeClass('alert').addClass('warning').html('&#x27F3;');
       element.parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
     }
   }
@@ -138,6 +138,21 @@ $(document).on('turbolinks:load', function() {
   $('body').on('change', '#transaction_transaction_purpose_id', function(e) {
     getEstimateForTransactionPurpose();
   });
+  // Filter Accounts as per eligible payment modes
+  function toggleAccountsForPaymentMode(payment_mode_select) {
+    var target = payment_mode_select.parents('.grid-container').find('.bank_account_select');
+    if (target.find('option:selected').attr('payment_modes') && !target.find('option:selected').attr('payment_modes').match(new RegExp(payment_mode_select.val()))) {
+      target.val('')
+    }
+    target.find('option').addClass('hide');
+    target.find('option[payment_modes~="' + payment_mode_select.val() + '"]').removeClass('hide');
+  }
+  $('.payment_mode_select').each(function(e) {
+    toggleAccountsForPaymentMode($(this));
+  });
+  $('body').on('change', '.payment_mode_select', function(e) {
+    toggleAccountsForPaymentMode($(this));
+  });
   // Show/hide scroll to top button
   $(document).on('scroll', function(){
     if ($(window).scrollTop() > 100) {
@@ -148,10 +163,9 @@ $(document).on('turbolinks:load', function() {
   });
   // Scroll to top on click
   function scrollToTop() {
-    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
-    element = $('body');
-    offset = element.offset();
-    offsetTop = offset.top;
+    var element = $('body');
+    var offset = element.offset();
+    var offsetTop = offset.top;
     $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
   }
   $('.scroll-to-top').on('click', scrollToTop);

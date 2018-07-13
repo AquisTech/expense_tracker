@@ -28,9 +28,9 @@
         .small-3.cell
           = p.amount_field :amount, currency: '&#8377;'
         .small-3.cell
-          = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last
+          = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode'}, class: :payment_mode_select
         .small-3.cell
-          = p.collection_select :account_id, Account.all, :id, :name
+          = p.select :account_id, Account.all.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
         .small-1.cell
           = p.hidden_field :_destroy
           = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' }

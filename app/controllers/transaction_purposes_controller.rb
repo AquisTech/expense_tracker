@@ -2,7 +2,8 @@ class TransactionPurposesController < ApplicationController
   before_action :set_transaction_purpose, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transaction_purposes = TransactionPurpose.all
+    # @transaction_purposes = TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Daily'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Weekly'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Monthly'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Yearly'}).first(10)
+    @transaction_purposes = TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Yearly'}).first(100)
   end
 
   def new

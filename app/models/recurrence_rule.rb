@@ -58,6 +58,7 @@ class RecurrenceRule < ApplicationRecord
   end
 
   # TODO: #FutureScope occurrence between starts_on and (ends_on or count whichever comes first)
+  # TODO: Modify this to work with update and delete
   def create_occurrences
     case type
     when 'Daily'
@@ -104,17 +105,26 @@ class RecurrenceRule < ApplicationRecord
   end
 
   def sanitize_rules(rules_hash = rules)
+    puts rules_hash.class, rules_hash.inspect, rules_hash.is_a?(Array)
     if rules_hash.is_a?(Array)
+      puts "array----------#{rules_hash.without('')}---"
       rules_hash = rules_hash.without('')
     elsif rules_hash.is_a?(Hash)
+      puts "hash----------------#{rules_hash.inspect}-----------"
       rules_hash.each { |k, v| v.is_a?(Array) ? rules_hash[k] = v.without('') : sanitize_rules(v) }
-      rules_hash.reject! { |k, v| v.blank? }
+      rules_hash.reject! do |k, v|
+        puts ")))))#{v.blank?}))))#{v.inspect}))))))))))"
+        v.blank?
+      end
     end
+    puts "]]]]]]]]]]]]]]]]]#{rules_hash.inspect}[[[[[[[[[[[[[[["
     rules_hash
   end
 
   def humanize
+    puts '***********111*****************', rules.class
     rules = sanitize_rules
+    puts '**********222******************', rules.inspect
     msg = case type
     when 'Daily'
       interval == 1 ? 'Daily' : "Every #{interval} days"

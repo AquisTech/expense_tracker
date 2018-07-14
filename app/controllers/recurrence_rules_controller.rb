@@ -2,7 +2,7 @@ class RecurrenceRulesController < ApplicationController
   before_action :set_recurrence_rule, only: [:show, :edit, :update, :destroy]
 
   def index
-    @recurrence_rules = RecurrenceRule.all
+    @recurrence_rules = RecurrenceRule.first(30) + RecurrenceRule.last(30)
   end
 
   def new

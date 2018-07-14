@@ -1,4 +1,8 @@
 .grid-container
+  .button-group
+    = link_to 'Prev', 'javascript:void(0)', class: 'button secondary'
+    = link_to 'Today', 'javascript:void(0)', class: 'button primary'
+    = link_to 'Next', 'javascript:void(0)', class: 'button secondary'
   .grid-x.grid-padding-x.callout.primary
     .small-3.cell
       %b Name
@@ -11,5 +15,6 @@
     .small-1.cell
       %b Action
 - @transactions.each do |transaction|
-  = render 'transaction_form', transaction: transaction
+  = # render 'transaction_form', transaction: transaction
+  = render 'oc_transaction_form', transaction: transaction
   %hr

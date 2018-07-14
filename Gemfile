@@ -55,6 +55,9 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'overcommit'
+  gem 'bundler-audit'
+  gem 'haml-lint'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -79,7 +79,7 @@ CommitMsg:
     required: true
 
   HardTabs:
-    enabled: false
+    enabled: true
     description: 'Check for hard tabs'
 
   MessageFormat:
@@ -135,7 +135,7 @@ PreCommit:
     pattern: '^[^@]+@.*$'
 
   AuthorName:
-    enabled: true
+    enabled: false
     description: 'Check for author name'
     requires_files: false
     required: true
@@ -157,13 +157,13 @@ PreCommit:
     quiet: true
 
   BundleAudit:
-    enabled: false
+    enabled: true
     description: 'Check for vulnerable versions of gems'
     required_executable: 'bundle-audit'
     install_command: 'gem install bundler-audit'
 
   BundleCheck:
-    enabled: false
+    enabled: true
     description: 'Check Gemfile dependencies'
     required_executable: 'bundle'
     flags: ['check']
@@ -171,10 +171,12 @@ PreCommit:
     include:
       - 'Gemfile'
       - 'Gemfile.lock'
+      - '.overcommit_gems.rb'
+      - '.overcommit_gems.rb.lock'
       - '*.gemspec'
 
   BundleOutdated:
-    enabled: false
+    enabled: true
     description: 'List installed gems with newer versions available'
     required_executable: 'bundle'
     flags: ['outdated', '--strict', '--parseable']
@@ -269,7 +271,7 @@ PreCommit:
     description: 'Check for file execute permissions'
     quiet: true
 
-  Fasterer:
+  Fasterer: # TODO: Configure and use this
     enabled: false
     description: 'Analyzing for potential speed improvements'
     required_executable: 'fasterer'
@@ -277,7 +279,7 @@ PreCommit:
     include: '**/*.rb'
 
   FixMe:
-    enabled: false
+    enabled: true
     description: 'Check for "token" strings'
     required_executable: 'grep'
     flags: ['-IEHnw']
@@ -291,7 +293,7 @@ PreCommit:
     install_command: 'gem install foodcritic'
 
   ForbiddenBranches:
-    enabled: false
+    enabled: true
     description: 'Check for commit to forbidden branch'
     quiet: true
     branch_patterns: ['master']
@@ -312,24 +314,26 @@ PreCommit:
     include: '**/*.go'
 
   Hadolint:
-    enabled: false
+    enabled: true
     description: 'Analyze with hadolint'
+    quiet: false
     required_executable: 'hadolint'
     include:
       - '**/Dockerfile*'
 
-  HamlLint:
+  HamlLint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with haml-lint'
+    quiet: false
     required_executable: 'haml-lint'
     install_command: 'gem install haml-lint'
     flags: ['--no-summary']
     include: '**/*.haml'
 
   HardTabs:
-    enabled: false
+    enabled: true
     description: 'Check for hard tabs'
-    quiet: true
+    quiet: false
     required_executable: 'grep'
     flags: ['-IHn', "\t"]
     exclude:
@@ -343,21 +347,21 @@ PreCommit:
     install_command: 'cabal install hlint'
     include: '**/*.hs'
 
-  HtmlHint:
+  HtmlHint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with HTMLHint'
     required_executable: 'htmlhint'
     install_command: 'npm install -g htmlhint'
     include: '**/*.html'
 
-  HtmlTidy:
+  HtmlTidy: # TODO: Configure and use
     enabled: false
     description: 'Analyze HTML with tidy'
     required_executable: 'tidy'
     flags: ['-errors', '-quiet', '-utf8']
     include: '**/*.html'
 
-  ImageOptim:
+  ImageOptim: # TODO: Configure and use
     enabled: false
     description: 'Check for optimizable images'
     required_executable: 'image_optim'
@@ -376,7 +380,7 @@ PreCommit:
     flags: ['-c', '/sun_checks.xml']
     include: '**/*.java'
 
-  Jscs:
+  Jscs: # TODO: Configure and use
     enabled: false
     description: 'Analyze with JSCS'
     required_executable: 'jscs'
@@ -384,7 +388,7 @@ PreCommit:
     install_command: 'npm install -g jscs'
     include: '**/*.js'
 
-  JsHint:
+  JsHint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with JSHint'
     required_executable: 'jshint'
@@ -392,7 +396,7 @@ PreCommit:
     install_command: 'npm install -g jshint'
     include: '**/*.js'
 
-  JsLint:
+  JsLint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with JSLint'
     required_executable: 'jslint'
@@ -400,21 +404,21 @@ PreCommit:
     install_command: 'npm install -g jslint'
     include: '**/*.js'
 
-  Jsl:
+  Jsl: # TODO: Configure and use
     enabled: false
     description: 'Analyze with JSL'
     required_executable: 'jsl'
     flags: ['-nologo', '-nofilelisting', '-nocontext', '-nosummary']
     include: '**/*.js'
 
-  JsonSyntax:
+  JsonSyntax: # TODO: Configure and use
     enabled: false
     description: 'Validate JSON syntax'
     required_library: 'json'
     install_command: 'gem install json'
     include: '**/*.json'
 
-  LicenseFinder:
+  LicenseFinder: # TODO: Configure and use
     enabled: false
     description: 'Analyze with LicenseFinder'
     required_executable: 'license_finder'
@@ -429,19 +433,19 @@ PreCommit:
       - 'Podfile'
       - 'rebar.config'
 
-  LicenseHeader:
+  LicenseHeader: # TODO: Configure and use
     enabled: false
     license_file: 'LICENSE.txt'
     description: 'Check source files for license headers'
 
-  LocalPathsInGemfile:
+  LocalPathsInGemfile: # TODO: Configure and use
     enabled: false
     description: 'Check for local paths in Gemfile'
     required_executable: 'grep'
     flags: ['-IHnE', "^[^#]*((\\bpath:)|(:path[ \t]*=>))"]
     include: '**/Gemfile'
 
-  Mdl:
+  Mdl: # TODO: Configure and use
     enabled: false
     description: 'Analyze markdown files with mdl'
     required_executable: 'mdl'
@@ -507,7 +511,7 @@ PreCommit:
     include:
       - '**/*.php'
 
-  Pronto:
+  Pronto: # TODO: Configure and use
     enabled: false
     description: 'Analyzing with pronto'
     required_executable: 'pronto'
@@ -564,7 +568,7 @@ PreCommit:
     install_command: 'pip install flake8'
     include: '**/*.py'
 
-  RakeTarget:
+  RakeTarget: # TODO: Configure and use
     enabled: false
     description: 'Run rake targets'
     # targets:
@@ -574,14 +578,14 @@ PreCommit:
     required_executable: 'rake'
     install_command: 'gem install rake'
 
-  RailsBestPractices:
+  RailsBestPractices: # TODO: Configure and use
     enabled: false
     description: 'Analyze with RailsBestPractices'
     required_executable: 'rails_best_practices'
     flags: ['--without-color']
     install_command: 'gem install rails_best_practices'
 
-  RailsSchemaUpToDate:
+  RailsSchemaUpToDate: # TODO: Configure and use
     enabled: false
     description: 'Check if database schema is up to date'
     include:
@@ -589,7 +593,7 @@ PreCommit:
       - 'db/schema.rb'
       - 'db/structure.sql'
 
-  Reek:
+  Reek: # TODO: Configure and use
     enabled: false
     description: 'Analyze with Reek'
     required_executable: 'reek'
@@ -609,7 +613,7 @@ PreCommit:
     install_command: 'pip install restructuredtext_lint'
     include: '**/*.rst'
 
-  RuboCop:
+  RuboCop: # TODO: Configure and use
     enabled: false
     description: 'Analyze with RuboCop'
     required_executable: 'rubocop'
@@ -623,7 +627,7 @@ PreCommit:
       - '**/Gemfile'
       - '**/Rakefile'
 
-  RubyLint:
+  RubyLint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with ruby-lint'
     required_executable: 'ruby-lint'
@@ -646,7 +650,7 @@ PreCommit:
     required_executable: 'scalastyle'
     include: '**/*.scala'
 
-  ScssLint:
+  ScssLint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with scss-lint'
     required_library: 'json'
@@ -655,7 +659,7 @@ PreCommit:
     install_command: 'gem install scss_lint'
     include: '**/*.scss'
 
-  SemiStandard:
+  SemiStandard: # TODO: Configure and use
     enabled: false
     description: 'Analyze with semistandard'
     required_executable: 'semistandard'
@@ -663,7 +667,7 @@ PreCommit:
     install_command: 'npm install -g semistandard'
     include: '**/*.js'
 
-  ShellCheck:
+  ShellCheck: # TODO: Configure and use
     enabled: false
     description: 'Analyze with ShellCheck'
     required_executable: 'shellcheck'
@@ -677,14 +681,14 @@ PreCommit:
     install_command: 'gem install slim_lint'
     include: '**/*.slim'
 
-  Sqlint:
+  Sqlint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with sqlint'
     required_executable: 'sqlint'
     install_command: 'gem install sqlint'
     include: '**/*.sql'
 
-  Standard:
+  Standard: # TODO: Configure and use
     enabled: false
     description: 'Analyze with standard'
     required_executable: 'standard'
@@ -700,7 +704,7 @@ PreCommit:
       flags: ['--t=prose']
       include: '**/*.ts'
 
-  TrailingWhitespace:
+  TrailingWhitespace: # TODO: Configure and use
     enabled: false
     description: 'Check for trailing whitespace'
     required_executable: 'grep'
@@ -723,7 +727,7 @@ PreCommit:
       - '**/*.vim'
       - '**/*.vimrc'
 
-  W3cCss:
+  W3cCss: # TODO: Configure and use
     enabled: false
     description: 'Analyze with W3C CSS validation service'
     required_library: 'w3c_validators'
@@ -735,7 +739,7 @@ PreCommit:
     include:
       - '**/*.css'
 
-  W3cHtml:
+  W3cHtml: # TODO: Configure and use
     enabled: false
     description: 'Analyze with W3C HTML validation service'
     required_library: 'w3c_validators'
@@ -746,7 +750,7 @@ PreCommit:
     include:
       - '**/*.html'
 
-  LineEndings:
+  LineEndings: # TODO: Configure and use
     description: 'Check line endings'
     enabled: false
     eol: "\n" # or "\r\n" for Windows-style newlines
@@ -768,7 +772,7 @@ PreCommit:
       - '**/*.xml'
       - '**/*.svg'
 
-  YamlLint:
+  YamlLint: # TODO: Configure and use
     enabled: false
     description: 'Analyze with YAMLlint'
     required_executable: 'yamllint'
@@ -778,7 +782,7 @@ PreCommit:
       - '**/*.yaml'
       - '**/*.yml'
 
-  YamlSyntax:
+  YamlSyntax: # TODO: Configure and use
     enabled: false
     description: 'Check YAML syntax'
     required_library: 'yaml'
@@ -786,7 +790,7 @@ PreCommit:
       - '**/*.yaml'
       - '**/*.yml'
 
-  YarnCheck:
+  YarnCheck: # TODO: Configure and use
     enabled: false
     description: 'Check yarn.lock dependencies'
     required_executable: 'yarn'
@@ -1111,7 +1115,7 @@ PrePush:
     required: false
     quiet: false
 
-  Brakeman:
+  Brakeman: # TODO: Configure and use
     enabled: false
     description: 'Check for security vulnerabilities'
     required_executable: 'brakeman'
@@ -1144,7 +1148,7 @@ PrePush:
     flags: ['--bootstrap', 'vendor/autoload.php', 'tests']
     install_command: 'composer require --dev phpunit/phpunit'
 
-  ProtectedBranches:
+  ProtectedBranches: # TODO: Configure and use
     enabled: false
     description: 'Check for illegal pushes to protected branches'
     destructive_only: true
@@ -1162,12 +1166,12 @@ PrePush:
     required_executable: 'nosetests'
     install_command: 'pip install -U nose'
 
-  RSpec:
+  RSpec: # TODO: Configure and use
     enabled: false
     description: 'Run RSpec test suite'
     required_executable: 'rspec'
 
-  RakeTarget:
+  RakeTarget: # TODO: Configure and use
     enabled: false
     description: 'Run rake targets'
     # targets:

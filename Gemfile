@@ -41,7 +41,7 @@ gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
 
-gem 'validates_timeliness', '~> 5.0.0.alpha2'
+gem 'validates_timeliness', '~> 5.0.0.alpha3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -236,7 +236,7 @@ GEM
     uglifier (4.1.14)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.0)
-    validates_timeliness (5.0.0.alpha2)
+    validates_timeliness (5.0.0.alpha3)
       timeliness (~> 0.3.8)
     web-console (3.6.2)
       actionview (>= 5.0)
@@ -274,7 +274,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier
-  validates_timeliness (~> 5.0.0.alpha2)
+  validates_timeliness (~> 5.0.0.alpha3)
   web-console
 
 RUBY VERSION

@@ -1,4 +1,6 @@
 .grid-container
+  = "Selected Date #{@date}"
+  = "Count #{@transactions.count}"
   .button-group
     = link_to 'Prev', 'javascript:void(0)', class: 'button secondary'
     = link_to 'Today', 'javascript:void(0)', class: 'button primary'

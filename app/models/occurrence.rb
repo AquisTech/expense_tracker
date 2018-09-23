@@ -15,16 +15,33 @@ class Occurrence < ApplicationRecord
   def self.for(date)
     Occurrence.find_by_sql([
       %Q{
-        SELECT * FROM occurrences
+        SELECT *,
+        DAY(:date) d,
+        WEEK(:date) w,
+        :date dt,
+        DATE_FORMAT(`starts_on`, '%Y-%m-%d') sd,
+        (:date - DATE_FORMAT(`starts_on`, '%Y-%m-%d')) diff,
+        ('2018-09-01' - "2018-02-18") diff2,
+        DATEDIFF('2018-09-01', "2018-02-18") diff3,
+        DATEDIFF(:date, starts_on) diff4,
+        DAYOFWEEK(:date) - 1 dow,
+        EXTRACT(YEAR_MONTH FROM :date) ym
+        FROM occurrences
         WHERE
           -- Daily
-          (recurrence_type = 'Daily' AND (((:date - DATE(`starts_on`)) % `interval`) = 0))
+          (recurrence_type = 'Daily' AND (DATEDIFF(:date, starts_on) % `interval`) = 0) -- checked + starts_on and ends_on and count cond to be added
+          OR
+          -- Weekly
+          (recurrence_type = 'Weekly' AND ((DAYOFWEEK(:date) - 1) = days)) -- checked + starts_on and ends_on and count and interval cond to be added
           OR
           -- Monthly day of month
-          (recurrence_type = 'Monthly' AND weeks is NULL AND (DAY(:date) = DAY(starts_on)) AND (((:date - DATE(`starts_on`)) % `interval`) = 0))
-          OR
+          (recurrence_type = 'Monthly' AND weeks IS NULL AND (DAY(:date) = days)) -- checked + interval needs fix
+          -- OR
           -- Monthly day of week
-          (recurrence_type = 'Monthly' AND weeks is NOT NULL AND (DAY(:date) = DAY(starts_on)) AND (((:date - DATE(`starts_on`)) % `interval`) = 0))
+          -- (recurrence_type = 'Monthly' AND weeks IS NOT NULL AND (DAY(:date) = DAY(starts_on)) AND (((:date - DATE(`starts_on`)) % `interval`) = 0))
+          -- OR
+          -- Yearly day of month
+          -- Yearly day of week
       },
       date: date
     ])

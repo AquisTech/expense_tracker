@@ -15,23 +15,25 @@ class Occurrence < ApplicationRecord
 
   def self.for(date)
     # TODO: Make week starting from monday. Change week function parameter accordingly
+    start_end_range_condition = 'starts_on <= :date AND (ends_on IS NULL OR ends_on >= :date)'
+    count_condition = ''
     daily = "(recurrence_type = 'Daily' AND (DATEDIFF(:date, starts_on) % `interval`) = 0)"
-    weekly = "(recurrence_type = 'Weekly' AND (days = (DAYOFWEEK(:date) - 1)))"
+    weekly = "(recurrence_type = 'Weekly' AND (days = (DAYOFWEEK(:date) - 1)) AND (DATEDIFF(:date, starts_on) % (`interval` * 7)) = 0)"
     monthly_day_of_month = "(
             recurrence_type = 'Monthly' AND
             weeks IS NULL AND
-            (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL))
+            (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
+            PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
           )"
     monthly_day_of_week = "(
             recurrence_type = 'Monthly' AND
             weeks IS NOT NULL AND
             days = (DAYOFWEEK(:date) - 1) AND
-            (
-              weeks IN (
-                WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1,
-                IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, NULL)
-              )
-            )
+            weeks IN (
+              WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1,
+              IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, NULL)
+            ) AND
+            PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
           )"
     yearly_day_of_month = "(
             recurrence_type = 'Yearly' AND

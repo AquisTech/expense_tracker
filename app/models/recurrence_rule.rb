@@ -1,5 +1,5 @@
 class RecurrenceRule < ApplicationRecord
-
+  # TODO: Write recurrence builder templates auto suggestion
   TYPES = ['Daily', 'Weekly', 'Monthly', 'Yearly']
 
   serialize :rules

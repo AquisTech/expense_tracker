@@ -15,44 +15,52 @@ class Occurrence < ApplicationRecord
 
   def self.for(date)
     # TODO: Make week starting from monday. Change week function parameter accordingly
-    start_end_range_condition = 'starts_on <= :date AND (ends_on IS NULL OR ends_on >= :date)'
-    count_condition = ''
-    daily = "(recurrence_type = 'Daily' AND (DATEDIFF(:date, starts_on) % `interval`) = 0)"
-    weekly = "(recurrence_type = 'Weekly' AND (days = (DAYOFWEEK(:date) - 1)) AND (DATEDIFF(:date, starts_on) % (`interval` * 7)) = 0)"
-    monthly_day_of_month = "(
-            recurrence_type = 'Monthly' AND
-            weeks IS NULL AND
-            (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
-            PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
-          )"
-    monthly_day_of_week = "(
-            recurrence_type = 'Monthly' AND
-            weeks IS NOT NULL AND
-            days = (DAYOFWEEK(:date) - 1) AND
-            weeks IN (
-              WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1,
-              IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, NULL)
-            ) AND
-            PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
-          )"
-    yearly_day_of_month = "(
-            recurrence_type = 'Yearly' AND
-            weeks IS NULL AND
-            months = MONTH(:date) AND
-            (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL))
-          )"
-    yearly_day_of_week = "(
-            recurrence_type = 'Yearly' AND
-            weeks IS NOT NULL AND
-            months = MONTH(:date) AND
-            days = (DAYOFWEEK(:date) - 1) AND
+    start_end_count_conditions = "(
+            starts_on <= :date AND
             (
-              weeks IN (
-                WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1,
-                IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, NULL)
-              )
+              (ends_on IS NULL AND count IS NULL) OR
+              (ends_on >= :date AND count IS NULL) -- OR
+              -- (ends_on IS NULL AND count < exhausted_count) OR
+              -- (ends_on >= :date OR count <> exhausted_count) -- ends_on and count both present so whichever is over consider it end
             )
           )"
+    daily = "-- Daily
+            (recurrence_type = 'Daily' AND (DATEDIFF(:date, starts_on) % `interval`) = 0)"
+    weekly = "-- Weekly
+            (recurrence_type = 'Weekly' AND (days = (DAYOFWEEK(:date) - 1)) AND (DATEDIFF(:date, starts_on) % (`interval` * 7)) = 0)"
+    monthly_day_of_month = "-- Monthly day of month
+            (
+              recurrence_type = 'Monthly' AND
+              weeks IS NULL AND
+              (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
+              PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
+            )"
+    monthly_day_of_week = "-- Monthly day of week
+            -- create funct for week of month
+            (
+              recurrence_type = 'Monthly' AND
+              weeks IS NOT NULL AND
+              days = (DAYOFWEEK(:date) - 1) AND
+              weeks = IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, (WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1)) AND
+              PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
+            )"
+    yearly_day_of_month = "-- Yearly day of month
+            (
+              recurrence_type = 'Yearly' AND
+              weeks IS NULL AND
+              months = MONTH(:date) AND
+              (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
+              PERIOD_DIFF(EXTRACT(YEAR FROM :date), EXTRACT(YEAR FROM starts_on)) % `interval` = 0
+            )"
+    yearly_day_of_week = "-- Yearly day of week
+            (
+              recurrence_type = 'Yearly' AND
+              weeks IS NOT NULL AND
+              months = MONTH(:date) AND
+              days = (DAYOFWEEK(:date) - 1) AND
+              weeks = IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, (WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1)) AND
+              PERIOD_DIFF(EXTRACT(YEAR FROM :date), EXTRACT(YEAR FROM starts_on)) % `interval` = 0
+            )"
     Occurrence.find_by_sql([
       %Q{
         SELECT *,
@@ -70,27 +78,21 @@ class Occurrence < ApplicationRecord
         MONTH(:date) mon
         FROM occurrences
         WHERE
-          -- Daily
-          -- checked + starts_on and ends_on and count cond to be added
-          #{daily}
-          OR
-          -- Weekly
-          -- checked + starts_on and ends_on and count and interval cond to be added
-          #{weekly}
-          OR
-          -- Monthly day of month
-          -- checked + starts_on and ends_on and count and interval cond to be added
-          #{monthly_day_of_month}
-          OR
-          -- Monthly day of week
-          -- checked + starts_on and ends_on and count and interval cond to be added + create funct for week of month
-          #{monthly_day_of_week}
-          OR
-          -- Yearly day of month
-          #{yearly_day_of_month}
-          OR
-          -- Yearly day of week
-          #{yearly_day_of_week}
+          (
+            #{daily}
+            OR
+            #{weekly}
+            OR
+            #{monthly_day_of_month}
+            OR
+            #{monthly_day_of_week}
+            OR
+            #{yearly_day_of_month}
+            OR
+            #{yearly_day_of_week}
+          )
+          AND
+          #{start_end_count_conditions}
       },
       date: date
     ])

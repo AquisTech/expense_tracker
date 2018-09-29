@@ -89,6 +89,7 @@ if Rails.env.development?
     Yearly: [ # rules: {month_number => [day_numbers]}
               {interval: [1,2], rules: {'2' => ['1']}},
               {interval: [1,2], rules: {'2' => ['1', '5']}},
+              {interval: [1,2], rules: {'2' => ['15', '-1']}},
               {interval: [1,2], rules: {'2' => ['1', '5'], '4' => ['1', '5']}},
               {interval: [1,2], rules: {'2' => ['1'], '3' => ['3']}},
               {interval: [1,2], rules: {'2' => ['1', '6'], '3' => ['3', '9']}},

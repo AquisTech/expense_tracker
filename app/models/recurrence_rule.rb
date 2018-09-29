@@ -98,8 +98,8 @@ class RecurrenceRule < ApplicationRecord
     o.days = days
     o.weeks = weeks
     o.months = months
-    o.starts_on = starts_on
-    o.ends_on = ends_on
+    o.starts_on = o.calculate_starts_on(starts_on)
+    o.ends_on = o.calculate_ends_on(ends_on)
     o.count = count
     o.save
   end

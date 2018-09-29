@@ -93,4 +93,54 @@ class Occurrence < ApplicationRecord
       date: date
     ])
   end
+
+  def calculate_starts_on(date=nil)
+    return nil if date.nil?
+    case type
+    when 'Daily'
+      date
+    when 'Weekly'
+      date.date_of_next_wday(days)
+    when 'Monthly'
+      if weeks.nil?
+        date.date_of_next_nth_day(days)
+      else
+        date.date_of_next_nth_wday(weeks, days)
+      end
+    when 'Yearly'
+      if weeks.nil?
+        date.date_of_next_nth_month_day(months, days)
+      else
+        date.date_of_next_nth_month_wday(months, weeks, days)
+      end
+    else
+      # TODO: #FutureScope Add custom rule
+      raise 'Invalid Rule. TODO: Support custom rule'
+    end
+  end
+
+  def calculate_ends_on(date=nil)
+    return nil if date.nil?
+    case type
+    when 'Daily'
+      date
+    when 'Weekly'
+      date.date_of_last_wday(days)
+    when 'Monthly'
+      if weeks.nil?
+        date.date_of_last_nth_day(days)
+      else
+        date.date_of_last_nth_wday(weeks, days)
+      end
+    when 'Yearly'
+      if weeks.nil?
+        date.date_of_last_nth_month_day(months, days)
+      else
+        date.date_of_last_nth_month_wday(months, weeks, days)
+      end
+    else
+      # TODO: #FutureScope Add custom rule
+      raise 'Invalid Rule. TODO: Support custom rule'
+    end
+  end
 end

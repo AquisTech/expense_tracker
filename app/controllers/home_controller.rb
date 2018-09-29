@@ -20,8 +20,7 @@ class HomeController < ApplicationController
   # end
 
   def index
-    # @date = params[:date] || Date.today
-    @date = params[:date] || Date.today.beginning_of_month  - 6.months + 3.day
+    @date = Date.parse(params[:date]) || Date.today
     # TODO: transaction_purposes = TransactionPurpose.for(params[:date] || Date.today)
     occurrences = Occurrence.for(@date)
     # transaction = Transaction.new

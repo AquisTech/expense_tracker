@@ -3,11 +3,13 @@
   = "Count #{@transactions.count}"
   .button-group
     .input-group
-      = link_to 'Prev', 'javascript:void(0)', class: 'input-group-button button secondary'
-      = link_to 'Today', 'javascript:void(0)', class: 'input-group-button button primary'
-      = link_to 'Next', 'javascript:void(0)', class: 'input-group-button button secondary'
+      = link_to 'Yesterday', root_path(date: Date.yesterday), class: 'input-group-button button secondary'
+      = link_to 'Today', root_path(date: Date.today), class: 'input-group-button button primary'
+      = link_to 'Tomorrow', root_path(date: Date.tomorrow), class: 'input-group-button button secondary'
+      = link_to 'Prev', root_path(date: @date.prev_day), class: 'input-group-button button secondary'
       = date_field_tag :date, @date, class: 'input-group-field'
       = link_to 'Pick a date', 'javascript:void(0)', class: 'input-group-button button success'
+      = link_to 'Next', root_path(date: @date.next_day), class: 'input-group-button button secondary'
   .grid-x.grid-padding-x.callout.primary
     .small-3.cell
       %b Name

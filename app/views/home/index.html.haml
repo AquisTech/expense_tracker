@@ -2,14 +2,15 @@
   = "Selected Date #{@date} | #{@date.strftime("%A")}"
   = "Count #{@transactions.count}"
   .button-group
-    .input-group
-      = link_to 'Yesterday', root_path(date: Date.yesterday), class: 'input-group-button button secondary'
-      = link_to 'Today', root_path(date: Date.today), class: 'input-group-button button primary'
-      = link_to 'Tomorrow', root_path(date: Date.tomorrow), class: 'input-group-button button secondary'
-      = link_to 'Prev', root_path(date: @date.prev_day), class: 'input-group-button button secondary'
-      = date_field_tag :date, @date, class: 'input-group-field'
-      = link_to 'Pick a date', 'javascript:void(0)', class: 'input-group-button button success'
-      = link_to 'Next', root_path(date: @date.next_day), class: 'input-group-button button secondary'
+    = form_with url: '/', method: :get, local: true do |f|
+      .input-group
+        = link_to 'Yesterday', root_path(date: Date.yesterday), class: 'input-group-button button secondary'
+        = link_to 'Today', root_path(date: Date.today), class: 'input-group-button button primary'
+        = link_to 'Tomorrow', root_path(date: Date.tomorrow), class: 'input-group-button button secondary'
+        = link_to 'Prev', root_path(date: @date.prev_day), class: 'input-group-button button secondary'
+        = date_field_tag :date, @date, class: 'input-group-field'
+        = submit_tag 'Go to date', class: 'input-group-button button success'
+        = link_to 'Next', root_path(date: @date.next_day), class: 'input-group-button button secondary'
   .grid-x.grid-padding-x.callout.primary
     .small-3.cell
       %b Name
@@ -23,5 +24,5 @@
       %b Action
 - @transactions.each do |transaction|
   = # render 'transaction_form', transaction: transaction
-  = render 'oc_transaction_form', transaction: transaction
+  = render 'transaction_form', transaction: transaction
   %hr

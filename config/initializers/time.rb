@@ -13,7 +13,7 @@ class Time
   end
 
   def date_of_next_nth_day(day_number)
-    return self.end_of_month if day_number == -1
+    return self.end_of_month if day_number == -1 # TODO: Check if this can be moved to date_of_nth_day
     nth_day = self.date_of_nth_day(day_number)
     # 9     <     10      next 9
     # 10    <     10      current
@@ -22,7 +22,7 @@ class Time
   end
 
   def date_of_last_nth_day(day_number)
-    return self.last_month.end_of_month if day_number == -1
+    return self.last_month.end_of_month if day_number == -1 # TODO: Check if this can be moved to date_of_nth_day
     nth_day = self.date_of_nth_day(day_number)
     # 9      >     10        current
     # 10     >     10        current
@@ -51,12 +51,12 @@ class Time
 
   def date_of_next_nth_month_day(month_number, day_number)
     nth_month_day = self.date_of_nth_month_day(month_number, day_number)
-    nth_month_day < self ? nth_month_day.next_year : nth_month_day
+    nth_month_day < self ? nth_month_day.next_year : nth_month_day # TODO: Check for last day of FEB
   end
 
   def date_of_last_nth_month_day(month_number, day_number)
     nth_month_day = self.date_of_nth_month_day(month_number, day_number)
-    nth_month_day > self ? nth_month_day.last_year : nth_month_day
+    nth_month_day > self ? nth_month_day.last_year : nth_month_day # TODO: Check for last day of FEB
   end
 
   def date_of_nth_month_wday(month_number, week_number, wday_number)

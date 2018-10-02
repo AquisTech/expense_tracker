@@ -9,8 +9,9 @@ ruby '2.4.0'
 
 gem 'rails', '5.2.1'
 
-# Use MySQL as the database for Active Record
+# Use MySQL & PG as the database for Active Record
 gem 'mysql2'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets

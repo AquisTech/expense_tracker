@@ -45,6 +45,7 @@ class Time
   end
 
   def date_of_nth_month_day(month_number, day_number)
+    return self.change(month: month_number).end_of_month if day_number == -1
     self.change(month: month_number, day: day_number)
   end
 

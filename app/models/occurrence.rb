@@ -100,7 +100,7 @@ class Occurrence < ApplicationRecord
 
   def calculate_starts_on(date=nil)
     return nil if date.nil?
-    case type
+    case recurrence_type
     when 'Daily'
       date
     when 'Weekly'
@@ -125,7 +125,7 @@ class Occurrence < ApplicationRecord
 
   def calculate_ends_on(date=nil)
     return nil if date.nil?
-    case type
+    case recurrence_type
     when 'Daily'
       date
     when 'Weekly'

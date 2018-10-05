@@ -25,74 +25,69 @@ class Occurrence < ApplicationRecord
             )
           )"
     daily = "-- Daily
-            (recurrence_type = 'Daily' AND (DATEDIFF(:date, starts_on) % `interval`) = 0)"
+            (recurrence_type = 'Daily' AND (#{DATE_DIFF(':date', 'starts_on')} % `interval`) = 0)"
     weekly = "-- Weekly
-            (recurrence_type = 'Weekly' AND (days = (DAYOFWEEK(:date) - 1)) AND (DATEDIFF(:date, starts_on) % (`interval` * 7)) = 0)"
+            (recurrence_type = 'Weekly' AND (days = (#{DAY_OF_WEEK(':date')} - 1)) AND (#{DATE_DIFF(':date', 'starts_on')} % (`interval` * 7)) = 0)"
     monthly_day_of_month = "-- Monthly day of month
             (
               recurrence_type = 'Monthly' AND
               weeks IS NULL AND
-              (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
-              PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
+              days = #{DAY_OF_MONTH(':date')} AND
+              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
             )"
     monthly_day_of_week = "-- Monthly day of week
             -- create funct for week of month
             (
               recurrence_type = 'Monthly' AND
               weeks IS NOT NULL AND
-              days = (DAYOFWEEK(:date) - 1) AND
-              weeks = IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, (WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1)) AND
-              PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM :date), EXTRACT(YEAR_MONTH FROM starts_on)) % `interval` = 0
+              days = (#{DAY_OF_WEEK(':date')} - 1) AND
+              weeks = #{WEEK_OF_MONTH(':date')} AND
+              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
             )"
     yearly_day_of_month = "-- Yearly day of month
             (
               recurrence_type = 'Yearly' AND
               weeks IS NULL AND
-              months = MONTH(:date) AND
-              (days = DAY(:date) OR days = IF(LAST_DAY(:date) = :date, -1, NULL)) AND
-              PERIOD_DIFF(EXTRACT(YEAR FROM :date), EXTRACT(YEAR FROM starts_on)) % `interval` = 0
+              months = #{MONTH(':date')} AND
+              days = #{DAY_OF_MONTH(':date')} AND
+              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
             )"
     yearly_day_of_week = "-- Yearly day of week
             (
               recurrence_type = 'Yearly' AND
               weeks IS NOT NULL AND
-              months = MONTH(:date) AND
-              days = (DAYOFWEEK(:date) - 1) AND
-              weeks = IF(WEEK(:date, 2) - WEEK(LAST_DAY(:date), 2) = 0, -1, (WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1)) AND
-              PERIOD_DIFF(EXTRACT(YEAR FROM :date), EXTRACT(YEAR FROM starts_on)) % `interval` = 0
+              months = #{MONTH(':date')} AND
+              days = (#{DAY_OF_WEEK(':date')} - 1) AND
+              weeks = #{WEEK_OF_MONTH(':date')} AND
+              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
             )"
     Occurrence.find_by_sql([
       %Q{
         SELECT *,
-        DAY(:date) d,
-        WEEK(:date) w,
-        :date dt,
-        DATE_FORMAT(`starts_on`, '%Y-%m-%d') sd,
-        (:date - DATE_FORMAT(`starts_on`, '%Y-%m-%d')) diff,
-        ('2018-09-01' - "2018-02-18") diff2,
-        DATEDIFF('2018-09-01', "2018-02-18") diff3,
-        DATEDIFF(:date, starts_on) diff4,
-        DAYOFWEEK(:date) - 1 dow,
-        (WEEK(:date, 2) - WEEK(:date - INTERVAL DAY(:date) - 1 DAY, 2) + 1) wom,
-        EXTRACT(YEAR_MONTH FROM :date) ym,
-        MONTH(:date) mon
+        #{DAY(':date')} a,
+        #{MONTH(':date')} b,
+        #{WEEK(':date')} c,
+        #{LAST_DAY(':date')} d,
+        #{DAY_OF_WEEK(':date')} z,
+        #{DATE_DIFF(':date', 'starts_on')} x,
+        #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} a1,
+        #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} a2
         FROM occurrences
-        WHERE
-          (
-            #{daily}
-            OR
-            #{weekly}
-            OR
-            #{monthly_day_of_month}
-            OR
-            #{monthly_day_of_week}
-            OR
-            #{yearly_day_of_month}
-            OR
-            #{yearly_day_of_week}
-          )
-          AND
-          #{start_end_count_conditions}
+        WHERE (
+          #{daily}
+          OR
+          #{weekly}
+          OR
+          #{monthly_day_of_month}
+          OR
+          #{monthly_day_of_week}
+          OR
+          #{yearly_day_of_month}
+          OR
+          #{yearly_day_of_week}
+        )
+        AND
+        #{start_end_count_conditions}
       },
       date: date
     ])

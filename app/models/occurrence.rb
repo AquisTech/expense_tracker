@@ -41,7 +41,7 @@ class Occurrence < ApplicationRecord
               recurrence_type = 'Monthly' AND
               weeks IS NOT NULL AND
               days = (#{DAY_OF_WEEK(':date')} - 1) AND
-              weeks = #{WEEK_OF_MONTH(':date')} AND
+              weeks IN (#{WEEK_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
             )"
     yearly_day_of_month = "-- Yearly day of month
@@ -58,20 +58,24 @@ class Occurrence < ApplicationRecord
               weeks IS NOT NULL AND
               months = #{MONTH(':date')} AND
               days = (#{DAY_OF_WEEK(':date')} - 1) AND
-              weeks = #{WEEK_OF_MONTH(':date')} AND
+              weeks IN (#{WEEK_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
             )"
     Occurrence.find_by_sql([
       %Q{
         SELECT *,
-        #{DAY(':date')} a,
-        #{MONTH(':date')} b,
-        #{WEEK(':date')} c,
-        #{LAST_DAY(':date')} d,
-        #{DAY_OF_WEEK(':date')} z,
-        #{DATE_DIFF(':date', 'starts_on')} x,
-        #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} a1,
-        #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} a2
+        #{DAY(':date')} a1,
+        #{LAST_DAY(':date')} a2,
+        #{DATE_DIFF(':date', 'starts_on')} a3,
+        #{DAY_OF_WEEK(':date')} a4,
+        #{DAY_OF_MONTH(':date')} a5,
+        #{WEEK(':date')} a6,
+        #{WEEK_OF_FIRST_DAY_OF_MONTH(':date')} a7,
+        #{WEEK_OF_LAST_DAY_OF_MONTH(':date')} a8,
+        #{WEEK_OF_MONTH(':date')} a9,
+        #{MONTH(':date')} a10,
+        #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} a11,
+        #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} a12
         FROM occurrences
         WHERE (
           #{daily}

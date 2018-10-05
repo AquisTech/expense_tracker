@@ -7,6 +7,10 @@ module ActiveRecord::MysqlExtension
       "DAY(#{attr})"
     end
 
+    def LAST_DAY(attr)
+      "LAST_DAY(#{attr})"
+    end
+
     def DATE_DIFF(date1, date2)
       "DATEDIFF(#{date1}, #{date2})"
     end
@@ -16,19 +20,23 @@ module ActiveRecord::MysqlExtension
     end
 
     def DAY_OF_MONTH(attr)
-      "#{DAY(attr)}, IF(#{LAST_DAY(attr)} = :date, -1, NULL)"
-    end
-
-    def WEEK_OF_MONTH(attr)
-      "IF(#{WEEK(attr)} - WEEK(#{LAST_DAY(attr)}, 2) = 0, -1, (#{WEEK(attr)} - WEEK(:date - INTERVAL #{DAY(attr)} - 1 DAY, 2) + 1))"
-    end
-
-    def LAST_DAY(attr)
-      "LAST_DAY(#{attr})"
+      "#{DAY(attr)}, IF(#{LAST_DAY(attr)} = #{attr}, -1, NULL)"
     end
 
     def WEEK(attr)
       "WEEK(#{attr}, 2)"
+    end
+
+    def WEEK_OF_FIRST_DAY_OF_MONTH(attr)
+      "WEEK(#{attr} - INTERVAL #{DAY(attr)} - 1 DAY, 2)"
+    end
+
+    def WEEK_OF_LAST_DAY_OF_MONTH(attr)
+      "WEEK(#{LAST_DAY(attr)}, 2)"
+    end
+
+    def WEEK_OF_MONTH(attr)
+      "(#{WEEK(attr)} - #{WEEK_OF_FIRST_DAY_OF_MONTH(attr)} + 1), IF(#{WEEK(attr)} - #{WEEK_OF_LAST_DAY_OF_MONTH(attr)} = 0, -1, NULL)"
     end
 
     def MONTH(attr)

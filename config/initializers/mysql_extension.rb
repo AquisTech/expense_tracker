@@ -16,7 +16,7 @@ module ActiveRecord::MysqlExtension
     end
 
     def DAY_OF_MONTH(attr)
-      "IF(#{LAST_DAY(attr)} = :date, -1, #{DAY(attr)})"
+      "#{DAY(attr)}, IF(#{LAST_DAY(attr)} = :date, -1, NULL)"
     end
 
     def WEEK_OF_MONTH(attr)

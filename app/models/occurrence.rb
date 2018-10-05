@@ -32,7 +32,7 @@ class Occurrence < ApplicationRecord
             (
               recurrence_type = 'Monthly' AND
               weeks IS NULL AND
-              days = #{DAY_OF_MONTH(':date')} AND
+              days IN (#{DAY_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
             )"
     monthly_day_of_week = "-- Monthly day of week
@@ -49,7 +49,7 @@ class Occurrence < ApplicationRecord
               recurrence_type = 'Yearly' AND
               weeks IS NULL AND
               months = #{MONTH(':date')} AND
-              days = #{DAY_OF_MONTH(':date')} AND
+              days IN (#{DAY_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
             )"
     yearly_day_of_week = "-- Yearly day of week

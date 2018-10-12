@@ -43,12 +43,12 @@ module ActiveRecord::MysqlExtension
       "MONTH(#{attr})"
     end
 
-    def PERIOD_DIFF_IN_MONTHS(date1, date2)
-      "PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM #{date1}), EXTRACT(YEAR_MONTH FROM #{date2}))"
+    def PERIOD_DIFF_IN_MONTHS(end_date, start_date)
+      "PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM #{end_date}), EXTRACT(YEAR_MONTH FROM #{start_date}))"
     end
 
-    def PERIOD_DIFF_IN_YEARS(date1, date2)
-      "PERIOD_DIFF(EXTRACT(YEAR FROM #{date1}), EXTRACT(YEAR FROM #{date2}))"
+    def PERIOD_DIFF_IN_YEARS(end_date, start_date)
+      "PERIOD_DIFF(EXTRACT(YEAR FROM #{end_date}), EXTRACT(YEAR FROM #{start_date}))"
     end
   end
 end

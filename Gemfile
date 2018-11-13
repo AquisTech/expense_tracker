@@ -47,9 +47,14 @@ gem 'validates_timeliness', '~> 5.0.0.alpha2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13.0'
-  gem 'selenium-webdriver'
+  gem "factory_bot_rails"
+  gem "rspec-rails"
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "chromedriver-helper"
+  gem "database_cleaner"
+  gem "faker"
+  gem "shoulda-matchers", require: false
 end
 
 group :development do
@@ -59,6 +64,8 @@ group :development do
   gem 'overcommit'
   gem 'bundler-audit'
   gem 'haml-lint'
+  # gem 'niceql'
+  # gem 'pp_sql' # TODO: Modify and use
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

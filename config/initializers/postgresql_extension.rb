@@ -16,7 +16,7 @@ module ActiveRecord::PostgreSQLExtension
     end
 
     def DATE_DIFF(date1, date2)
-      "DATE_PART('day', DATE(#{date1}) - #{date2})"
+      "DATE_PART('day', DATE(#{date1}) - #{date2})::INTEGER"
     end
 
     def DAY_OF_WEEK(attr)
@@ -48,11 +48,15 @@ module ActiveRecord::PostgreSQLExtension
     end
 
     def PERIOD_DIFF_IN_MONTHS(end_date, start_date)
-      "#{PERIOD_DIFF_IN_YEARS(end_date, start_date)} * 12 + (DATE_PART('month', DATE(#{end_date})) - DATE_PART('month', #{start_date}))"
+      "#{PERIOD_DIFF_IN_YEARS(end_date, start_date)} * 12 + (DATE_PART('month', DATE(#{end_date})) - DATE_PART('month', #{start_date}))::INTEGER"
     end
 
     def PERIOD_DIFF_IN_YEARS(end_date, start_date)
-      "DATE_PART('year', DATE(#{end_date})) - DATE_PART('year', #{start_date})"
+      "DATE_PART('year', DATE(#{end_date})) - DATE_PART('year', #{start_date})::INTEGER"
+    end
+
+    def INTERVAL_COLUMN
+      "interval"
     end
   end
 end

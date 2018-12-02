@@ -25,15 +25,15 @@ class Occurrence < ApplicationRecord
             )
           )"
     daily = "-- Daily
-            (recurrence_type = 'Daily' AND (#{DATE_DIFF(':date', 'starts_on')} % `interval`) = 0)"
+            (recurrence_type = 'Daily' AND (#{DATE_DIFF(':date', 'starts_on')} % #{INTERVAL_COLUMN()}) = 0)"
     weekly = "-- Weekly
-            (recurrence_type = 'Weekly' AND (days = (#{DAY_OF_WEEK(':date')} - 1)) AND (#{DATE_DIFF(':date', 'starts_on')} % (`interval` * 7)) = 0)"
+            (recurrence_type = 'Weekly' AND (days = (#{DAY_OF_WEEK(':date')} - 1)) AND (#{DATE_DIFF(':date', 'starts_on')} % (#{INTERVAL_COLUMN()} * 7)) = 0)"
     monthly_day_of_month = "-- Monthly day of month
             (
               recurrence_type = 'Monthly' AND
               weeks IS NULL AND
               days IN (#{DAY_OF_MONTH(':date')}) AND
-              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
+              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"
     monthly_day_of_week = "-- Monthly day of week
             -- create funct for week of month
@@ -42,7 +42,7 @@ class Occurrence < ApplicationRecord
               weeks IS NOT NULL AND
               days = (#{DAY_OF_WEEK(':date')} - 1) AND
               weeks IN (#{WEEK_OF_MONTH(':date')}) AND
-              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % `interval` = 0
+              #{PERIOD_DIFF_IN_MONTHS(':date', 'starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"
     yearly_day_of_month = "-- Yearly day of month
             (
@@ -50,7 +50,7 @@ class Occurrence < ApplicationRecord
               weeks IS NULL AND
               months = #{MONTH(':date')} AND
               days IN (#{DAY_OF_MONTH(':date')}) AND
-              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
+              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"
     yearly_day_of_week = "-- Yearly day of week
             (
@@ -59,7 +59,7 @@ class Occurrence < ApplicationRecord
               months = #{MONTH(':date')} AND
               days = (#{DAY_OF_WEEK(':date')} - 1) AND
               weeks IN (#{WEEK_OF_MONTH(':date')}) AND
-              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % `interval` = 0
+              #{PERIOD_DIFF_IN_YEARS(':date', 'starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"
     Occurrence.find_by_sql([
       %Q{

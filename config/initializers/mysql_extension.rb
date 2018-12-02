@@ -50,6 +50,10 @@ module ActiveRecord::MysqlExtension
     def PERIOD_DIFF_IN_YEARS(end_date, start_date)
       "PERIOD_DIFF(EXTRACT(YEAR FROM #{end_date}), EXTRACT(YEAR FROM #{start_date}))"
     end
+
+    def INTERVAL_COLUMN
+      "`interval`"
+    end
   end
 end
 

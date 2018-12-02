@@ -1,20 +1,45 @@
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: root
+#   password: root
+
+# development:
+#   <<: *default
+#   database: expense_tracker_development
+
+# test:
+#   <<: *default
+#   database: expense_tracker_test
+
+# production:
+#   <<: *default
+#   database: expense_tracker_production
+#   username: readers_club
+#   password: <%= ENV['READERS_CLUB_DATABASE_PASSWORD'] %>
+
+##-----------------------------------------------------------------
 default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: root
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: localhost
 
 development:
   <<: *default
-  database: expense_tracker_development
+  database: et_dev
+  username: postgres
+  password: postgresdb
 
 test:
   <<: *default
-  database: expense_tracker_test
+  database: et_test
+  username: postgres
+  password: postgresdb
 
 production:
   <<: *default
-  database: expense_tracker_production
-  username: readers_club
-  password: <%= ENV['READERS_CLUB_DATABASE_PASSWORD'] %>
+  database: et_production
+  username: postgres
+  password: postgresdb

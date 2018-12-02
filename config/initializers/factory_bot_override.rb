@@ -1,4 +1,4 @@
-require "generators/factory_bot/model/model_generator"
+require "generators/factory_bot/model/model_generator" if defined?(FactoryBot)
 
 FactoryBot::Generators::ModelGenerator.class_eval do
   private

@@ -22,5 +22,5 @@ class Payment < ApplicationRecord
   validates :payment_mode, inclusion: {
                              in: proc { |p| p.account.payment_modes },
                              message: proc { |p| "is invalid for selected account. Supported payment modes are #{p.account.payment_modes.map { |pm| "'#{PAYMENT_MODES[pm.to_sym]}'" }.to_sentence }" }
-                           }
+                           }, if: proc { |p| p.account_id.present? }
 end

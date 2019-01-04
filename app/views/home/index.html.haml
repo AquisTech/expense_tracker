@@ -23,7 +23,9 @@
       %b Transfer
     .small-1.cell
       %b Action
+
+
 - @transactions.each do |transaction|
   = # render 'transaction_form', transaction: transaction
-  = render 'transaction_form', transaction: transaction
+  = render 'mobile_transaction_form', transaction: transaction
   %hr

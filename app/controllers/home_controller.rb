@@ -23,10 +23,10 @@ class HomeController < ApplicationController
     @date = Date.parse(params[:date]) rescue Date.today
     # TODO: transaction_purposes = TransactionPurpose.for(params[:date] || Date.today)
     occurrences = Occurrence.for(@date)
-    # transaction = Transaction.new
-    # transaction.payments.build
-    # @transactions = [transaction]
-    @transactions = []
+    transaction = Transaction.new
+    transaction.payments.build
+    @transactions = [transaction]
+    # @transactions = []
     # TODO: Keep new on top and filled ones below
     occurrences.each do |occurrence|
       tp = occurrence.transaction_purpose

@@ -95,7 +95,7 @@ $(document).on('turbolinks:load', function() {
   $('body').on('click', '.clone-fragment', function(e) {
     var blueprint = $(this).parents('.clonable-fragment');
     var clonedFragment = blueprint.clone();
-    clonedFragment.find('input, select').val(null);
+    clonedFragment.find('input[type!=submit], select').val(null);
     $.each(clonedFragment.find('input, select'), function() {
       var name = $(this).attr('name');
       name = name.replace(/[0-9]/, function(i) { return parseInt(i) + 1 })
@@ -103,6 +103,7 @@ $(document).on('turbolinks:load', function() {
     })
     clonedFragment.find('input:first').focus();
     blueprint.after(clonedFragment);
+    $(this).parents('.cell').next('.cell').remove();
     $(this).remove();
   });
   // Remove clonable fragment

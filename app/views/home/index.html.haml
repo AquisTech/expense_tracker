@@ -5,25 +5,14 @@
         = link_to 'Yesterday', root_path(date: Date.yesterday), title: Date.yesterday, class: 'input-group-button button secondary'
         = link_to 'Today', root_path(date: Date.today), title: Date.today, class: 'input-group-button button primary'
         = link_to 'Tomorrow', root_path(date: Date.tomorrow), title: Date.tomorrow, class: 'input-group-button button secondary'
+    .button-group
+      .input-group
         = link_to '<< Prev', root_path(date: @date.prev_day), title: @date.prev_day, class: 'input-group-button button secondary'
         = date_field_tag :date, @date, class: 'input-group-field'
-        = submit_tag 'Go to date', class: 'input-group-button button success'
+        = submit_tag 'Go', class: 'input-group-button button success'
         = link_to 'Next >>', root_path(date: @date.next_day), title: @date.next_day, class: 'input-group-button button secondary'
   %h3
-    = "Suggested expenses for #{@date}, #{@date.strftime("%A")}"
-    = "| Count #{@transactions.count}"
-  .grid-x.grid-padding-x.callout.primary
-    .small-3.cell
-      %b Name
-    .small-2.cell
-      %b Amount
-    .small-4.cell
-      %b Description
-    .small-2.cell
-      %b Transfer
-    .small-1.cell
-      %b Action
-
+    = "Suggested expenses for #{@date}, #{@date.strftime("%A")} | Count #{@transactions.count}"
 
 - @transactions.each do |transaction|
   = # render 'transaction_form', transaction: transaction

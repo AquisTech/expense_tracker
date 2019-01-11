@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery3
 //= require foundation
+//= require serviceworker-companion
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {

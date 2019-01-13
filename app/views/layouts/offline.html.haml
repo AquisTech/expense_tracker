@@ -5,7 +5,7 @@
 
     %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
 
-    %title= content_for?(:title) ? yield(:title) : 'ExpenseTracker'
+    %title= content_for?(:title) ? yield(:title) : 'ExpenseTracker(OFFLINE)'
 
     = csrf_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'

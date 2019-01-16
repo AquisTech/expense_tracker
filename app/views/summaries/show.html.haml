@@ -1,0 +1,17 @@
+%h3= "Total Expense for #{@date}, #{@date.strftime("%A")} : #{@transactions.sum(:amount)}"
+
+%table.striped.hover.table-striped.stack
+  %thead
+    %tr
+      %th Purpose
+      %th Description
+      %th Amount
+
+  %tbody
+    - @transactions.each do |transaction|
+      %tr
+        %td= transaction.transaction_purpose.name
+        %td= transaction.description
+        %td= transaction.amount
+
+

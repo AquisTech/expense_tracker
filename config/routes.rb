@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   resources :categories
   resources :account_balances
   resources :home
+  resource :summary
   root to: 'home#index'
 end

@@ -32,12 +32,12 @@ class TransactionsController < ApplicationController
   # TODO: Make this compatible for transcations/form
   # This action is called from home/index
   def update
-    if @transaction.update(transaction_params)
+    if transaction.update(transaction_params)
       flash[:success] = 'Transaction updated successfully.'
-      render :success, locals: { transaction: @transaction }
+      render :success, locals: { transaction: transaction }
     else
-      flash[:failure] = @transaction.errors.full_messages.to_sentence
-      render :failure, locals: { transaction: @transaction }
+      flash[:failure] = transaction.errors.full_messages.to_sentence
+      render :failure, locals: { transaction: transaction }
     end
   end
 
@@ -59,6 +59,6 @@ class TransactionsController < ApplicationController
     end
 
     def transaction_params
-      params.require(:transaction).permit(:amount, :description, :transaction_purpose_id, :transfer_id, payments_attributes: {})
+      params.require(:transaction).permit(:amount, :description, :transaction_purpose_id, :transfer_id, :transacted_at, payments_attributes: {})
     end
 end

@@ -1,10 +1,61 @@
-%h3= "Total Expense for #{@date}, #{@date.strftime("%A")} : #{@transactions.sum(:amount)}"
+.grid-container
+  - if params[:year]
+    = form_with url: summary_path, method: :get, local: true do |f|
+      .button-group.expanded
+        .input-group
+          = link_to 'Last Year', summary_path(year: Date.today.prev_year), title: Date.today.prev_year, class: 'input-group-button button secondary'
+          = link_to 'Current Year', summary_path(year: Date.today), title: Date.today, class: 'input-group-button button primary'
+          = link_to 'Next Year', summary_path(year: Date.today.next_year), title: Date.today.next_year, class: 'input-group-button button secondary'
+      .button-group
+        .input-group
+          = link_to '<< Prev', summary_path(year: @year.prev_year), title: @year.prev_year, class: 'input-group-button button secondary'
+          = date_field_tag :year, @year, class: 'input-group-field'
+          = submit_tag 'Go', class: 'input-group-button button success'
+          = link_to 'Next >>', summary_path(year: @year.next_year), title: @year.next_year, class: 'input-group-button button secondary'
+
+  - if params[:month]
+    = form_with url: summary_path, method: :get, local: true do |f|
+      .button-group.expanded
+        .input-group
+          = link_to 'Last Month', summary_path(month: Date.today.prev_month), title: Date.today.prev_month, class: 'input-group-button button secondary'
+          = link_to 'Today', summary_path(month: Date.today), title: Date.today, class: 'input-group-button button primary'
+          = link_to 'Next Month', summary_path(month: Date.today.next_month), title: Date.today.next_month, class: 'input-group-button button secondary'
+      .button-group
+        .input-group
+          = link_to '<< Prev', summary_path(month: @month.prev_month), title: @month.prev_month, class: 'input-group-button button secondary'
+          = date_field_tag :month, @month, class: 'input-group-field'
+          = submit_tag 'Go', class: 'input-group-button button success'
+          = link_to 'Next >>', summary_path(month: @month.next_month), title: @month.next_month, class: 'input-group-button button secondary'
+
+  - if params[:date]
+    = form_with url: summary_path, method: :get, local: true do |f|
+      .button-group.expanded
+        .input-group
+          = link_to 'Yesterday', summary_path(date: Date.yesterday), title: Date.yesterday, class: 'input-group-button button secondary'
+          = link_to 'Today', summary_path(date: Date.today), title: Date.today, class: 'input-group-button button primary'
+          = link_to 'Tomorrow', summary_path(date: Date.tomorrow), title: Date.tomorrow, class: 'input-group-button button secondary'
+      .button-group
+        .input-group
+          = link_to '<< Prev', summary_path(date: @date.prev_day), title: @date.prev_day, class: 'input-group-button button secondary'
+          = date_field_tag :date, @date, class: 'input-group-field'
+          = submit_tag 'Go', class: 'input-group-button button success'
+          = link_to 'Next >>', summary_path(date: @date.next_day), title: @date.next_day, class: 'input-group-button button secondary'
+
+%h3
+  = 'Total Expense for'
+  = "#{@date}, #{@date.strftime("%A")}" if params[:date]
+  = "#{@month.strftime('%B')}-#{@month.strftime('%Y')}" if @month
+  = @year.strftime('%Y') if @year
+  = 'is'
+  = @transactions.sum(:amount)
 
 %table.striped.hover.table-striped.stack
   %thead
     %tr
       %th Purpose
       %th Description
+      - if @month || @year
+        %th Transacted at
       %th Amount
 
   %tbody
@@ -12,6 +63,8 @@
       %tr
         %td= transaction.transaction_purpose.name
         %td= transaction.description
+        - if @month || @year
+          %td= transaction.transacted_at
         %td= transaction.amount
 
 

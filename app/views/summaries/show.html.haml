@@ -1,5 +1,5 @@
 .grid-container
-  - if params[:year]
+  - if @year
     = form_with url: summary_path, method: :get, local: true do |f|
       .button-group.expanded
         .input-group
@@ -13,7 +13,7 @@
           = submit_tag 'Go', class: 'input-group-button button success'
           = link_to 'Next >>', summary_path(year: @year.next_year), title: @year.next_year, class: 'input-group-button button secondary'
 
-  - if params[:month]
+  - if @month
     = form_with url: summary_path, method: :get, local: true do |f|
       .button-group.expanded
         .input-group
@@ -27,7 +27,7 @@
           = submit_tag 'Go', class: 'input-group-button button success'
           = link_to 'Next >>', summary_path(month: @month.next_month), title: @month.next_month, class: 'input-group-button button secondary'
 
-  - if params[:date]
+  - unless (@month || @year)
     = form_with url: summary_path, method: :get, local: true do |f|
       .button-group.expanded
         .input-group
@@ -42,11 +42,14 @@
           = link_to 'Next >>', summary_path(date: @date.next_day), title: @date.next_day, class: 'input-group-button button secondary'
 
 %h3
-  = 'Total Expense for'
-  = "#{@date}, #{@date.strftime("%A")}" if params[:date]
+  = 'Summary for'
+  = "#{@date}, #{@date.strftime("%A")}" unless (@month || @year)
   = "#{@month.strftime('%B')}-#{@month.strftime('%Y')}" if @month
   = @year.strftime('%Y') if @year
-  = 'is'
+  - unless (@month || @year)
+    = 'Estimated Expense:'
+    = @estimated_expense
+  = 'Actual Expense:'
   = @transactions.sum(:amount)
 
 %table.striped.hover.table-striped.stack

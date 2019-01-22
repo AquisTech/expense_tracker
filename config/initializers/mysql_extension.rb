@@ -52,7 +52,7 @@ module ActiveRecord::MysqlExtension
     end
 
     def INTERVAL_COLUMN
-      "`interval`"
+      "`occurrences.interval`"
     end
   end
 end

@@ -56,7 +56,7 @@ module ActiveRecord::PostgreSQLExtension
     end
 
     def INTERVAL_COLUMN
-      "interval"
+      "occurrences.interval"
     end
   end
 end

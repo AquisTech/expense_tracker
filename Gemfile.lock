@@ -54,6 +54,7 @@ GEM
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
+    bcrypt (3.1.12)
     bindex (0.5.0)
     builder (3.2.3)
     bundler-audit (0.6.0)
@@ -82,6 +83,13 @@ GEM
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    devise (4.5.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 6.0)
+      responders
+      warden (~> 1.2.3)
+    devise-foundation-views (0.1.1)
     diff-lcs (1.3)
     erubi (1.7.1)
     erubis (2.7.0)
@@ -161,6 +169,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
+    orm_adapter (0.5.0)
     overcommit (0.45.0)
       childprocess (~> 0.6, >= 0.6.3)
       iniparse (~> 1.4)
@@ -203,6 +212,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -275,6 +287,8 @@ GEM
     unicode-display_width (1.4.0)
     validates_timeliness (5.0.0.alpha3)
       timeliness (~> 0.3.8)
+    warden (1.2.7)
+      rack (>= 1.0)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -297,6 +311,8 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails
   database_cleaner
+  devise
+  devise-foundation-views
   factory_bot_rails
   faker
   foundation-rails

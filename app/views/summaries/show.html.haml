@@ -1,11 +1,17 @@
 .grid-container
+  = form_with url: summary_path, method: :get, local: true do |f|
+    .button-group.expanded
+      .input-group
+        = link_to 'Daily Summary', summary_path(date: Date.today), title: Date.today, class: 'input-group-button button secondary'
+        = link_to 'Monthly Summary', summary_path(month: Date.today), title: Date.today, class: 'input-group-button button primary'
+        = link_to 'Annual Summary', summary_path(year: Date.today.year), title: Date.today.year, class: 'input-group-button button secondary'
   - if @year
     = form_with url: summary_path, method: :get, local: true do |f|
       .button-group.expanded
         .input-group
-          = link_to 'Last Year', summary_path(year: Date.today.prev_year), title: Date.today.prev_year, class: 'input-group-button button secondary'
-          = link_to 'Current Year', summary_path(year: Date.today), title: Date.today, class: 'input-group-button button primary'
-          = link_to 'Next Year', summary_path(year: Date.today.next_year), title: Date.today.next_year, class: 'input-group-button button secondary'
+          = link_to 'Last Year', summary_path(year: Date.today.year - 1.year), title: Date.today.year - 1.year, class: 'input-group-button button secondary'
+          = link_to 'Current Year', summary_path(year: Date.today.year), title: Date.today.year, class: 'input-group-button button primary'
+          = link_to 'Next Year', summary_path(year: Date.today.year + 1.year), title: Date.today.year + 1.year, class: 'input-group-button button secondary'
       .button-group
         .input-group
           = link_to '<< Prev', summary_path(year: @year.prev_year), title: @year.prev_year, class: 'input-group-button button secondary'

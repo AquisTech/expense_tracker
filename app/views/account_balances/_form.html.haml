@@ -21,6 +21,6 @@
       = select_year object.year || Date.today, prefix: :account_balance, class: 'input-group-field small-2'
   .row
     = f.label :account_id
-    = f.collection_select :account_id, Account.all, :id, :name, id: :account_balance_account_id
+    = f.collection_select :account_id, current_user.accounts, :id, :name, id: :account_balance_account_id
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

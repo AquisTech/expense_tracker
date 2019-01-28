@@ -38,7 +38,7 @@
                 %label= transaction.transaction_purpose.name
                 = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
               - else
-                = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name
+                = f.collection_select :transaction_purpose_id, current_user.transaction_purposes, :id, :name
               = f.hidden_field :transacted_at, value: @date
             .medium-6.large-4.cell
               %label
@@ -53,7 +53,7 @@
               .medium-6.large-4.cell
                 = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode'}, class: :payment_mode_select
               .medium-6.large-4.cell
-                = p.select :account_id, Account.all.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
+                = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
               .medium-6.large-3.cell
                 = p.amount_field :amount, currency: '&#8377;'
               .medium-6.large-1.cell

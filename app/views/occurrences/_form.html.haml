@@ -33,6 +33,6 @@
     = f.number_field :count, id: :occurrence_count
   .row
     = f.label :recurrence_rule_id
-    = f.collection_select :recurrence_rule_id, RecurrenceRule.all, :id, :humanize, id: :occurrence_recurrence_rule_id
+    = f.collection_select :recurrence_rule_id, current_user.recurrence_rules, :id, :humanize, id: :occurrence_recurrence_rule_id
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

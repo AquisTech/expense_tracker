@@ -34,6 +34,6 @@
     = f.text_area :rules, id: :recurrence_rule_rules
   .row
     = f.label :transaction_purpose_id
-    = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :recurrence_rule_transaction_purpose_id
+    = f.collection_select :transaction_purpose_id, current_user.transaction_purposes, :id, :name, id: :recurrence_rule_transaction_purpose_id
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

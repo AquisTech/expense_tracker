@@ -13,9 +13,9 @@
     = f.text_field :description, id: :transaction_description
   .row
     = f.label :transaction_purpose_id
-    = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name, id: :transaction_transaction_purpose_id
+    = f.collection_select :transaction_purpose_id, current_user.transaction_purposes, :id, :name, id: :transaction_transaction_purpose_id
   .row
     = f.label :transfer_id
-    = f.collection_select :transfer_id, Transfer.all, :id, :name, id: :transaction_transfer_id
+    = f.collection_select :transfer_id, current_user.transfers, :id, :name, id: :transaction_transfer_id
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

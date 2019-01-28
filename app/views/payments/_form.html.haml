@@ -7,13 +7,13 @@
           %li= message
   .row
     = f.label :transaction_id
-    = f.collection_select :transaction_id, Transaction.all, :id, :description, id: :payment_transaction_id
+    = f.collection_select :transaction_id, current_user.transactions, :id, :description, id: :payment_transaction_id
   .row
     = f.label :amount
     = f.amount_field :amount, id: :payment_amount, currency: '&#8377;'
   .row
     = f.label :account_id
-    = f.collection_select :account_id, Account.all, :id, :name, id: :payment_account_id
+    = f.collection_select :account_id, current_user.accounts, :id, :name, id: :payment_account_id
   .row
     = f.label :payment_mode
     = f.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, id: :payment_payment_mode

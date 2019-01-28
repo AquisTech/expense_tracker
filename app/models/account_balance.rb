@@ -1,5 +1,6 @@
 class AccountBalance < ApplicationRecord
   belongs_to :account
+  belongs_to :user
 
   # TODO: Add callback for converting amount to paise
   # TODO: Add gem to handle currency/money related stuff

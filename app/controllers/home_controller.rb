@@ -22,8 +22,8 @@ class HomeController < ApplicationController
   def index
     @date = Date.parse(params[:date]) rescue Date.today
     # TODO: transaction_purposes = TransactionPurpose.for(params[:date] || Date.today)
-    occurrences = Occurrence.for(@date)
-    transaction = Transaction.new
+    occurrences = current_user.occurrences.for(@date)
+    transaction = current_user.transactions.new
     transaction.payments.build
     @transactions = [transaction]
     # @transactions = []
@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     occurrences.each do |occurrence|
       tp = occurrence.transaction_purpose
       if tp.transactions.present?
-        tp.transactions.each { |t| @transactions << t }
+        tp.transactions.where(transacted_at: @date.all_day).each { |t| @transactions << t }
       else
         transaction = tp.transactions.build
         transaction.payments.build

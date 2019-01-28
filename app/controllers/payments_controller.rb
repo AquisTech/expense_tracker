@@ -2,16 +2,16 @@ class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @payments = Payment.all
+    @payments = current_user.payments
   end
 
   def new
-    @payment = Payment.new
+    @payment = current_user.payments.new
     render layout: false
   end
 
   def create
-    @payment = Payment.new(payment_params)
+    @payment = current_user.payments.new(payment_params)
     if @payment.save
       redirect_to payments_url, notice: 'Payment was successfully created.'
     else
@@ -42,7 +42,7 @@ class PaymentsController < ApplicationController
 
   private
     def set_payment
-      @payment = Payment.find(params[:id])
+      @payment = current_user.payments.find(params[:id])
     end
 
     def payment_params

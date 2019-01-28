@@ -2,16 +2,16 @@ class RecurrenceRulesController < ApplicationController
   before_action :set_recurrence_rule, only: [:show, :edit, :update, :destroy]
 
   def index
-    @recurrence_rules = RecurrenceRule.first(30) + RecurrenceRule.last(30)
+    @recurrence_rules = current_user.recurrence_rules
   end
 
   def new
-    @recurrence_rule = RecurrenceRule.new
+    @recurrence_rule = current_user.recurrence_rules.new
     render layout: false
   end
 
   def create
-    @recurrence_rule = RecurrenceRule.new(recurrence_rule_params)
+    @recurrence_rule = current_user.recurrence_rules.new(recurrence_rule_params)
     if @recurrence_rule.save
       redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully created.'
     else
@@ -42,7 +42,7 @@ class RecurrenceRulesController < ApplicationController
 
   private
     def set_recurrence_rule
-      @recurrence_rule = RecurrenceRule.find(params[:id])
+      @recurrence_rule = current_user.recurrence_rules.find(params[:id])
     end
 
     def recurrence_rule_params

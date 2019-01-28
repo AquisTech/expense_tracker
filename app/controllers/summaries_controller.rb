@@ -9,7 +9,9 @@ class SummariesController < ApplicationController
     else
       Date.parse(params[:date]) rescue Date.today
     end
-    @transactions = Transaction.where(transacted_at: @date)
-    @estimated_expense = Occurrence.joins(:recurrence_rule).joins("INNER JOIN transaction_purposes ON recurrence_rules.transaction_purpose_id = transaction_purposes.id").for(@date).sum(:estimate) unless (@month || @year)
+    @transactions = current_user.transactions.where(transacted_at: @date)
+    @estimated_expense = current_user.occurrences.joins(:recurrence_rule)
+                           .joins("INNER JOIN transaction_purposes ON recurrence_rules.transaction_purpose_id = transaction_purposes.id")
+                           .for(@date).sum(:estimate) unless (@month || @year)
   end
 end

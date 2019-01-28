@@ -2,18 +2,17 @@ class TransactionPurposesController < ApplicationController
   before_action :set_transaction_purpose, only: [:show, :edit, :update, :destroy]
 
   def index
-    # @transaction_purposes = TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Daily'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Weekly'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Monthly'}).first(10) + TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Yearly'}).first(10)
-    @transaction_purposes = TransactionPurpose.joins(:recurrence_rule).where(recurrence_rules: {type: 'Yearly'}).first(100)
+    @transaction_purposes = current_user.transaction_purposes
   end
 
   def new
-    @transaction_purpose = TransactionPurpose.new
+    @transaction_purpose = current_user.transaction_purposes.new
     @transaction_purpose.build_recurrence_rule(type: 'Daily', interval: 1)
     render layout: false
   end
 
   def create
-    @transaction_purpose = TransactionPurpose.new(transaction_purpose_params)
+    @transaction_purpose = current_user.transaction_purposes.new(transaction_purpose_params)
     if @transaction_purpose.save
       redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully created.'
     else
@@ -55,13 +54,13 @@ class TransactionPurposesController < ApplicationController
   end
 
   def get_estimate
-    tp = TransactionPurpose.find(params[:id])
+    tp = current_user.transaction_purposes.find(params[:id])
     render json: tp.estimate, status: :ok
   end
 
   private
     def set_transaction_purpose
-      @transaction_purpose = TransactionPurpose.find(params[:id])
+      @transaction_purpose = current_user.transaction_purposes.find(params[:id])
     end
 
     def transaction_purpose_params

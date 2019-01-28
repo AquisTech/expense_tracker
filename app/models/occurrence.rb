@@ -1,5 +1,6 @@
 class Occurrence < ApplicationRecord
   # TODO: Rename columns to singularised
+  belongs_to :user
   belongs_to :recurrence_rule
   delegate :transaction_purpose, to: :recurrence_rule
   delegate :humanize, to: :recurrence_rule

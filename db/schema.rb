@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_24_231237) do
+ActiveRecord::Schema.define(version: 2019_01_28_220959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,9 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["account_id"], name: "index_account_balances_on_account_id"
+    t.index ["user_id"], name: "index_account_balances_on_user_id"
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -35,6 +37,8 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.text "payment_modes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -55,7 +59,9 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "recurrence_rule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["recurrence_rule_id"], name: "index_occurrences_on_recurrence_rule_id"
+    t.index ["user_id"], name: "index_occurrences_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -65,8 +71,10 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["transaction_id"], name: "index_payments_on_transaction_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "recurrence_rules", force: :cascade do |t|
@@ -79,7 +87,9 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "transaction_purpose_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["transaction_purpose_id"], name: "index_recurrence_rules_on_transaction_purpose_id"
+    t.index ["user_id"], name: "index_recurrence_rules_on_user_id"
   end
 
   create_table "sub_categories", force: :cascade do |t|
@@ -96,7 +106,9 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "sub_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["sub_category_id"], name: "index_transaction_purposes_on_sub_category_id"
+    t.index ["user_id"], name: "index_transaction_purposes_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -107,8 +119,10 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "transacted_at", null: false
+    t.bigint "user_id"
     t.index ["transaction_purpose_id"], name: "index_transactions_on_transaction_purpose_id"
     t.index ["transfer_id"], name: "index_transactions_on_transfer_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "transfers", force: :cascade do |t|
@@ -118,8 +132,10 @@ ActiveRecord::Schema.define(version: 2019_01_24_231237) do
     t.bigint "destination_account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["destination_account_id"], name: "index_transfers_on_destination_account_id"
     t.index ["source_account_id"], name: "index_transfers_on_source_account_id"
+    t.index ["user_id"], name: "index_transfers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

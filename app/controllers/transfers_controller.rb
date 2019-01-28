@@ -2,16 +2,16 @@ class TransfersController < ApplicationController
   before_action :set_transfer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transfers = Transfer.all
+    @transfers = current_user.transfers
   end
 
   def new
-    @transfer = Transfer.new
+    @transfer = current_user.transfers.new
     render layout: false
   end
 
   def create
-    @transfer = Transfer.new(transfer_params)
+    @transfer = current_user.transfers.new(transfer_params)
     if @transfer.save
       redirect_to transfers_url, notice: 'Transfer was successfully created.'
     else
@@ -42,7 +42,7 @@ class TransfersController < ApplicationController
 
   private
     def set_transfer
-      @transfer = Transfer.find(params[:id])
+      @transfer = current_user.transfers.find(params[:id])
     end
 
     def transfer_params

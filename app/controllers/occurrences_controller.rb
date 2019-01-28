@@ -2,16 +2,16 @@ class OccurrencesController < ApplicationController
   before_action :set_occurrence, only: [:show, :edit, :update, :destroy]
 
   def index
-    @occurrences = Occurrence.all
+    @occurrences = current_user.occurrences
   end
 
   def new
-    @occurrence = Occurrence.new
+    @occurrence = current_user.occurrences.new
     render layout: false
   end
 
   def create
-    @occurrence = Occurrence.new(occurrence_params)
+    @occurrence = current_user.occurrences.new(occurrence_params)
     if @occurrence.save
       redirect_to occurrences_url, notice: 'Occurrence was successfully created.'
     else
@@ -42,7 +42,7 @@ class OccurrencesController < ApplicationController
 
   private
     def set_occurrence
-      @occurrence = Occurrence.find(params[:id])
+      @occurrence = current_user.occurrences.find(params[:id])
     end
 
     def occurrence_params

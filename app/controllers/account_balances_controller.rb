@@ -2,16 +2,16 @@ class AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy]
 
   def index
-    @account_balances = AccountBalance.all
+    @account_balances = current_user.account_balances
   end
 
   def new
-    @account_balance = AccountBalance.new
+    @account_balance = current_user.account_balances.new
     render layout: false
   end
 
   def create
-    @account_balance = AccountBalance.new(account_balance_params)
+    @account_balance = current_user.account_balances.new(account_balance_params)
     if @account_balance.save
       redirect_to account_balances_url, notice: 'Account balance was successfully created.'
     else
@@ -42,7 +42,7 @@ class AccountBalancesController < ApplicationController
 
   private
     def set_account_balance
-      @account_balance = AccountBalance.find(params[:id])
+      @account_balance = current_user.account_balances.find(params[:id])
     end
 
     def account_balance_params

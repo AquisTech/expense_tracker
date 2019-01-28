@@ -10,10 +10,10 @@ class Payment < ApplicationRecord
     CQ: 'Cheque',
     CS: 'Cash'
   }
-
   belongs_to :transaxion, class_name: 'Transaction', inverse_of: :payments, foreign_key: :transaction_id # Workaround for error "You tried to define an association named transaction on the model Payment, but this will conflict with a method transaction already defined by Active Record. Please choose a different association name."
   # TODO: Change `Transaxion` must exists message appropriately
   belongs_to :account
+  belongs_to :user
 
   # TODO: Add callback for converting amount to paise
 

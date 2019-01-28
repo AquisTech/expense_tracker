@@ -16,6 +16,7 @@ class RecurrenceRule < ApplicationRecord
 
   has_many :occurrences, dependent: :destroy
   belongs_to :transaction_purpose # TODO: Remove transaction_purpose_id from RecurrenceRule
+  belongs_to :user
 
   # Workaround to get forms working with STI child object
   def self.inherited(child)

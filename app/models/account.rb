@@ -2,6 +2,7 @@ class Account < ApplicationRecord
 
   serialize :payment_modes
 
+  belongs_to :user
   has_many :account_balances
   has_many :transactions
   has_many :transfers

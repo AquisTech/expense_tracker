@@ -2,6 +2,7 @@ class Transaction < ApplicationRecord
 
   belongs_to :transaction_purpose
   # belongs_to :transfer # TODO: Make transfer association nullable
+  belongs_to :user
 
   has_many :payments, dependent: :destroy, inverse_of: :transaxion # TODO: Check if destroy is correct or we have to use nullify to maintain history
 

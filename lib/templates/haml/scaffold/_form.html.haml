@@ -7,24 +7,24 @@
           %li= message
 <%- attributes = singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') %><% attributes.values.each do |attribute| -%>
   .row
-  <%- if attribute.name =~ /password/ -%>
+  <%- if attribute.name == 'password' -%>
     = f.label :password
-    = f.password_field :password, id: :<%= field_id(:password) %>
+    = f.password_field :password
 
   .row
     = f.label :password_confirmation
-    = f.password_field :password_confirmation, id: :<%= field_id(:password_confirmation) %>
+    = f.password_field :password_confirmation
   <%- else -%>
     = f.label :<%= attribute.name %>
     <%- if attribute.name =~ /_id$/ -%>
-    = f.collection_select :<%= attribute.name %>, <%= attribute.name.classify.gsub(/Id$/, '') %>.all, :id, :name, id: :<%= field_id(attribute.name) %>
+    = f.collection_select :<%= attribute.name %>, <%= attribute.name.classify.gsub(/Id$/, '') %>.all, :id, :name
     <%- elsif attribute.name =~ /amount/ -%>
-    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>, currency: '&#8377;' # TODO: Check if `id` passed is correctly used
+    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, currency: '&#8377;' # TODO: Check if `id` passed is correctly used
     <%- elsif attribute.type =~ /datetime|timestamp/ -%>
     .input-group
-      = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, {order: [:day, :month, :year], date_separator: ' / '}, id: :<%= field_id(attribute.name) %>, class: 'input-group-field small-2'
+      = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
     <%- else -%>
-    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>, id: :<%= field_id(attribute.name) %>
+    = f.<%= field_type(attribute.name, attribute.type) %> :<%= attribute.name %>
     <%- end -%>
   <%- end -%>
 <%- end -%>

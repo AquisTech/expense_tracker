@@ -1,0 +1,67 @@
+= form_with(model: object, remote: true) do |f|
+  - if object.errors.any?
+    #error_explanation
+      %p= "#{pluralize(object.errors.count, "error")} prohibited this User from being saved:"
+      %ul
+        - object.errors.full_messages.each do |message|
+          %li= message
+  .row
+    = f.label :email
+    = f.email_field :email
+  .row
+    = f.label :encrypted_password
+    = f.text_field :encrypted_password
+  .row
+    = f.label :reset_password_token
+    = f.text_field :reset_password_token
+  .row
+    = f.label :reset_password_sent_at
+    .input-group
+      = f.datetime_select :reset_password_sent_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :remember_created_at
+    .input-group
+      = f.datetime_select :remember_created_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :sign_in_count
+    = f.number_field :sign_in_count
+  .row
+    = f.label :current_sign_in_at
+    .input-group
+      = f.datetime_select :current_sign_in_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :last_sign_in_at
+    .input-group
+      = f.datetime_select :last_sign_in_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :current_sign_in_ip
+    = f.text_field :current_sign_in_ip
+  .row
+    = f.label :last_sign_in_ip
+    = f.text_field :last_sign_in_ip
+  .row
+    = f.label :confirmation_token
+    = f.text_field :confirmation_token
+  .row
+    = f.label :confirmed_at
+    .input-group
+      = f.datetime_select :confirmed_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :confirmation_sent_at
+    .input-group
+      = f.datetime_select :confirmation_sent_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  .row
+    = f.label :unconfirmed_email
+    = f.email_field :unconfirmed_email
+  .row
+    = f.label :failed_attempts
+    = f.number_field :failed_attempts
+  .row
+    = f.label :unlock_token
+    = f.text_field :unlock_token
+  .row
+    = f.label :locked_at
+    .input-group
+      = f.datetime_select :locked_at, {order: [:day, :month, :year], date_separator: ' / '}, class: 'input-group-field small-2'
+  = render 'shared/timestamps', f: f # TODO: Add this partial to generator
+  = render 'shared/reveal_footer', f: f # TODO: Add this partial to generator

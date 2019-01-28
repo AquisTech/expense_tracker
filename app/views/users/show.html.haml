@@ -1,0 +1,63 @@
+.row
+  %strong Id:
+  = @user.id
+.row
+  %strong Email:
+  = @user.email
+.row
+  %strong Encrypted password:
+  = @user.encrypted_password
+.row
+  %strong Reset password token:
+  = @user.reset_password_token
+.row
+  %strong Reset password sent at:
+  = @user.reset_password_sent_at
+.row
+  %strong Remember created at:
+  = @user.remember_created_at
+.row
+  %strong Sign in count:
+  = @user.sign_in_count
+.row
+  %strong Current sign in at:
+  = @user.current_sign_in_at
+.row
+  %strong Last sign in at:
+  = @user.last_sign_in_at
+.row
+  %strong Current sign in ip:
+  = @user.current_sign_in_ip
+.row
+  %strong Last sign in ip:
+  = @user.last_sign_in_ip
+.row
+  %strong Confirmation token:
+  = @user.confirmation_token
+.row
+  %strong Confirmed at:
+  = @user.confirmed_at
+.row
+  %strong Confirmation sent at:
+  = @user.confirmation_sent_at
+.row
+  %strong Unconfirmed email:
+  = @user.unconfirmed_email
+.row
+  %strong Failed attempts:
+  = @user.failed_attempts
+.row
+  %strong Unlock token:
+  = @user.unlock_token
+.row
+  %strong Locked at:
+  = @user.locked_at
+.row
+  %strong Created at:
+  = @user.created_at
+.row
+  %strong Updated at:
+  = @user.updated_at
+.row
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_user_path(@user)}
+  = close_reveal_button # TODO: Add this method to be copied via generator

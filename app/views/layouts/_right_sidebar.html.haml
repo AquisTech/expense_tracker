@@ -5,11 +5,5 @@
       .card-section
         = current_user.email
   %ul.menu.vertical
-    %li
-      %a{:href => "#"} Right One
-    %li
-      %a{:href => "#"} Two
-    %li
-      %a{:href => "#"} Three
-    %li
-      %a{:href => "#"} Four
+    = render 'devise/menu/registration_items'
+    = render 'devise/menu/login_items'

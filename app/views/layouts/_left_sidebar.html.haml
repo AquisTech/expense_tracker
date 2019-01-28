@@ -1,7 +1,18 @@
 #offCanvasLeft.off-canvas.position-left{'data-off-canvas': '', 'data-transition': 'overlap'}
   %ul.menu.vertical
+    // Access for all
     %li= link_to 'Home', root_path
-    - (ActiveRecord::Base.connection.tables - ['schema_migrations', 'ar_internal_metadata']).each do |model|
+    // Access for Admins only
+    - ['categories', 'sub_categories', 'users'].each do |model|
       %li
         = link_to model.titleize, send("#{model}_path")
+    // Access for all
+    - ['accounts', 'account_balances', 'transaction_purposes'].each do |model|
+      %li
+        = link_to model.titleize, send("#{model}_path")
+    // Detailed access - need to think
+    - ['transactions', 'transfers', 'payments', 'recurrence_rules', 'occurrences'].each do |model|
+      %li
+        = link_to model.titleize, send("#{model}_path")
+    // Access for all
     %li= link_to 'Summary', summary_path

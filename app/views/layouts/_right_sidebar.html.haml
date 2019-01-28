@@ -1,4 +1,9 @@
-#offCanvasRight.off-canvas.position-right{"data-off-canvas" => ""}
+#offCanvasRight.off-canvas.position-right{"data-off-canvas" => "", 'data-transition': 'overlap'}
+  - if user_signed_in?
+    .card
+      = image_tag 'rupee'
+      .card-section
+        = current_user.email
   %ul.menu.vertical
     %li
       %a{:href => "#"} Right One

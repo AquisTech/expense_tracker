@@ -1,9 +1,17 @@
 #offCanvasRight.off-canvas.position-right{"data-off-canvas" => "", 'data-transition': 'overlap'}
   - if user_signed_in?
     .card
-      = image_tag 'rupee'
+      = image_tag current_user.image_url.present? ? current_user.image_url : 'rupee'
+      .card-section
+        = current_user.name
       .card-section
         = current_user.email
+      .card-section
+        = current_user.gender
+      .card-section
+        = current_user.locale
+      .card-section
+        = current_user.currency
   %ul.menu.vertical
     = render 'devise/menu/registration_items'
     = render 'devise/menu/login_items'

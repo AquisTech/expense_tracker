@@ -16,6 +16,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
     user.name = auth.info.name unless user.name.present?
+    user.password = SecureRandom.hex(6) unless user.encrypted_password.present?
     user.provider = auth.provider unless user.provider.present?
     user.uid = auth.uid unless user.uid.present?
     user.image_url = auth.info.image unless user.image_url.present?

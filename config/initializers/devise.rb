@@ -260,7 +260,7 @@ Devise.setup do |config|
   config.omniauth :google_oauth2,
     ENV['GOOGLE_CLIENT_ID'], ['GOOGLE_CLIENT_SECRET'],
     {
-      scope: "contacts.readonly,userinfo.email,userinfo.profile,user.phonenumbers.read,user.birthday.read,plus.login,tasks"
+      scope: "userinfo.email,userinfo.profile,contacts.readonly,user.phonenumbers.read,user.birthday.read,plus.login"
     }
 
   # ==> Warden configuration

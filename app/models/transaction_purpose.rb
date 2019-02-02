@@ -15,4 +15,8 @@ class TransactionPurpose < ApplicationRecord
   def humanize
     recurrence_rule.humanize
   end
+
+  def sign_class
+    credit? ? 'plus' : 'minus'
+  end
 end

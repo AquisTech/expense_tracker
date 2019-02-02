@@ -73,6 +73,8 @@
         %td= transaction.description
         - if @month || @year
           %td= transaction.transacted_at
-        %td= transaction.amount
+        %td{ class: transaction.credit? ? 'text-success' : 'text-alert' }
+          = transaction.sign
+          = transaction.amount
 
 

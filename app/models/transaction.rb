@@ -13,8 +13,14 @@ class Transaction < ApplicationRecord
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0, equal_to: proc { |t| t.total_payments_amount } } # TODO: Add gem to handle currency/money related stuff
   validates :description, presence: true
 
-  def total_payments_amount
+  before_validation { self.credit = self.transaction_purpose.credit }
+
+  def total_payments_amount # TODO: Change error message as 'Sum of payments must be equal to transaction amount.'
     payments.sum(&:amount)
+  end
+
+  def sign
+    credit? ? '+' : '-'
   end
   # TODO: Add tags to transactions
 end

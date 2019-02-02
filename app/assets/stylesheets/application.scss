@@ -85,3 +85,20 @@
   95% { left: 120%; }
   to { left: 100%; }
 }
+.input-group {
+  .input-group-inset {
+    &.plus:before {
+      position: relative;
+      left: 37px;
+      content: '+'
+    }
+    &.minus:before {
+      position: relative;
+      left: 35px;
+      content: '-'
+    }
+    + input {
+      padding-left: 15px;
+    }
+  }
+}

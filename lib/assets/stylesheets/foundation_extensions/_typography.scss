@@ -1,0 +1,23 @@
+@mixin foundation-typography-extensions {
+  .text-default {
+    color: $white;
+  }
+  .text-muted {
+    color: #777;
+  }
+  .text-primary {
+    color: $primary-color;
+  }
+  .text-secondary {
+    color: $secondary-color;
+  }
+  .text-alert {
+    color: $alert-color;
+  }
+  .text-warning {
+    color: $warning-color;
+  }
+  .text-success {
+    color: $success-color;
+  }
+}

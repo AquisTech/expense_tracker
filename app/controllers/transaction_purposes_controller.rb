@@ -13,6 +13,7 @@ class TransactionPurposesController < ApplicationController
 
   def create
     @transaction_purpose = current_user.transaction_purposes.new(transaction_purpose_params)
+    @transaction_purpose.recurrence_rule.user_id = current_user.id
     if @transaction_purpose.save
       redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully created.'
     else

@@ -95,6 +95,7 @@ class RecurrenceRule < ApplicationRecord
   def create_occurrence(days, weeks: nil, months: nil)
     o = occurrences.build
     o.recurrence_type = type
+    o.user_id = user_id
     o.interval = interval # TODO: Check interval and days logic
     o.days = days
     o.weeks = weeks

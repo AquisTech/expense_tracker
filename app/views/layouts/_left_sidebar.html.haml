@@ -4,16 +4,21 @@
       // Access for all
       %li= link_to 'Home', root_path
       // Access for Admins only
-      - ['categories', 'sub_categories', 'users'].each do |model|
-        %li
-          = link_to model.titleize, send("#{model}_path")
+      - if current_user.admin?
+        - ['categories', 'sub_categories', 'users'].each do |model|
+          %li
+            = link_to model.titleize, send("#{model}_path")
       // Access for all
       - ['accounts', 'account_balances', 'transaction_purposes'].each do |model|
         %li
           = link_to model.titleize, send("#{model}_path")
       // Detailed access - need to think
-      - ['transactions', 'transfers', 'payments', 'recurrence_rules', 'occurrences'].each do |model|
+      - ['transactions', 'transfers', 'payments'].each do |model|
         %li
           = link_to model.titleize, send("#{model}_path")
+      - if current_user.admin?
+        - ['recurrence_rules', 'occurrences'].each do |model|
+          %li
+            = link_to model.titleize, send("#{model}_path")
       // Access for all
       %li= link_to 'Summary', summary_path

@@ -1,0 +1,10 @@
+.text-center
+  = "Version: #{Git::VERSION}.#{Git::REVISION}"
+  - if Rails.env.production?
+    .hide
+      = "#{Git::BRANCH}@#{Rails.env}"
+  - else
+    Revision:
+    = link_to Git::REVISION, "https://github.com/AquisTech/expense_tracker/commit/#{Git::REVISION}"
+    = "Branch: #{Git::BRANCH}"
+    = "Environment: #{Rails.env}"

@@ -9,6 +9,7 @@ module ApplicationHelper
 
   def flash_messages
     flash.map do |msg_type, message|
+      next unless zf_class_for(msg_type)
       content_tag(:div, class: "callout #{zf_class_for(msg_type)}", data: { closable: true }) do
         (button_tag(type: 'button', class: 'close-button', data: { close: true }) do
           content_tag(:span, '&times;'.html_safe)

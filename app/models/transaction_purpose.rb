@@ -10,7 +10,7 @@ class TransactionPurpose < ApplicationRecord
   validates :name, presence: true
   # TODO: Add callback for converting estimate to paise
   # TODO: Add gem to handle currency/money related stuff
-  validates :estimate, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :estimate, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def humanize
     recurrence_rule.humanize

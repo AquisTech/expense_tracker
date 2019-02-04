@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :recurrence_rules
   has_many :occurrences
 
+  after_create :add_default_transaction_purposes!
+
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
     user.name = auth.info.name unless user.name.present?
@@ -32,4 +34,16 @@ class User < ApplicationRecord
     user
   end
 
+  def add_default_transaction_purposes!
+    self.transaction_purposes.new([
+      {
+        name: 'One Time Credit', sub_category: SubCategory.find_by(name: 'One Time Credit'), credit: true, estimate: 0,
+        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: Time.now, user: self}
+      },
+      {
+        name: 'One Time Debit', sub_category: SubCategory.find_by(name: 'One Time Debit'), credit: false, estimate: 0,
+        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: Time.now, user: self}
+      }
+    ]).map(&:save!)
+  end
 end

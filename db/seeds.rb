@@ -13,7 +13,7 @@
   'Loan': ['Automobile', 'Home', 'Mortgage', 'Education', 'Business', 'Property'],
   'Personal': ['Clothing', 'Gift', 'Personal Care'],
   'Tax': ['Property Tax', 'Income Tax'],
-  'Travel': ['Aeroplane', 'Train', 'Metro', 'Monorail', 'Bullet Train', 'Bus', 'Auto-rikshaw', 'Taxi', 'Cab', 'Rented Vehicle', 'Toll'],
+  'Travel': ['Aeroplane', 'Train', 'Metro', 'Monorail', 'Bullet Train', 'Bus', 'Auto-rikshaw', 'Taxi', 'Cab', 'Rented Vehicle', 'Toll', 'Car Pool'],
   'Utilities': ['Cable TV', 'Dish TV', 'Electricity', 'Gas', 'Internet', 'Water', 'Telephone', 'Mobile'],
   'Vacation': ['Aeroplane', 'Train', 'Metro', 'Monorail', 'Bullet Train', 'Bus', 'Auto-rikshaw', 'Taxi', 'Cab', 'Rented Vehicle', 'Toll', 'Hotel'],
   # Incomes / Credits
@@ -26,6 +26,10 @@
   (sub_categories << 'Other').each do |sub_category|
     c.sub_categories.where(name: sub_category).first_or_create!
   end
+end
+c = Category.where(name: 'Other').first_or_create!
+['One Time Credit', 'One Time Debit'].each do |sub_category|
+  c.sub_categories.where(name: sub_category).first_or_create!
 end
 if Rails.env.development?
   [

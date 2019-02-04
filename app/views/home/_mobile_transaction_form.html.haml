@@ -38,6 +38,8 @@
               = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
             - else
               = f.collection_select :transaction_purpose_id, current_user.transaction_purposes, :id, :name
+              .help-text
+                = link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
             = f.hidden_field :transacted_at, value: @date
           .medium-6.large-4.cell
             %label

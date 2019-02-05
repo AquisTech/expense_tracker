@@ -9,6 +9,9 @@
     = f.label :name
     = f.text_field :name, id: :transaction_purpose_name
   .row
+    = f.check_box :transfer
+    = f.label :transfer?
+  .row
     = f.label :sub_category_id
     = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
   .row

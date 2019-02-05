@@ -20,9 +20,10 @@ class Occurrence < ApplicationRecord
             occurrences.starts_on <= :date AND
             (
               (occurrences.ends_on IS NULL AND occurrences.count IS NULL) OR
-              (occurrences.ends_on >= :date AND occurrences.count IS NULL) -- OR
-              -- (ends_on IS NULL AND count < exhausted_count) OR
-              -- (ends_on >= :date OR count <> exhausted_count) -- ends_on and count both present so whichever is over consider it end
+              (occurrences.ends_on >= :date AND occurrences.count IS NULL) OR
+              (occurrences.ends_on IS NULL AND occurrences.count IS NOT NULL) -- OR
+              -- (occurrences.ends_on IS NULL AND occurrences.count < exhausted_count) -- OR
+              -- (occurrences.ends_on >= :date OR occurrences.count <> exhausted_count) -- ends_on and count both present so whichever is over consider it end
             )
           )"
     daily = "-- Daily

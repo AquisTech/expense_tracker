@@ -27,6 +27,10 @@ class Payment < ApplicationRecord
   before_validation { self.user_id = self.transaxion.user_id; self.credit = self.transaxion.credit }
   after_save {
     balance = self.account.account_balances.last.calculated_closing_balance
-    self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance - amount)
+    self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, amount))
   }
+
+  def sign
+    credit? ? '+' : '-'
+  end
 end

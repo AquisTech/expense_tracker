@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :recurrence_rules
   has_many :occurrences
 
-  after_create :add_default_transaction_purposes!
+  after_create :add_default_cash_wallet!, :add_default_transaction_purposes!
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
@@ -45,5 +45,9 @@ class User < ApplicationRecord
         recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: Time.now, user: self}
       }
     ]).map(&:save!)
+  end
+
+  def add_default_cash_wallet!
+    self.accounts.create!(name: 'Cash Wallet', description: 'Cash in hand', details: 'Cash in hand', account_type: 'CS', payment_modes: ['CS'])
   end
 end

@@ -4,8 +4,8 @@ class Transfer < ApplicationRecord
   belongs_to :source_account, class_name: 'Account'
   belongs_to :destination_account, class_name: 'Account'
   has_many :payments, dependent: :destroy, inverse_of: :transactable, foreign_key: :transactable_id
-  # has_one :credit_payment, class_name: 'Payment', -> { where(credit: true) } # TODO: Add condition
-  # has_one :debit_payment, class_name: 'Payment', -> { where(credit: false) } # TODO: Add condition
+  has_one :credit_payment, -> { where(credit: true) }, class_name: 'Payment', foreign_key: :transactable_id
+  has_one :debit_payment, -> { where(credit: false) }, class_name: 'Payment', foreign_key: :transactable_id
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: :all_blank
 
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 } # TODO: Add gem to handle currency/money related stuff

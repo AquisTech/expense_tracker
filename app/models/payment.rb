@@ -8,7 +8,7 @@ class Payment < ApplicationRecord
     UP: 'UPI',
     EW: 'E-Wallet',
     CQ: 'Cheque',
-    CS: 'Cash'
+    CS: 'Cash (Default)'
   }
   belongs_to :transactable, polymorphic: true
   belongs_to :account

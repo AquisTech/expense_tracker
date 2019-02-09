@@ -20,7 +20,6 @@
 $(document).on('turbolinks:load', function() {
   // Initialize Zurb Foundation JS
   $(document).foundation();
-  // getEstimateForTransactionPurpose(); TODO: Make it working on page load/reload
   // Remote modal with AJAX and Reveal
   $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();

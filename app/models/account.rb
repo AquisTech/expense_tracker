@@ -16,7 +16,9 @@ class Account < ApplicationRecord
     EW: 'E-Wallet',
     CS: 'Cash'
   }
-
+  before_validation {
+    self.payment_modes << 'CS'
+  }
   validates :name, presence: true
   validates :description, presence: true
   validates :details, presence: true

@@ -22,7 +22,7 @@
       %legend Allowed Payment Modes:
       = f.collection_check_boxes :payment_modes, Payment::PAYMENT_MODES, :first, :last, { checked: f.object.payment_modes } do |c|
         %div{style: 'display: block'}
-          = c.label { c.check_box  + c.text }
+          = c.label { c.check_box(disabled: c.value == :CS, checked: c.value == :CS)  + c.text }
   = f.fields_for :account_balances do |ab|
     .row
       = ab.label :opening_balance

@@ -6,7 +6,6 @@ class Transfer < ApplicationRecord
   has_many :payments, dependent: :destroy, inverse_of: :transactable, foreign_key: :transactable_id
   has_one :credit_payment, -> { where(credit: true) }, class_name: 'Payment', foreign_key: :transactable_id
   has_one :debit_payment, -> { where(credit: false) }, class_name: 'Payment', foreign_key: :transactable_id
-  accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: :all_blank
 
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 } # TODO: Add gem to handle currency/money related stuff
   validates :source_account_id, numericality: { other_than: proc {|t| t.destination_account_id}, message: 'cannot be same as Destination Account' },

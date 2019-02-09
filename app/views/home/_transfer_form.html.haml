@@ -20,6 +20,8 @@
           .medium-6.large-4.cell
             %label
               = f.text_field :description, id: :transaction_description, placeholder: :description
+      .card-section
+        .grid-x.grid-padding-x
           .medium-6.large-4.cell
             = f.select :source_account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Source Account'}
           .medium-6.large-4.cell

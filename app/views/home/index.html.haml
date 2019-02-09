@@ -14,8 +14,4 @@
   = "Suggested expenses for #{@date}, #{@date.strftime("%A")} | Count #{@transactions.count}"
 
 - @transactions.each do |transaction|
-  - if transaction.is_a?(Transfer)
-    = render 'transfer_form', transaction: transaction, transacted_at: @date
-  - else
-    = render 'transaction_form', transaction: transaction, transacted_at: @date
-  %hr
+  = render "#{transaction.class.to_s.downcase}_form", transaction: transaction, transacted_at: @date

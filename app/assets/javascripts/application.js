@@ -129,16 +129,33 @@ $(document).on('turbolinks:load', function() {
     }
   }
   // Fetch estimate for transaction purpose
-  function getEstimateForTransactionPurpose() {
+  function getEstimateForTransactionPurpose(transaction_purpose_select) {
     $.ajax({
-      url: '/transaction_purposes/' + $(this).val() + '/get_estimate',
+      url: '/transaction_purposes/' + transaction_purpose_select.val() + '/get_estimate',
       success: function(result) {
-        $('#transaction_transaction_purpose_id').parents('form').find('input[name="transaction[amount]"]').val(result);
+        transaction_purpose_select.parents('form').find('input[name="transaction[amount]"],input[name="transfer[amount]"]').val(result);
       }
     });
   }
-  $('body').on('change', '#transaction_transaction_purpose_id', function(e) {
-    getEstimateForTransactionPurpose();
+  // Toggle new transaction/transfer section as per selected transaction purpose
+  function toggleTransactableForTransactionPurpose(transaction_purpose_select) {
+    if(transaction_purpose_select.find('option:selected').attr('transfer') == 'true') {
+      $('.custom_transaction').hide();
+      $('.custom_transfer').find('.transaction_purpose_select').val(transaction_purpose_select.val());
+      $('.custom_transfer').show();
+    } else {
+      $('.custom_transfer').hide();
+      $('.custom_transaction').find('.transaction_purpose_select').val(transaction_purpose_select.val());
+      $('.custom_transaction').show();
+    }
+  }
+  $('.transaction_purpose_select').each(function(e) {
+    toggleTransactableForTransactionPurpose($(this));
+    getEstimateForTransactionPurpose($(this));
+  });
+  $('body').on('change', '.transaction_purpose_select', function(e) {
+    toggleTransactableForTransactionPurpose($(this));
+    getEstimateForTransactionPurpose($(this));
   });
   // Filter Accounts as per eligible payment modes
   function toggleAccountsForPaymentMode(payment_mode_select) {

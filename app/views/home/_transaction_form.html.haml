@@ -1,5 +1,5 @@
 - unique_id = SecureRandom.uuid
-= form_with(model: transaction, remote: true, class: unique_id) do |f|
+= form_with(model: transaction, remote: true, class: [unique_id, "#{'custom_transaction' unless transaction.transaction_purpose}"]) do |f|
   / .orbit{"aria-label" => "Favorite Space Pictures", "data-orbit" => "", :role => "region", 'data-auto-play' => false}
   /   .orbit-wrapper
   /     .orbit-controls
@@ -37,7 +37,7 @@
               %label= transaction.transaction_purpose.name
               = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
             - else
-              = f.collection_select :transaction_purpose_id, current_user.transaction_purposes.where(transfer: false), :id, :name
+              = f.select :transaction_purpose_id, current_user.transaction_purposes.map { |tp| [tp.name, tp.id, { transfer: tp.transfer? }] }, {}, class: :transaction_purpose_select
               .help-text
                 = link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
             = f.hidden_field :transacted_at, value: transacted_at

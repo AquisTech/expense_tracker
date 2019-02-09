@@ -6,6 +6,7 @@ class Account < ApplicationRecord
   has_many :account_balances
   has_many :transactions
   has_many :transfers
+  accepts_nested_attributes_for :account_balances, allow_destroy: true, reject_if: :all_blank
 
   ACCOUNT_TYPES = {
     SB: 'Saving Bank Account',

@@ -7,6 +7,7 @@ class AccountsController < ApplicationController
 
   def new
     @account = current_user.accounts.new
+    @account.account_balances.build
     render layout: false
   end
 
@@ -47,6 +48,6 @@ class AccountsController < ApplicationController
 
     def account_params
       params[:account][:payment_modes] = params[:account][:payment_modes].without('')
-      params.require(:account).permit(:name, :description, :details, :account_type, payment_modes: [])
+      params.require(:account).permit(:name, :description, :details, :account_type, payment_modes: [], account_balances_attributes: {})
     end
 end

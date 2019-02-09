@@ -23,5 +23,20 @@
       = f.collection_check_boxes :payment_modes, Payment::PAYMENT_MODES, :first, :last, { checked: f.object.payment_modes } do |c|
         %div{style: 'display: block'}
           = c.label { c.check_box  + c.text }
+  = f.fields_for :account_balances do |ab|
+    .row
+      = ab.label :opening_balance
+      = ab.amount_field :opening_balance, currency: '&#8377;', id: :account_balance_opening_balance
+    .row
+      = ab.label :calculated_closing_balance
+      = ab.amount_field :calculated_closing_balance, currency: '&#8377;', id: :account_balance_calculated_closing_balance
+    .row
+      = ab.label :actual_closing_balance
+      = ab.amount_field :actual_closing_balance, currency: '&#8377;', id: :account_balance_actual_closing_balance
+    .row
+      = ab.label :month_and_year
+      .input-group
+        = select_month ab.object.month || Date.today, prefix: 'account[account_balances_attributes][0]', class: 'input-group-field small-2'
+        = select_year ab.object.year || Date.today, prefix: 'account[account_balances_attributes][0]', class: 'input-group-field small-2'
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f

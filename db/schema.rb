@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_02_182054) do
+ActiveRecord::Schema.define(version: 2019_02_09_121256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,14 +67,15 @@ ActiveRecord::Schema.define(version: 2019_02_02_182054) do
   create_table "payments", force: :cascade do |t|
     t.integer "amount", default: 0
     t.string "payment_mode"
-    t.bigint "transaction_id", null: false
+    t.bigint "transactable_id", null: false
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "credit", default: false
+    t.string "transactable_type"
     t.index ["account_id"], name: "index_payments_on_account_id"
-    t.index ["transaction_id"], name: "index_payments_on_transaction_id"
+    t.index ["transactable_id"], name: "index_payments_on_transactable_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -109,6 +110,7 @@ ActiveRecord::Schema.define(version: 2019_02_02_182054) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "credit", default: false
+    t.boolean "transfer", default: false
     t.index ["sub_category_id"], name: "index_transaction_purposes_on_sub_category_id"
     t.index ["user_id"], name: "index_transaction_purposes_on_user_id"
   end
@@ -136,8 +138,12 @@ ActiveRecord::Schema.define(version: 2019_02_02_182054) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "transaction_purpose_id"
+    t.string "payment_mode"
+    t.datetime "transacted_at", null: false
     t.index ["destination_account_id"], name: "index_transfers_on_destination_account_id"
     t.index ["source_account_id"], name: "index_transfers_on_source_account_id"
+    t.index ["transaction_purpose_id"], name: "index_transfers_on_transaction_purpose_id"
     t.index ["user_id"], name: "index_transfers_on_user_id"
   end
 
@@ -181,4 +187,5 @@ ActiveRecord::Schema.define(version: 2019_02_02_182054) do
 
   add_foreign_key "occurrences", "recurrence_rules"
   add_foreign_key "recurrence_rules", "transaction_purposes"
+  add_foreign_key "transfers", "transaction_purposes"
 end

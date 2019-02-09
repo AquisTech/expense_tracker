@@ -14,6 +14,9 @@
   %strong Destination account:
   = @transfer.destination_account.name
 .row
+  %strong Payment Mode:
+  = @transfer.payment_mode # TODO: Add column for payment mode
+.row
   %strong Created at:
   = @transfer.created_at
 .row

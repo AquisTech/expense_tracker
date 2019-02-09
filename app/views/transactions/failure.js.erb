@@ -1,1 +1,2 @@
-$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages_with_grid_container %>');
+$('<%= ".#{params[:transaction][:unique_id]}" %>').prev('.flash-message').remove();
+$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages %>');

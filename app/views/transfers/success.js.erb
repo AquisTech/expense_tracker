@@ -1,0 +1,9 @@
+<%- if params[:action] == 'create' %>
+  if($('<%= ".#{params[:transfer][:unique_id]}" %>' + ' select[name="transfer[transaction_purpose_id]"]').length) {
+    $('<%= ".#{params[:transfer][:unique_id]}" %>').before("<%=j render 'home/transfer_form', transaction: new_transaction, transacted_at: transacted_at %>");
+    $('<%= ".#{params[:transfer][:unique_id]}" %>').before('<hr>');
+  }
+<%- end %>
+$('<%= ".#{params[:transfer][:unique_id]}" %>').prev('.flash-message').remove();
+$('<%= ".#{params[:transfer][:unique_id]}" %>').before('<%=j flash_messages %>');
+$('<%= ".#{params[:transfer][:unique_id]}" %>').replaceWith("<%=j render 'home/transfer_form', transaction: transaction, transacted_at: transacted_at %>");

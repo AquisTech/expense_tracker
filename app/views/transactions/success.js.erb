@@ -1,8 +1,9 @@
 <%- if params[:action] == 'create' %>
   if($('<%= ".#{params[:transaction][:unique_id]}" %>' + ' select[name="transaction[transaction_purpose_id]"]').length) {
-    $('<%= ".#{params[:transaction][:unique_id]}" %>').before("<%=j render 'home/transaction_form', transaction: new_transaction %>");
+    $('<%= ".#{params[:transaction][:unique_id]}" %>').before("<%=j render 'home/transaction_form', transaction: new_transaction, transacted_at: transacted_at %>");
     $('<%= ".#{params[:transaction][:unique_id]}" %>').before('<hr>');
   }
 <%- end %>
-$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages_with_grid_container %>');
-$('<%= ".#{params[:transaction][:unique_id]}" %>').replaceWith("<%=j render 'home/transaction_form', transaction: transaction %>");
+$('<%= ".#{params[:transaction][:unique_id]}" %>').prev('.flash-message').remove();
+$('<%= ".#{params[:transaction][:unique_id]}" %>').before('<%=j flash_messages %>');
+$('<%= ".#{params[:transaction][:unique_id]}" %>').replaceWith("<%=j render 'home/transaction_form', transaction: transaction, transacted_at: transacted_at %>");

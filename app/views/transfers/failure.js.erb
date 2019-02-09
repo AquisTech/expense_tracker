@@ -1,0 +1,2 @@
+$('<%= ".#{params[:transfer][:unique_id]}" %>').prev('.flash-message').remove();
+$('<%= ".#{params[:transfer][:unique_id]}" %>').before('<%=j flash_messages %>');

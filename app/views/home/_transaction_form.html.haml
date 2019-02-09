@@ -1,43 +1,75 @@
 - unique_id = SecureRandom.uuid
 = form_with(model: transaction, remote: true, class: unique_id) do |f|
-  .grid-container
-    .grid-x.grid-padding-x
-      .small-3.cell
-        = f.hidden_field :unique_id, value: unique_id, class: :unique_id
-        - if transaction.transaction_purpose.present?
-          %label= transaction.transaction_purpose.name
-          = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
-        - else
-          = f.collection_select :transaction_purpose_id, TransactionPurpose.all, :id, :name
-      .small-2.cell
-        %label
-          = f.amount_field :amount, id: :transaction_amount, currency: '&#8377;', value: transaction.transaction_purpose.try(:estimate)
-      .small-4.cell
-        %label
-          = f.text_field :description, id: :transaction_description
-      //.small-2.cell
-      //  %label
-      //    = #f.collection_select :transfer_id, Transfer.all, :id, :name, id: :transaction_transfer_id
-      .small-1.cell
-        %label
-          = f.submit '&#10004'.html_safe, class: 'button success'
-      - clonable_fragment_class = transaction.new_record? ? "new_transaction_for_#{transaction.transaction_purpose_id}" : "transaction_#{transaction.id}"
-  = f.fields :payments do |p|
-    .grid-container.clonable-fragment{ class: clonable_fragment_class }
-      .grid-x.grid-padding-x
-        .small-3.cell
-          = p.amount_field :amount, currency: '&#8377;'
-        .small-3.cell
-          = p.select :account_id, Account.all.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
-        .small-3.cell
-          = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode'}, class: :payment_mode_select
-        .small-1.cell
-          = p.hidden_field :_destroy
-          = link_to '&times'.html_safe, 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' }
-        .small-2.cell
-          - if f.object.payments.last == p.object
-            = link_to 'javascript:void(0)', class: 'clone-fragment button primary' do
-              %span.show-for-small-only
-                = '+'
-              %span.show-for-medium
-                = 'Add another payment'
+  / .orbit{"aria-label" => "Favorite Space Pictures", "data-orbit" => "", :role => "region", 'data-auto-play' => false}
+  /   .orbit-wrapper
+  /     .orbit-controls
+  /       %button.orbit-previous
+  /         %span.show-for-sr> Previous Slide
+  /         = '&#9664;&#xFE0E;'.html_safe
+  /       %button.orbit-next
+  /         %span.show-for-sr> Next Slide
+  /         = '&#9654;&#xFE0E;'.html_safe
+
+  /     %ul.orbit-container
+  /       %li.is-active.orbit-slide
+  /         %div
+  /       %li.orbit-slide
+  /         %div
+  /       %li.orbit-slide
+  /         %div
+
+  /   %nav.orbit-bullets
+  /     %button.is-active{"data-slide" => "0"}
+  /       %span.show-for-sr First form details.
+  /       %span.show-for-sr Current form
+  /     %button{"data-slide" => "1"}
+  /       %span.show-for-sr Second form details.
+  /     %button{"data-slide" => "2"}
+  /       %span.show-for-sr Third form details.
+
+  .grid-x
+    .card
+      .card-divider
+        .grid-x.grid-padding-x
+          .medium-6.large-4.cell
+            = f.hidden_field :unique_id, value: unique_id, class: :unique_id
+            - if transaction.transaction_purpose.present?
+              %label= transaction.transaction_purpose.name
+              = f.hidden_field :transaction_purpose_id, value: transaction.transaction_purpose_id
+            - else
+              = f.collection_select :transaction_purpose_id, current_user.transaction_purposes.where(transfer: false), :id, :name
+              .help-text
+                = link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
+            = f.hidden_field :transacted_at, value: transacted_at
+          .medium-6.large-4.cell
+            %label
+              = f.amount_field :amount, id: :transaction_amount, currency: '&#8377;', sign: transaction.transaction_purpose.try(:sign_class), value: transaction.transaction_purpose.try(:estimate)
+          .medium-6.large-4.cell
+            %label
+              = f.text_field :description, id: :transaction_description, placeholder: :description
+          - clonable_fragment_class = transaction.new_record? ? "new_transaction_for_#{transaction.transaction_purpose_id}" : "transaction_#{transaction.id}"
+      = f.fields :payments do |p|
+        .card-section.clonable-fragment{ class: clonable_fragment_class }
+          .grid-x.grid-padding-x
+            .medium-6.large-4.cell
+              = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode'}, class: :payment_mode_select
+            .medium-6.large-4.cell
+              = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
+            .medium-6.large-3.cell
+              = p.amount_field :amount, currency: '&#8377;'
+            .medium-6.large-1.cell
+              = p.hidden_field :_destroy
+              = link_to 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' } do
+                %span.show-for-large
+                  = '&times'.html_safe
+                %span.hide-for-large
+                  = 'Delete Payment'
+            - if f.object.payments.last == p.object
+              .small-6.cell
+                = link_to 'javascript:void(0)', class: 'clone-fragment button primary' do
+                  / %span.show-for-small-only
+                  /   = '+'
+                  / %span.show-for-medium
+                  = 'Add More Payment'
+              .small-6.cell
+                = f.submit 'Save Transaction', class: 'button success'

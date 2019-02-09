@@ -10,7 +10,6 @@ class AccountBalance < ApplicationRecord
 
   before_validation {
     self.user_id = self.account.user_id
-    self.actual_closing_balance = 0 unless self.actual_closing_balance
   }
   before_create {
     self.calculated_closing_balance = self.opening_balance

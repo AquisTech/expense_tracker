@@ -132,7 +132,7 @@ $(document).on('turbolinks:load', function() {
     $.ajax({
       url: '/transaction_purposes/' + transaction_purpose_select.val() + '/get_estimate',
       success: function(result) {
-        transaction_purpose_select.parents('form').find('input[name="transaction[amount]"],input[name="transfer[amount]"]').val(result);
+        transaction_purpose_select.parents('form').find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result);
       }
     });
   }

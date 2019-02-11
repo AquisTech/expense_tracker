@@ -10,7 +10,7 @@
     = f.amount_field :opening_balance, currency: '&#8377;', id: :account_balance_opening_balance
   .row
     = f.label :calculated_closing_balance
-    = f.amount_field :calculated_closing_balance, currency: '&#8377;', id: :account_balance_calculated_closing_balance, readonly: true
+    = f.amount_field :calculated_closing_balance, currency: '&#8377;', id: :account_balance_calculated_closing_balance, readonly: !current_user.admin?
   .row
     = f.label :actual_closing_balance
     = f.amount_field :actual_closing_balance, currency: '&#8377;', id: :account_balance_actual_closing_balance

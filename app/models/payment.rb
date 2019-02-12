@@ -32,9 +32,28 @@ class Payment < ApplicationRecord
     balance = self.account.account_balances.last.calculated_closing_balance
     self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, amount))
   }
-  # after_update {
-  #   puts 'Revert from old acc and then update acc balance in new acc'
-  # }
+  after_update {
+    if amount_previously_changed?
+      if account_id_previously_changed?
+        previous_account = Account.find(account_id_previous_change.first)
+        balance = previous_account.account_balances.last.calculated_closing_balance
+        previous_account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, -1 * amount_previous_change.first))
+        balance = self.account.account_balances.last.calculated_closing_balance
+        self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, amount))
+      else
+        balance = self.account.account_balances.last.calculated_closing_balance.send(sign, amount_previous_change.last - amount_previous_change.first)
+        self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance)
+      end
+    else
+      if account_id_previously_changed?
+        previous_account = Account.find(account_id_previous_change.first)
+        balance = previous_account.account_balances.last.calculated_closing_balance
+        previous_account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, -1 * amount))
+        balance = self.account.account_balances.last.calculated_closing_balance
+        self.account.account_balances.last.update_attribute(:calculated_closing_balance, balance.send(sign, amount))
+      end
+    end
+  }
 
   def sign
     credit? ? '+' : '-'

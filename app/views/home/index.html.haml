@@ -11,7 +11,7 @@
       = submit_tag 'Go', class: 'input-group-button button success'
       = link_to 'Next >>', root_path(date: @date.next_day), title: @date.next_day, class: 'input-group-button button secondary'
 %h3
-  = "Suggested expenses for #{@date}, #{@date.strftime("%A")} | Count #{@transactions.count}"
+  = "Suggested expenses for #{@date}, #{@date.strftime("%A")} | Count #{@transactions.count - 1}"
 
 - @transactions.each do |transaction|
   = render "#{transaction.class.to_s.downcase}_form", transaction: transaction, transacted_at: @date

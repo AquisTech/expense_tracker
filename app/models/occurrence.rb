@@ -17,19 +17,19 @@ class Occurrence < ApplicationRecord
   def self.for(date)
     # TODO: Make week starting from monday. Change week function parameter accordingly
     start_end_count_conditions = "(
-            occurrences.starts_on <= :date AND
+            DATE(occurrences.starts_on) <= :date AND
             (
               (occurrences.ends_on IS NULL AND occurrences.count IS NULL) OR
-              (occurrences.ends_on >= :date AND occurrences.count IS NULL) OR
+              (DATE(occurrences.ends_on) >= :date AND occurrences.count IS NULL) OR
               (occurrences.ends_on IS NULL AND occurrences.count IS NOT NULL) -- OR
               -- (occurrences.ends_on IS NULL AND occurrences.count < exhausted_count) -- OR
-              -- (occurrences.ends_on >= :date OR occurrences.count <> exhausted_count) -- ends_on and count both present so whichever is over consider it end
+              -- (DATE(occurrences.ends_on) >= :date OR occurrences.count <> exhausted_count) -- ends_on and count both present so whichever is over consider it end
             )
           )"
     daily = "-- Daily
             (recurrence_type = 'Daily' AND (#{DATE_DIFF(':date', 'occurrences.starts_on')} % #{INTERVAL_COLUMN()}) = 0)"
     weekly = "-- Weekly
-            (recurrence_type = 'Weekly' AND (days = (#{DAY_OF_WEEK(':date')} - 1)) AND (#{DATE_DIFF(':date', 'occurrences.starts_on')} % (#{INTERVAL_COLUMN()} * 7)) = 0)"
+            (recurrence_type = 'Weekly' AND (days = #{DAY_OF_WEEK(':date')}) AND (#{DATE_DIFF(':date', 'occurrences.starts_on')} % (#{INTERVAL_COLUMN()} * 7)) = 0)"
     monthly_day_of_month = "-- Monthly day of month
             (
               recurrence_type = 'Monthly' AND
@@ -42,7 +42,7 @@ class Occurrence < ApplicationRecord
             (
               recurrence_type = 'Monthly' AND
               weeks IS NOT NULL AND
-              days = (#{DAY_OF_WEEK(':date')} - 1) AND
+              days = #{DAY_OF_WEEK(':date')} AND
               weeks IN (#{WEEK_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_MONTHS(':date', 'occurrences.starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"
@@ -59,7 +59,7 @@ class Occurrence < ApplicationRecord
               recurrence_type = 'Yearly' AND
               weeks IS NOT NULL AND
               months = #{MONTH(':date')} AND
-              days = (#{DAY_OF_WEEK(':date')} - 1) AND
+              days = #{DAY_OF_WEEK(':date')} AND
               weeks IN (#{WEEK_OF_MONTH(':date')}) AND
               #{PERIOD_DIFF_IN_YEARS(':date', 'occurrences.starts_on')} % #{INTERVAL_COLUMN()} = 0
             )"

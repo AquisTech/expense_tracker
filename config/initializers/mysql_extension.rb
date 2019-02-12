@@ -16,7 +16,7 @@ module ActiveRecord::MysqlExtension
     end
 
     def DAY_OF_WEEK(attr)
-      "DAYOFWEEK(#{attr})"
+      "(DAYOFWEEK(#{attr}) - 1)"
     end
 
     def DAY_OF_MONTH(attr)

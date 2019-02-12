@@ -20,7 +20,7 @@ module ActiveRecord::PostgreSQLExtension
     end
 
     def DAY_OF_WEEK(attr)
-      "EXTRACT(DOW FROM DATE(#{attr}))" # add or substract days to make it correct
+      "EXTRACT(DOW FROM DATE(#{attr}))"
     end
 
     def DAY_OF_MONTH(attr)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_164503) do
+ActiveRecord::Schema.define(version: 2019_02_12_164504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,8 @@ ActiveRecord::Schema.define(version: 2019_02_12_164503) do
   create_table "expenses", force: :cascade do |t|
     t.datetime "starts_on"
     t.datetime "ends_on"
-    t.integer "amount", default: 0
+    t.integer "credits", default: 0
+    t.integer "debits", default: 0
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

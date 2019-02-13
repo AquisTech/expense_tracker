@@ -51,10 +51,17 @@
   = "#{@date}, #{@date.strftime("%A")}" unless (@month || @year)
   = "#{@month.strftime('%B')}-#{@month.strftime('%Y')}" if @month
   = @year.strftime('%Y') if @year
+%h4
+  .text-success
+    = 'Estimated Credits:'
+    = @estimated_credits
+  .text-alert
+    = 'Estimated Debits:'
+    = @estimated_debits
   = 'Estimated Expense:'
-  = @estimated_expense
+  = @estimated_credits - @estimated_debits
   = 'Actual Expense:'
-  = @transactions.sum(:amount)
+  = @actual_expenses
 
 %table.striped.hover.table-striped.stack
   %thead

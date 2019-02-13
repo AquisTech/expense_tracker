@@ -1,6 +1,5 @@
 class CreateExpenses < ActiveRecord::Migration[5.2]
   def change
-    drop_table :expenses
     create_table :expenses do |t|
       t.datetime :starts_on
       t.datetime :ends_on

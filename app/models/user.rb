@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :payments
   has_many :recurrence_rules
   has_many :occurrences
+  has_many :expenses
 
   after_create :add_default_cash_wallet!, :add_default_transaction_purposes!
 

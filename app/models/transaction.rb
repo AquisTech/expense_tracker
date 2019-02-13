@@ -1,6 +1,6 @@
 class Transaction < ApplicationRecord
 
-  belongs_to :transaction_purpose
+  belongs_to :transaction_purpose # TODO: Prevent destroy of transaction purpose if transactions are associated. Use soft delete
   # belongs_to :transfer, optional: true # TODO: Make transfer association nullable
   belongs_to :user
 

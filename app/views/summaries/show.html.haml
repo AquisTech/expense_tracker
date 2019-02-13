@@ -51,9 +51,8 @@
   = "#{@date}, #{@date.strftime("%A")}" unless (@month || @year)
   = "#{@month.strftime('%B')}-#{@month.strftime('%Y')}" if @month
   = @year.strftime('%Y') if @year
-  - unless (@month || @year)
-    = 'Estimated Expense:'
-    = @estimated_expense
+  = 'Estimated Expense:'
+  = @estimated_expense
   = 'Actual Expense:'
   = @transactions.sum(:amount)
 
@@ -69,7 +68,7 @@
   %tbody
     - @transactions.each do |transaction|
       %tr
-        %td= transaction.transaction_purpose.name
+        %td= transaction.transaction_purpose.try(:name)
         %td= transaction.description
         - if @month || @year
           %td= transaction.transacted_at

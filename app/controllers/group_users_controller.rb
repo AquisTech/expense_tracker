@@ -1,0 +1,51 @@
+class GroupUsersController < ApplicationController
+  before_action :set_group_user, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @group_users = GroupUser.all
+  end
+
+  def new
+    @group_user = GroupUser.new
+    render layout: false
+  end
+
+  def create
+    @group_user = GroupUser.new(group_user_params)
+    if @group_user.save
+      redirect_to group_users_url, notice: 'Group user was successfully created.'
+    else
+      render_failure(@group_user)
+    end
+  end
+
+  def edit
+    render layout: false
+  end
+
+  def update
+    if @group_user.update(group_user_params)
+      redirect_to group_users_url, notice: 'Group user was successfully updated.'
+    else
+      render_failure(@group_user)
+    end
+  end
+
+  def show
+    render layout: false
+  end
+
+  def destroy
+    @group_user.destroy
+    redirect_to group_users_url, notice: 'Group user was successfully destroyed.'
+  end
+
+  private
+    def set_group_user
+      @group_user = GroupUser.find(params[:id])
+    end
+
+    def group_user_params
+      params.require(:group_user).permit(:user_id, :group_id)
+    end
+end

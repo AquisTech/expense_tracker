@@ -13,8 +13,12 @@ class User < ApplicationRecord
   has_many :recurrence_rules
   has_many :occurrences
   has_many :expenses
+  has_many :group_users
+  has_many :groups, through: :group_users
+  has_one :group_user
+  has_one :family, -> { where(name: 'Family') }, through: :group_user, class_name: 'Group', source: :group
 
-  after_create :add_default_cash_wallet!, :add_default_transaction_purposes!
+  after_create :add_default_cash_wallet!, :add_default_transaction_purposes!, :add_family!
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
@@ -50,5 +54,9 @@ class User < ApplicationRecord
 
   def add_default_cash_wallet!
     self.accounts.create!(name: 'Cash Wallet', description: 'Cash in hand', details: 'Cash in hand', account_type: 'CS', payment_modes: ['CS'])
+  end
+
+  def add_family!
+    self.group_users.new(group: Group.where(name: 'Family', default: true).first_or_create!).save!
   end
 end

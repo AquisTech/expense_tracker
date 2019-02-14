@@ -3,8 +3,6 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   # Add model sections' pointers
   [:attributes, :attributes=, :field_type, :field_type_by_name,
     :invoke_with_padding, :options, :options=]
-    <%= attributes %>
-    <%= field_type_by_name(:amount) %>
 <% attributes.select(&:reference?).each do |attribute| -%>
   belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', required: true' if attribute.required? %>
 <% end -%>

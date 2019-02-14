@@ -1,0 +1,24 @@
+%h1
+  Group Users
+  = link_to 'Add New Group User', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_group_user_path}
+
+.table-scroll
+  %table.striped.hover.table-striped.stack
+    %thead
+      %tr
+        %th Id
+        %th User
+        %th Group
+        %th Actions
+
+    %tbody
+      - @group_users.each do |group_user|
+        %tr
+          %td= group_user.id
+          %td= group_user.user.name
+          %td= group_user.group.name
+          %td
+            .button-group
+              = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: group_user_path(group_user)}
+              = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_group_user_path(group_user)}
+              = link_to 'Delete', group_user, method: :delete, data: { confirm: 'Are you sure you want to delete this Group User?' }, class: 'button alert'

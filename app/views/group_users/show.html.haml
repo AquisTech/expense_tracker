@@ -1,0 +1,12 @@
+.row
+  %strong Id:
+  = @group_user.id
+.row
+  %strong User:
+  = @group_user.user.name
+.row
+  %strong Group:
+  = @group_user.group.name
+.row
+  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_group_user_path(@group_user)}
+  = close_reveal_button # TODO: Add this method to be copied via generator

@@ -17,8 +17,8 @@
     - @payments.each do |payment|
       %tr
         %td= payment.id
-        %td= payment.transaction.description
-        %td= payment.amount
+        %td= payment.transactable.description
+        %td{class: payment.credit? ? 'text-success' : 'text-alert'}= "#{payment.sign}#{payment.amount}"
         %td= payment.account.name
         %td= payment.payment_mode
         %td= payment.created_at

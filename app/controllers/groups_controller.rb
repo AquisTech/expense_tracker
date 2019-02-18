@@ -1,17 +1,17 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :invite_member]
 
   def index
-    @groups = Group.all
+    @groups = current_user.groups
   end
 
   def new
-    @group = Group.new
+    @group = current_user.group.new
     render layout: false
   end
 
   def create
-    @group = Group.new(group_params)
+    @group = current_user.groups.new(group_params)
     if @group.save
       redirect_to groups_url, notice: 'Group was successfully created.'
     else
@@ -40,9 +40,23 @@ class GroupsController < ApplicationController
     redirect_to groups_url, notice: 'Group was successfully destroyed.'
   end
 
+  def invite_member
+    user = User.search(params[:search_term])
+    if user
+      if @group.invite(user)
+        flash[:notice] = 'Member invited successfully'
+      else
+        flash[:error] = "Failed to invite member. #{@group.errors.full_messages.to_sentence}"
+      end
+    else
+      flash[:error] = 'User not found.' # TODO : Implement invitable and while joining join with group invitation
+    end
+    redirect_to groups_url
+  end
+
   private
     def set_group
-      @group = Group.find(params[:id])
+      @group = current_user.groups.find(params[:id])
     end
 
     def group_params

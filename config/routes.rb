@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
   resources :group_users
-  resources :groups
+  resources :groups do
+    post :invite_member, on: :collection
+  end
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  resources :users
+  resources :users do
+    collection do
+      post :accept_membership
+      post :decline_membership
+      post :cancel_membership
+      post :block_membership
+      post :toggle_admin
+      post :transfer_ownership
+    end
+  end
   get 'home/index'
   resources :occurrences
   resources :recurrence_rules

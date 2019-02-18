@@ -2,16 +2,16 @@ class GroupUsersController < ApplicationController
   before_action :set_group_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @group_users = GroupUser.all
+    @group_users = current_user.group_users
   end
 
   def new
-    @group_user = GroupUser.new
+    @group_user = current_user.group_users.new
     render layout: false
   end
 
   def create
-    @group_user = GroupUser.new(group_user_params)
+    @group_user = current_user.group_users.new(group_user_params)
     if @group_user.save
       redirect_to group_users_url, notice: 'Group user was successfully created.'
     else
@@ -42,7 +42,7 @@ class GroupUsersController < ApplicationController
 
   private
     def set_group_user
-      @group_user = GroupUser.find(params[:id])
+      @group_user = current_user.group_users.find(params[:id])
     end
 
     def group_user_params

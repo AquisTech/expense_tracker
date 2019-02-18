@@ -14,5 +14,6 @@
       .card-section
         = current_user.currency
   %ul.menu.vertical
+    = link_to 'Groups', groups_path
     = render 'devise/menu/registration_items'
     = render 'devise/menu/login_items'

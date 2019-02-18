@@ -1,21 +1,103 @@
-.row
-  %strong Id:
-  = @group.id
+- if current_user.admin?
+  .row
+    %strong Id:
+    = @group.id
+  .row
+    %strong Default:
+    = @group.default
+  .row
+    %strong Created at:
+    = @group.created_at
+  .row
+    %strong Updated at:
+    = @group.updated_at
 .row
   %strong Name:
   = @group.name
 .row
-  %strong Default:
-  = @group.default
-.row
-  %strong User:
-  = @group.user.name
-.row
-  %strong Created at:
-  = @group.created_at
-.row
-  %strong Updated at:
-  = @group.updated_at
+  %strong Owner:
+  = @group.owner.name
 .row
   = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_group_path(@group)}
   = close_reveal_button # TODO: Add this method to be copied via generator
+%hr
+.row
+  %strong Members:
+.row
+  = form_with url: invite_member_groups_path, method: :post, remote: true do |f|
+    .input-group
+      = f.text_field :search_term, placeholder: 'Enter email or username', class: 'input-group-field'
+      = f.hidden_field :id, value: @group.id
+      .input-group-button= f.submit 'Invite to join group', class: 'button primary'
+.row
+  %table.striped.hover.table-striped.stack
+    %thead
+      %tr
+        %th User
+        %th Status
+        %th Actions
+    %tbody
+      - @group.users.each do |user|
+        %tr
+          %td= user.name
+          %td= @group.owner == user ? 'Owner' : @group.group_users.find_by(user_id: user.id).try(:status)
+          %td
+            - if @group.owner == current_user
+              - unless @group.default?
+                = link_to 'Delete Group', group, method: :delete, data: { confirm: 'Are you sure you want to delete this Group?' }, class: 'button alert'
+              - if user != current_user
+                = form_with url: transfer_ownership_users_path, method: :post, remote: true do |f|
+                  = f.hidden_field :id, value: user.id
+                  = f.hidden_field :group_id, value: @group.id
+                  = f.submit 'Transfer Ownership', class: 'button primary small'
+            - if current_user != user
+              - if current_user.group_admin_for?(@group)
+                - if @group.group_users.find_by(user_id: user.id).accepted?
+                  = form_with url: make_admin_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit "#{user.group_admin_for?(@group) ? 'Remove' : 'Make'} Admin", class: 'button primary small'
+                - if @group.group_users.find_by(user_id: user.id).requested?
+                  = form_with url: accept_membership_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit 'Accept Request', class: 'button primary small'
+                  = form_with url: decline_membership_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit 'Decline Request', class: 'button primary small'
+                  = form_with url: block_membership_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit 'Block User', class: 'button primary small'
+                - if @group.group_users.find_by(user_id: user.id).invited?
+                  = form_with url: cancel_membership_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit 'Cancel Invitation', class: 'button primary small'
+                - if @group.group_users.find_by(user_id: user.id).accepted?
+                  = form_with url: cancel_membership_users_path, method: :post, remote: true do |f|
+                    = f.hidden_field :id, value: user.id
+                    = f.hidden_field :group_id, value: @group.id
+                    = f.submit 'Remove from Group', class: 'button primary small'
+            - else
+              - if @group.group_users.find_by(user_id: user.id).invited?
+                = form_with url: accept_membership_users_path, method: :post, remote: true do |f|
+                  = f.hidden_field :id, value: user.id
+                  = f.hidden_field :group_id, value: @group.id
+                  = f.submit 'Join Group', class: 'button primary small'
+                = form_with url: decline_membership_users_path, method: :post, remote: true do |f|
+                  = f.hidden_field :id, value: user.id
+                  = f.hidden_field :group_id, value: @group.id
+                  = f.submit 'Decline to Join', class: 'button primary small'
+                = form_with url: block_membership_users_path, method: :post, remote: true do |f|
+                  = f.hidden_field :id, value: user.id
+                  = f.hidden_field :group_id, value: @group.id
+                  = f.submit 'Block Group', class: 'button primary small'
+              - if @group.group_users.find_by(user_id: user.id).accepted?
+                = form_with url: cancel_membership_users_path, method: :post, remote: true do |f|
+                  = f.hidden_field :id, value: user.id
+                  = f.hidden_field :group_id, value: @group.id
+                  = f.submit 'Exit Group', class: 'button primary small'
+
+

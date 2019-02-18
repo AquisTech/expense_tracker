@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_141611) do
+ActiveRecord::Schema.define(version: 2019_02_17_092306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,9 @@ ActiveRecord::Schema.define(version: 2019_02_13_141611) do
   create_table "group_users", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "group_id", null: false
+    t.integer "status", default: 0
+    t.boolean "admin", default: false
+    t.index ["group_id", "user_id"], name: "index_group_users_on_group_id_and_user_id", unique: true
     t.index ["group_id"], name: "index_group_users_on_group_id"
     t.index ["user_id"], name: "index_group_users_on_user_id"
   end
@@ -70,6 +73,8 @@ ActiveRecord::Schema.define(version: 2019_02_13_141611) do
     t.boolean "default", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "occurrences", force: :cascade do |t|

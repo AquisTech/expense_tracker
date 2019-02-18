@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :recurrence_rules
   has_many :occurrences
   has_many :expenses
+  has_many :owned_groups, class_name: 'Group', foreign_key: :owner_id
   has_many :group_users
   has_many :groups, through: :group_users
   has_one :group_user
@@ -57,6 +58,37 @@ class User < ApplicationRecord
   end
 
   def add_family!
-    self.group_users.new(group: Group.where(name: 'Family', default: true).first_or_create!).save!
+    self.group_users.new(group: self.owned_groups.where(name: 'Family', default: true).first_or_create!, status: :accepted, admin: true).save!
+  end
+
+  def join_group(group) # accept_request
+    self.group_users.find(group: group).accept!
+  end
+  alias_method :accept_request, :join_group
+
+  def exit_group(group) # OR decline_request
+    self.group_users.find(group: group).destroy
+  end
+  alias_method :decline_request, :exit_group
+
+  def block_group(group)
+    self.group_users.find(group: group).block!
+  end
+
+  def transfer_ownership(group) # TODO: move to group model
+    group.update_attribute(:owner_id, self.id)
+  end
+
+  def toggle_admin(group)
+    group_user = self.group_users.find(group: group)
+    group_user.update_attribute(:admin, !group_user.admin?)
+  end
+
+  def self.search(term)
+    User.find_by('email = :term', term: term)
+  end
+
+  def group_admin_for?(group)
+    self.group_users.find_by(group_id: group.id).admin?
   end
 end

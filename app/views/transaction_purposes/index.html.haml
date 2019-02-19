@@ -6,23 +6,29 @@
 %table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th Id
+      - if current_user.admin?
+        %th Id
+        %th User
       %th Name
       %th Sub category
       %th Estimate
-      %th Created at
-      %th Updated at
+      - if current_user.admin?
+        %th Created at
+        %th Updated at
       %th Actions
 
   %tbody
     - @transaction_purposes.each do |transaction_purpose|
       %tr
-        %td= transaction_purpose.id
+        - if current_user.admin?
+          %td= transaction_purpose.id
+          %td= transaction_purpose.user.name
         %td= transaction_purpose.name
         %td= transaction_purpose.sub_category.name_with_category
         %td= transaction_purpose.estimate
-        %td= transaction_purpose.created_at
-        %td= transaction_purpose.updated_at
+        - if current_user.admin?
+          %td= transaction_purpose.created_at
+          %td= transaction_purpose.updated_at
         %td
           .button-group
             = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: transaction_purpose_path(transaction_purpose)}

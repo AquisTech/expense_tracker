@@ -6,6 +6,7 @@
   %thead
     %tr
       %th Id
+      %th User
       %th Opening balance
       %th Calculated closing balance
       %th Actual closing balance
@@ -20,6 +21,7 @@
     - @account_balances.each do |account_balance|
       %tr
         %td= account_balance.id
+        %td= account_balance.user.name
         %td= account_balance.opening_balance
         %td= account_balance.calculated_closing_balance
         %td= account_balance.actual_closing_balance

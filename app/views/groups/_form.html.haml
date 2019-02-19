@@ -8,8 +8,9 @@
   .row
     = f.label :name
     = f.text_field :name
-  .row
-    = f.label :default
-    = f.check_box :default
+  - if current_user.admin?
+    .row
+      = f.label :default
+      = f.check_box :default
   = render 'shared/timestamps', f: f # TODO: Add this partial to generator
   = render 'shared/reveal_footer', f: f # TODO: Add this partial to generator

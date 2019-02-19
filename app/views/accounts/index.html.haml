@@ -6,27 +6,33 @@
 %table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th Id
+      - if current_user.admin?
+        %th Id
+        %th User
       %th Name
       %th Description
       %th Details
       %th Account type
       %th Allowed payment modes
-      %th Created at
-      %th Updated at
+      - if current_user.admin?
+        %th Created at
+        %th Updated at
       %th Actions
 
   %tbody
     - @accounts.each do |account|
       %tr
-        %td= account.id
+        - if current_user.admin?
+          %td= account.id
+          %td= account.user.name
         %td= account.name
         %td= account.description
         %td= account.details
         %td= account.account_type_name
         %td= account.payment_modes.join(', ')
-        %td= account.created_at
-        %td= account.updated_at
+        - if current_user.admin?
+          %td= account.created_at
+          %td= account.updated_at
         %td
           .button-group
             = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: account_path(account)}

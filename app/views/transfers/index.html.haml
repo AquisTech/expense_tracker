@@ -6,25 +6,31 @@
 %table.striped.hover.table-striped.stack
   %thead
     %tr
-      %th Id
+      - if current_user.admin?
+        %th Id
+        %th User
       %th Amount
       %th Description
       %th Source account
       %th Destination account
-      %th Created at
-      %th Updated at
+      - if current_user.admin?
+        %th Created at
+        %th Updated at
       %th Actions
 
   %tbody
     - @transfers.each do |transfer|
       %tr
-        %td= transfer.id
+        - if current_user.admin?
+          %td= transfer.id
+          %td= transfer.user.name
         %td= transfer.amount
         %td= transfer.description
         %td= transfer.source_account.name
         %td= transfer.destination_account.name
-        %td= transfer.created_at
-        %td= transfer.updated_at
+        - if current_user.admin?
+          %td= transfer.created_at
+          %td= transfer.updated_at
         %td
           .button-group
             = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: transfer_path(transfer)}

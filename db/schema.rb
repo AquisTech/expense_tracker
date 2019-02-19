@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_17_092306) do
+ActiveRecord::Schema.define(version: 2019_02_19_212943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,14 +149,12 @@ ActiveRecord::Schema.define(version: 2019_02_17_092306) do
     t.integer "amount", default: 0
     t.string "description"
     t.bigint "transaction_purpose_id", null: false
-    t.bigint "transfer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "transacted_at", null: false
     t.bigint "user_id"
     t.boolean "credit", default: false
     t.index ["transaction_purpose_id"], name: "index_transactions_on_transaction_purpose_id"
-    t.index ["transfer_id"], name: "index_transactions_on_transfer_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 

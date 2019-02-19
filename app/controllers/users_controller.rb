@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :accept_membership, :decline_membership, :cancel_membership]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :accept_membership, :decline_membership, :cancel_membership, :cancel_invitation, :block_membership, :transfer_ownership, :toggle_admin]
 
   def index
     @users = User.all
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   end
 
   def decline_membership
-    if @user.exit_group(Group.find(params[:group_id]))
+    if @user.decline_request(Group.find(params[:group_id]))
       flash[:notice] = 'Invitation declined successfully'
     else
       flash[:error] = "Failed to decline membership. #{@user.errors.full_messages.to_sentence}"
@@ -63,6 +63,15 @@ class UsersController < ApplicationController
       flash[:notice] = 'Group left successfully'
     else
       flash[:error] = "Failed to leave group. #{@user.errors.full_messages.to_sentence}"
+    end
+    redirect_to groups_url
+  end
+
+  def cancel_invitation
+    if @user.decline_request(Group.find(params[:group_id]))
+      flash[:notice] = 'Invitation cancelled successfully'
+    else
+      flash[:error] = "Failed to cancel invitation. #{@user.errors.full_messages.to_sentence}"
     end
     redirect_to groups_url
   end

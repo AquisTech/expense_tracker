@@ -3,7 +3,6 @@
     - if user_signed_in?
       // Access for all
       %li= link_to 'Home', root_path
-      // Access for all
       - ['accounts', 'transaction_purposes'].each do |model|
         %li
           = link_to model.titleize, send("#{model}_path")

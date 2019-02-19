@@ -49,7 +49,10 @@ class GroupsController < ApplicationController
         flash[:error] = "Failed to invite member. #{@group.errors.full_messages.to_sentence}"
       end
     else
-      flash[:error] = 'User not found.' # TODO : Implement invitable and while joining join with group invitation
+      flash[:error] = 'User not found.'
+      # TODO : Implement invitable and while joining join with group invitation
+      # Implement this after friendlyId is implemented
+      # Check if the link is opened by intended user, else create record with status as requested
     end
     redirect_to groups_url
   end

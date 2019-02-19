@@ -45,15 +45,15 @@
             - if @group.owner == current_user
               - unless @group.default?
                 = link_to 'Delete Group', group, method: :delete, data: { confirm: 'Are you sure you want to delete this Group?' }, class: 'button alert'
-              - if user != current_user
+              - if user != current_user && @group.group_users.find_by(user_id: user.id).accepted?
                 = form_with url: transfer_ownership_users_path, method: :post, remote: true do |f|
                   = f.hidden_field :id, value: user.id
                   = f.hidden_field :group_id, value: @group.id
                   = f.submit 'Transfer Ownership', class: 'button primary small'
             - if current_user != user
-              - if current_user.group_admin_for?(@group)
+              - if current_user.group_admin_for?(@group) && !user.group_owner_for?(@group)
                 - if @group.group_users.find_by(user_id: user.id).accepted?
-                  = form_with url: make_admin_users_path, method: :post, remote: true do |f|
+                  = form_with url: toggle_admin_users_path, method: :post, remote: true do |f|
                     = f.hidden_field :id, value: user.id
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit "#{user.group_admin_for?(@group) ? 'Remove' : 'Make'} Admin", class: 'button primary small'
@@ -71,7 +71,7 @@
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Block User', class: 'button primary small'
                 - if @group.group_users.find_by(user_id: user.id).invited?
-                  = form_with url: cancel_membership_users_path, method: :post, remote: true do |f|
+                  = form_with url: cancel_invitation_users_path, method: :post, remote: true do |f|
                     = f.hidden_field :id, value: user.id
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Cancel Invitation', class: 'button primary small'

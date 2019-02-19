@@ -6,6 +6,10 @@ class Group < ApplicationRecord
 
 
   def invite(member) # send_request
-    self.group_users.new(user: member, status: :invited).save!
+    self.group_users.where(user: member, status: :invited).first_or_create!
+  end
+
+  def request(member) # request to join
+    self.group_users.where(user: member, status: :requested).first_or_create!
   end
 end

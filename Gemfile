@@ -50,7 +50,7 @@ gem 'devise'
 gem 'devise-foundation-views'
 gem 'omniauth-google-oauth2'
 
-gem 'stateful_enum'
+gem 'stateful_enum' # TODO: May be we can remove this if we are not using much of its functionality
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

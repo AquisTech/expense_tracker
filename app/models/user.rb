@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :group_users
   has_many :groups, through: :group_users
   has_one :group_user
-  has_one :family, -> { where(name: 'Family') }, through: :group_user, class_name: 'Group', source: :group
+  has_one :family, -> { where(default: true, group_users: { status: :accepted }) }, through: :group_user, class_name: 'Group', source: :group
 
   after_create :add_default_cash_wallet!, :add_default_transaction_purposes!, :add_family!
 
@@ -58,29 +58,47 @@ class User < ApplicationRecord
   end
 
   def add_family!
-    self.group_users.new(group: self.owned_groups.where(name: 'Family', default: true).first_or_create!, status: :accepted, admin: true).save!
+    self.group_users.where(group: self.owned_groups.where(name: 'Family', default: true).first_or_create!, status: :accepted, admin: true).first_or_create!
+  end
+
+  def remove_family!
+    self.group_users.find_by(group_id: self.family.id).destroy! && self.family.destroy!
   end
 
   def join_group(group) # accept_request
-    self.group_users.find(group: group).accept!
+    remove_family! if group.default? && self.family && self.family.owner == self
+    self.group_users.find_by(group_id: group.id).accept!
   end
-  alias_method :accept_request, :join_group
 
-  def exit_group(group) # OR decline_request
-    self.group_users.find(group: group).destroy
+  def exit_group(group)
+    if group_owner_for?(group)
+      self.errors.add(:base, 'Please transfer ownership before exiting group.')
+      false
+    else
+      self.group_users.find_by(group_id: group.id).destroy
+      add_family! if group.default? && self.family.nil?
+    end
   end
-  alias_method :decline_request, :exit_group
+
+  def decline_request(group)
+    self.group_users.find_by(group_id: group.id).destroy
+  end
 
   def block_group(group)
-    self.group_users.find(group: group).block!
+    self.group_users.find_by(group_id: group.id).block!
   end
 
   def transfer_ownership(group) # TODO: move to group model
-    group.update_attribute(:owner_id, self.id)
+    group.update_attribute(:owner_id, self.id) && self.make_admin
+  end
+
+  def make_admin(group)
+    group_user = self.group_users.find_by(group_id: group.id)
+    group_user.update_attribute(:admin, true)
   end
 
   def toggle_admin(group)
-    group_user = self.group_users.find(group: group)
+    group_user = self.group_users.find_by(group_id: group.id)
     group_user.update_attribute(:admin, !group_user.admin?)
   end
 
@@ -90,5 +108,9 @@ class User < ApplicationRecord
 
   def group_admin_for?(group)
     self.group_users.find_by(group_id: group.id).admin?
+  end
+
+  def group_owner_for?(group)
+    self == group.owner
   end
 end

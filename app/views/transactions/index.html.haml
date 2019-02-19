@@ -8,6 +8,7 @@
     %tr
       - if current_user.admin?
         %th Id
+      - if family_view?
         %th User
       %th Amount
       %th Description
@@ -22,6 +23,7 @@
       %tr
         - if current_user.admin?
           %td= transaction.id
+        - if family_view?
           %td= transaction.user.name
         %td= transaction.amount
         %td= transaction.description

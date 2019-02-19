@@ -8,6 +8,7 @@
     %tr
       - if current_user.admin?
         %th Id
+      - if family_view?
         %th User
       %th Transaction
       %th Amount
@@ -23,6 +24,7 @@
       %tr
         - if current_user.admin?
           %td= payment.id
+        - if family_view?
           %td= payment.user.name
         %td= payment.transactable.description
         %td{class: payment.credit? ? 'text-success' : 'text-alert'}= "#{payment.sign}#{payment.amount}"

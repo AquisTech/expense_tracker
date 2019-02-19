@@ -8,6 +8,7 @@
     %tr
       - if current_user.admin?
         %th Id
+      - if family_view?
         %th User
       %th Name
       %th Description
@@ -24,6 +25,7 @@
       %tr
         - if current_user.admin?
           %td= account.id
+        - if family_view?
           %td= account.user.name
         %td= account.name
         %td= account.description

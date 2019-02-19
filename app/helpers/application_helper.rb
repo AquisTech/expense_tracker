@@ -21,4 +21,8 @@ module ApplicationHelper
   def close_reveal_button(text = 'Cancel')
     content_tag(:div, text, class: 'button warning', data: {close: ''})
   end
+
+  def family_view?
+    params[:family]
+  end
 end

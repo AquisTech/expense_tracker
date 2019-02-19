@@ -1,5 +1,7 @@
-%h1 Accounts
-%span= link_to 'Add New Account', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_account_path}
+%h1
+  Accounts
+  = render 'shared/family_switch'
+  = link_to 'Add New Account', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_account_path}
 
 %table.striped.hover.table-striped.stack
   %thead

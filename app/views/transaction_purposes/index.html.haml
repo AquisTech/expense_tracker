@@ -1,5 +1,7 @@
-%h1 Transaction Purposes
-%span= link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
+%h1
+  Transaction Purposes
+  = render 'shared/family_switch'
+  = link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
 
 %table.striped.hover.table-striped.stack
   %thead

@@ -1,0 +1,6 @@
+%span.switch.text-primary.text-center
+  %span Self
+  = check_box_tag :family, params[:family], params[:family], class: 'switch-input', id: 'family_switch'
+  %label.switch-paddle.rounded{ for: 'family_switch' }
+    %span.show-for-sr Family
+  %span Family

@@ -67,6 +67,15 @@ class UsersController < ApplicationController
     redirect_to groups_url
   end
 
+  def remove_from_group
+    if @user.exit_group(Group.find(params[:group_id]))
+      flash[:notice] = 'User removed successfully'
+    else
+      flash[:error] = "Failed to remove user. #{@user.errors.full_messages.to_sentence}"
+    end
+    redirect_to groups_url
+  end
+
   def cancel_invitation
     if @user.decline_request(Group.find(params[:group_id]))
       flash[:notice] = 'Invitation cancelled successfully'
@@ -81,6 +90,15 @@ class UsersController < ApplicationController
       flash[:notice] = 'Group blocked successfully'
     else
       flash[:error] = "Failed to block group. #{@user.errors.full_messages.to_sentence}"
+    end
+    redirect_to groups_url
+  end
+
+  def block_user
+    if @user.block_group(Group.find(params[:group_id]))
+      flash[:notice] = 'User blocked successfully'
+    else
+      flash[:error] = "Failed to block user. #{@user.errors.full_messages.to_sentence}"
     end
     redirect_to groups_url
   end

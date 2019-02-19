@@ -66,7 +66,7 @@
                     = f.hidden_field :id, value: user.id
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Decline Request', class: 'button primary small'
-                  = form_with url: block_membership_users_path, method: :post, remote: true do |f|
+                  = form_with url: block_user_users_path, method: :post, remote: true do |f|
                     = f.hidden_field :id, value: user.id
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Block User', class: 'button primary small'
@@ -76,7 +76,7 @@
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Cancel Invitation', class: 'button primary small'
                 - if @group.group_users.find_by(user_id: user.id).accepted?
-                  = form_with url: cancel_membership_users_path, method: :post, remote: true do |f|
+                  = form_with url: remove_from_group_users_path, method: :post, remote: true do |f|
                     = f.hidden_field :id, value: user.id
                     = f.hidden_field :group_id, value: @group.id
                     = f.submit 'Remove from Group', class: 'button primary small'

@@ -9,8 +9,10 @@ Rails.application.routes.draw do
       post :accept_membership
       post :decline_membership
       post :cancel_membership
+      post :remove_from_group
       post :cancel_invitation
       post :block_membership
+      post :block_user
       post :toggle_admin
       post :transfer_ownership
     end

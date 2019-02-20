@@ -2,7 +2,7 @@ class TransactionPurposesController < ApplicationController
   before_action :set_transaction_purpose, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transaction_purposes = current_user.transaction_purposes
+    @transaction_purposes = (family_view? ? current_user.family : current_user).transaction_purposes
   end
 
   def new

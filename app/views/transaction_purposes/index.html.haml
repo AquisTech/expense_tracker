@@ -27,7 +27,9 @@
           %td= transaction_purpose.user.name
         %td= transaction_purpose.name
         %td= transaction_purpose.sub_category.name_with_category
-        %td= transaction_purpose.estimate
+        %td{ class: transaction_purpose.credit? ? 'text-success' : 'text-alert' }
+          = transaction_purpose.sign
+          = transaction_purpose.estimate
         - if current_user.admin?
           %td= transaction_purpose.created_at
           %td= transaction_purpose.updated_at

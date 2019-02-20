@@ -5,4 +5,9 @@ class ApplicationController < ActionController::Base
   def render_failure(object)
     render 'shared/failure', locals: { object: object }
   end
+
+  def family_view?
+    params[:family]
+  end
+  helper_method :family_view?
 end

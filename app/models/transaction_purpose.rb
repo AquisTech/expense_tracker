@@ -13,11 +13,15 @@ class TransactionPurpose < ApplicationRecord
   # TODO: Add gem to handle currency/money related stuff
   validates :estimate, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  def humanize
+  def humanize # TODO: Use deligate
     recurrence_rule.humanize
   end
 
   def sign_class
     credit? ? 'plus' : 'minus'
+  end
+
+  def sign
+    credit? ? '+' : '-'
   end
 end

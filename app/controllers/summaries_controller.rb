@@ -9,18 +9,18 @@ class SummariesController < ApplicationController
     else
       Date.parse(params[:date]) rescue Date.today
     end
-    @transactions = current_user.transactions.where(transacted_at: @date)
+    @transactions = (family_view? ? current_user.family : current_user).transactions.where(transacted_at: @date)
     @estimated_credits, @estimated_debits = if (@month || @year)
-      expense = current_user.expenses.where(starts_on: @date.first, ends_on: @date.last).first_or_initialize
-      if expense.updated_at.nil? || expense.updated_at < current_user.transaction_purposes.select("max(updated_at) latest_updated").order('user_id').group('user_id').first.latest_updated
+      expense = current_user.expenses.where(starts_on: @date.first, ends_on: @date.last).first_or_initialize # TODO: Make expenses polymorphic
+      if expense.updated_at.nil? || expense.updated_at < (family_view? ? current_user.family : current_user).transaction_purposes.select("max(updated_at) latest_updated").order('user_id').group('user_id').first.latest_updated
         expense.recalculate_amount(@date.first, @date.last)
       end
       [expense.credits, expense.debits]
     else
-      [current_user.occurrences.joins(:recurrence_rule)
+      [(family_view? ? current_user.family : current_user).occurrences.joins(:recurrence_rule)
         .joins("INNER JOIN transaction_purposes ON recurrence_rules.transaction_purpose_id = transaction_purposes.id")
         .for(@date).where(transaction_purposes: {credit: true}).sum(:estimate),
-      current_user.occurrences.joins(:recurrence_rule)
+      (family_view? ? current_user.family : current_user).occurrences.joins(:recurrence_rule)
         .joins("INNER JOIN transaction_purposes ON recurrence_rules.transaction_purpose_id = transaction_purposes.id")
         .for(@date).where(transaction_purposes: {credit: false}).sum(:estimate)]
     end

@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
-    @accounts = current_user.accounts
+    @accounts = (family_view? ? current_user.family : current_user).accounts
   end
 
   def new

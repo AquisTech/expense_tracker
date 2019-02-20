@@ -171,6 +171,20 @@ $(document).on('turbolinks:load', function() {
   $('body').on('change', '.payment_mode_select', function(e) {
     toggleAccountsForPaymentMode($(this));
   });
+  // Toggle between self and family account
+  $('body').on('change', '#family_switch', function(e) {
+    if($(this).prop('checked')) {
+      if(location.search == '') {
+        Turbolinks.visit(location.origin + location.pathname + '?family=true');
+      } else if(location.search.indexOf('family') != -1) {
+        Turbolinks.visit(location.href.replace(/family=(true|false)/, 'family=true'));
+      } else {
+        Turbolinks.visit(location.href.replace(/\?/, '?family=true'));
+      }
+    } else {
+      Turbolinks.visit(location.href.replace(/family=(true|false)/, ''));
+    }
+  });
   // Show/hide scroll to top button
   $(document).on('scroll', function(){
     if ($(window).scrollTop() > 100) {

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def family_view?
-    params[:family]
+    params[:family] == 'true' || params[:family] == true
   end
   helper_method :family_view?
 end

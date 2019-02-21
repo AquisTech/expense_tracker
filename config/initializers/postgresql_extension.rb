@@ -16,7 +16,7 @@ module ActiveRecord::PostgreSQLExtension
     end
 
     def DATE_DIFF(date1, date2)
-      "DATE_PART('day', DATE(#{date1}) - #{date2})::INTEGER"
+      "(DATE(#{date1}) - DATE(#{date2}))"
     end
 
     def DAY_OF_WEEK(attr)

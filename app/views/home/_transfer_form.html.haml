@@ -1,7 +1,7 @@
 - unique_id = SecureRandom.uuid
 = form_with(model: transaction, remote: true, class: [unique_id, "#{'custom_transfer' unless transaction.transaction_purpose}"]) do |f|
   .grid-x
-    .card
+    .card.shadow
       .card-divider
         .grid-x.grid-padding-x
           .medium-6.large-4.cell

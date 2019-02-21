@@ -128,17 +128,18 @@ $(document).on('turbolinks:load', function() {
     }
   }
   // Fetch estimate for transaction purpose
-  function getEstimateForTransactionPurpose(transaction_purpose_select) {
+  function getEstimateForTransactionPurpose(transaction_purpose_select, transfer) {
     $.ajax({
       url: '/transaction_purposes/' + transaction_purpose_select.val() + '/get_estimate',
       success: function(result) {
-        transaction_purpose_select.parents('form').find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result);
+        var target_selector = transfer ? '.custom_transfer' : '.custom_transaction';
+        $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result);
       }
     });
   }
   // Toggle new transaction/transfer section as per selected transaction purpose
-  function toggleTransactableForTransactionPurpose(transaction_purpose_select) {
-    if(transaction_purpose_select.find('option:selected').attr('transfer') == 'true') {
+  function toggleTransactableForTransactionPurpose(transaction_purpose_select, transfer) {
+    if(transfer) {
       $('.custom_transaction').hide();
       $('.custom_transfer').find('.transaction_purpose_select').val(transaction_purpose_select.val());
       $('.custom_transfer').show();
@@ -149,12 +150,14 @@ $(document).on('turbolinks:load', function() {
     }
   }
   $('.transaction_purpose_select').each(function(e) {
-    toggleTransactableForTransactionPurpose($(this));
-    getEstimateForTransactionPurpose($(this));
+    var transfer = $(this).find('option:selected').attr('transfer') == 'true';
+    toggleTransactableForTransactionPurpose($(this), transfer);
+    getEstimateForTransactionPurpose($(this), transfer);
   });
   $('body').on('change', '.transaction_purpose_select', function(e) {
-    toggleTransactableForTransactionPurpose($(this));
-    getEstimateForTransactionPurpose($(this));
+    var transfer = $(this).find('option:selected').attr('transfer') == 'true';
+    toggleTransactableForTransactionPurpose($(this), transfer);
+    getEstimateForTransactionPurpose($(this), transfer);
   });
   // Filter Accounts as per eligible payment modes
   function toggleAccountsForPaymentMode(payment_mode_select) {

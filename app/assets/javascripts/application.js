@@ -164,11 +164,11 @@ $(document).on('turbolinks:load', function() {
   });
   // Filter Accounts as per eligible payment modes
   function toggleAccountsForPaymentMode(payment_mode_select) {
-    var target = payment_mode_select.parents('.grid-container').find('.bank_account_select');
+    var target = payment_mode_select.parents('form').find('.bank_account_select');
     if (target.find('option:selected').attr('payment_modes') && !target.find('option:selected').attr('payment_modes').match(new RegExp(payment_mode_select.val()))) {
       target.val('')
     }
-    target.find('option').addClass('hide');
+    target.find('option[value!=""]').addClass('hide');
     target.find('option[payment_modes~="' + payment_mode_select.val() + '"]').removeClass('hide');
   }
   $('.payment_mode_select').each(function(e) {

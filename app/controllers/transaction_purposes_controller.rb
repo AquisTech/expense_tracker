@@ -34,7 +34,11 @@ class TransactionPurposesController < ApplicationController
   end
 
   def show
-    render layout: false
+    if request.format.json?
+      render json: @transaction_purpose, status: :ok
+    else
+      render layout: false
+    end
   end
 
   def destroy
@@ -54,11 +58,6 @@ class TransactionPurposesController < ApplicationController
     render json: { msg: msg }, status: :ok
   end
 
-  def get_estimate
-    tp = current_user.transaction_purposes.find(params[:id])
-    render json: tp.estimate, status: :ok
-  end
-
   private
     def set_transaction_purpose
       @transaction_purpose = current_user.transaction_purposes.find(params[:id])
@@ -70,6 +69,6 @@ class TransactionPurposesController < ApplicationController
       rules = params[:day_of_month_or_week_monthly] == 'day_of_month' ? [] : {} if type == 'Monthly' && rules.blank?
       rules = { '1' => (params[:day_of_month_or_week_yearly] == 'day_of_month' ? [] : {}) } if type == 'Yearly' && rules.blank?
       params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rules
-      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, :credit, :transfer, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
+      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, :credit, :transfer, :preferred_payment_mode, :preferred_account_id, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
     end
 end

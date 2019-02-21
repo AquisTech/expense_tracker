@@ -8,6 +8,7 @@ class Group < ApplicationRecord
   has_many :transactions, through: :group_users
   has_many :transfers, through: :group_users
   has_many :payments, through: :group_users
+  has_many :occurrences, through: :group_users
 
   validates :name, presence: true
 

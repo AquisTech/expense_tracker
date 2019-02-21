@@ -130,10 +130,13 @@ $(document).on('turbolinks:load', function() {
   // Fetch estimate for transaction purpose
   function getEstimateForTransactionPurpose(transaction_purpose_select, transfer) {
     $.ajax({
-      url: '/transaction_purposes/' + transaction_purpose_select.val() + '/get_estimate',
+      url: '/transaction_purposes/' + transaction_purpose_select.val(),
+      dataType: 'json',
       success: function(result) {
         var target_selector = transfer ? '.custom_transfer' : '.custom_transaction';
-        $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result);
+        $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result['estimate']);
+        $(target_selector).find('select[name$="[payment_mode]"]').val(result['preferred_payment_mode']);
+        $(target_selector).find('select[name$="[account_id]"]').val(result['preferred_account_id']);
       }
     });
   }

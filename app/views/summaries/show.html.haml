@@ -79,7 +79,7 @@
     - @transactions.each do |transaction|
       %tr
         - if family_view?
-          = transaction.user.name
+          %td= transaction.user.name
         %td= transaction.transaction_purpose.try(:name)
         %td= transaction.description
         - if @month || @year

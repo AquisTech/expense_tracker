@@ -13,6 +13,8 @@
       %th Name
       %th Sub category
       %th Estimate
+      %th Preferred Payment Mode
+      %th Preferred Account
       - if current_user.admin?
         %th Created at
         %th Updated at
@@ -30,6 +32,8 @@
         %td{ class: transaction_purpose.credit? ? 'text-success' : 'text-alert' }
           = transaction_purpose.sign
           = transaction_purpose.estimate
+        %td= transaction_purpose.preferred_payment_mode
+        %td= transaction_purpose.preferred_account.try(:name)
         - if current_user.admin?
           %td= transaction_purpose.created_at
           %td= transaction_purpose.updated_at

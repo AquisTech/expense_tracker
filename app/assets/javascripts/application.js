@@ -191,6 +191,14 @@ $(document).on('turbolinks:load', function() {
       Turbolinks.visit(location.href.replace(/family=(true|false)/, ''));
     }
   });
+  // Toggle credit-debit radio on transfer checkbox toggle
+  $('body').on('change', '#transaction_purpose_transfer', function(e) {
+    if ($('#transaction_purpose_transfer').prop('checked')) {
+      $('.credit_debit_toggle').hide();
+    } else {
+      $('.credit_debit_toggle').show();
+    }
+  });
   // Show/hide scroll to top button
   $(document).on('scroll', function(){
     if ($(window).scrollTop() > 100) {

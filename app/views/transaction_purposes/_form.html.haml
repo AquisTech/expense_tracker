@@ -14,12 +14,12 @@
   .row
     = f.label :sub_category_id
     = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
-  .row
-    = # TODO: hide credit debit for transfer
-    = f.radio_button :credit, true
-    = f.label :credit
-    = f.radio_button :credit, false
-    = f.label :debit
+  - unless object.transfer?
+    .row.credit_debit_toggle
+      = f.radio_button :credit, true
+      = f.label :credit
+      = f.radio_button :credit, false
+      = f.label :debit
   .row
     = f.label :estimate
     = f.amount_field :estimate, id: :transaction_purpose_estimate, currency: '&#8377;'

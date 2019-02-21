@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @payments = (family_view? ? current_user.family : current_user).payments
+    @payments = current_scope.payments
   end
 
   def new

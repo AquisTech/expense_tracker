@@ -2,7 +2,7 @@ class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transactions = (family_view? ? current_user.family : current_user).transactions
+    @transactions = current_scope.transactions
   end
 
   def new

@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     render 'shared/failure', locals: { object: object }
   end
 
+  def current_scope
+    @current_scope ||= family_view? ? current_user.family : current_user
+  end
+
   def family_view?
     params[:family] == 'true' || params[:family] == true
   end

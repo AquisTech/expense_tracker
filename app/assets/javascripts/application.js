@@ -179,7 +179,7 @@ $(document).on('turbolinks:load', function() {
       } else if(location.search.indexOf('family') != -1) {
         Turbolinks.visit(location.href.replace(/family=(true|false)/, 'family=true'));
       } else {
-        Turbolinks.visit(location.href.replace(/\?/, '?family=true'));
+        Turbolinks.visit(location.href.replace(/\?/, '?family=true&'));
       }
     } else {
       Turbolinks.visit(location.href.replace(/family=(true|false)/, ''));

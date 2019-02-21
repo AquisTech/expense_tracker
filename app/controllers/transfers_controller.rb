@@ -2,7 +2,7 @@ class TransfersController < ApplicationController
   before_action :set_transfer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transfers = (family_view? ? current_user.family : current_user).transfers
+    @transfers = current_scope.transfers
   end
 
   def new

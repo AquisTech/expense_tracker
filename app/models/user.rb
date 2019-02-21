@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :payments
   has_many :recurrence_rules
   has_many :occurrences
-  has_many :expenses
+  has_many :expenses, as: :owner
   has_many :owned_groups, class_name: 'Group', foreign_key: :owner_id
   has_many :group_users
   has_many :groups, through: :group_users

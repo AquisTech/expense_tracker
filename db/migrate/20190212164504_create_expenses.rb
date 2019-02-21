@@ -5,7 +5,7 @@ class CreateExpenses < ActiveRecord::Migration[5.2]
       t.datetime :ends_on
       t.integer :credits, default: 0
       t.integer :debits, default: 0
-      t.references :user, null:false, index: true
+      t.references :user, null: false, index: true
       t.timestamps
     end
   end

@@ -18,9 +18,16 @@
     display: none;
     &:checked + label {
       background: #1779ba; // $primary-color
+      color: white;
+      font-weight: bold;
     }
     &+ label {
       border: 1px solid #767676; // $secondary-color
+      border-radius: 20px;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
     }
   }
 }

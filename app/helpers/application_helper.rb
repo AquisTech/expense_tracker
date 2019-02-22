@@ -21,4 +21,12 @@ module ApplicationHelper
   def close_reveal_button(text = 'Cancel')
     content_tag(:div, text, class: 'button warning', data: {close: ''})
   end
+
+  def link_to_reveal # TODO: Implement link_to_reveal
+
+  end
+
+  def turbolink_to # TODO: Implement turbolink_to
+
+  end
 end

@@ -193,11 +193,7 @@ $(document).on('turbolinks:load', function() {
   });
   // Toggle credit-debit radio on transfer checkbox toggle
   $('body').on('change', '#transaction_purpose_transfer', function(e) {
-    if ($('#transaction_purpose_transfer').prop('checked')) {
-      $('.credit_debit_toggle').hide();
-    } else {
-      $('.credit_debit_toggle').show();
-    }
+    toggleCreditDebitRadioOnTransferToggle();
   });
   // Show/hide scroll to top button
   $(document).on('scroll', function(){
@@ -223,4 +219,11 @@ function toggleMonthlyDayOfMonthOrWeek(selection) {
   $('#monthly .' + other_class).addClass('hide');
   $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
   $('#monthly .' + selection).find('select, input').attr('disabled', false);
+}
+function toggleCreditDebitRadioOnTransferToggle() {
+  if ($('#transaction_purpose_transfer').prop('checked')) {
+    $('.credit_debit_toggle').hide();
+  } else {
+    $('.credit_debit_toggle').show();
+  }
 }

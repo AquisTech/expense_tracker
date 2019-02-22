@@ -14,12 +14,11 @@
   .row
     = f.label :sub_category_id
     = f.collection_select :sub_category_id, SubCategory.all, :id, :name_with_category, id: :transaction_purpose_sub_category_id
-  - unless object.transfer?
-    .row.credit_debit_toggle
-      = f.radio_button :credit, true
-      = f.label :credit
-      = f.radio_button :credit, false
-      = f.label :debit
+  .row.credit_debit_toggle
+    = f.radio_button :credit, true
+    = f.label :credit
+    = f.radio_button :credit, false
+    = f.label :debit
   .row
     = f.label :estimate
     = f.amount_field :estimate, id: :transaction_purpose_estimate, currency: '&#8377;'
@@ -33,3 +32,5 @@
     = render 'recurrence_rule_form', f: f
   = render 'shared/timestamps', f: f
   = render 'shared/reveal_footer', f: f
+:javascript
+  toggleCreditDebitRadioOnTransferToggle();

@@ -17,8 +17,4 @@
           %td= group_user.id
           %td= group_user.user.name
           %td= group_user.group.name
-          %td
-            .button-group
-              = link_to 'Show', 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: group_user_path(group_user)}
-              = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_group_user_path(group_user)}
-              = link_to 'Delete', group_user, method: :delete, data: { confirm: 'Are you sure you want to delete this Group User?' }, class: 'button alert'
+          %td= render 'shared/table_row_action_buttons', object: group_user

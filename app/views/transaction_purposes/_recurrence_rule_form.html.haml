@@ -27,7 +27,7 @@
         - ((1..31).to_a << -1).in_groups_of(7).map do |days_of_week|
           .row.columns
             = rr.collection_check_boxes :rules, days_of_week.compact, :to_s, :to_s, { checked: rr.object.rules, include_hidden: false }, disabled: disable_dom_monthly do |day|
-              %div= day.check_box + (day.value == '-1' ? day.label { 'Last day of month' } : day.label)
+              %div= day.check_box + (day.value == '-1' ? day.label(class: :monthend) { 'Last day of month' } : day.label)
 
       - disable_dow_monthly = !rr.object.monthly_days_of_week?
       .day_of_week.input-group{ class: hide_if(disable_dow_monthly) }
@@ -35,7 +35,7 @@
           .row.columns
             - [1, 2, 3, 4, -1].each do |n|
               %div
-                %label= (n == -1 ? 'Last' : n.ordinalize) + ' Week'
+                %label.week_counter= (n == -1 ? 'Last' : n.ordinalize) + ' Week'
           - (0..6).to_a.each do |day|
             .row.columns
               = r.collection_check_boxes day.to_s, [1, 2, 3, 4, -1], :to_s, :to_s, { checked: !rr.object.rules.is_a?(Array) && rr.object.rules.try(:[], day.to_s), include_hidden: false }, disabled: disable_dow_monthly do |week|
@@ -60,7 +60,7 @@
               - ((1..Time.days_in_month(month, 2000)).to_a << -1).in_groups_of(7).map do |days_of_week|
                 .row.columns
                   = r.collection_check_boxes month, days_of_week.compact, :to_s, :to_s, { checked: rr.object.rules.is_a?(Hash) && rr.object.rules.try(:[], month.to_s), include_hidden: false }, disabled: disable_dom_yearly do |day|
-                    %div= day.check_box + (day.value == '-1' ? day.label { 'Last day of month' } : day.label)
+                    %div= day.check_box + (day.value == '-1' ? day.label(class: :monthend) { 'Last day of month' } : day.label)
 
           - disable_dow_yearly = !rr.object.yearly_days_of_week?
           .day_of_week.input-group{ class: hide_if(disable_dow_yearly) }
@@ -70,7 +70,7 @@
                 .row.columns
                   - [1, 2, 3, 4, -1].each do |n|
                     %div
-                      %label= (n == -1 ? 'Last' : n.ordinalize) + ' Week'
+                      %label.week_counter= (n == -1 ? 'Last' : n.ordinalize) + ' Week'
                 - (0..6).to_a.each do |day|
                   .row.columns
                     = m.collection_check_boxes day.to_s, [1, 2, 3, 4, -1], :to_s, :to_s, { checked: rr.object.rules.is_a?(Hash) && rr.object.rules.try(:[], month.to_s).is_a?(Hash) && rr.object.rules.try(:[], month.to_s).try(:[], day.to_s), include_hidden: false }, disabled: disable_dow_yearly do |week|

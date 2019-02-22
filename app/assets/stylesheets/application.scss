@@ -28,7 +28,18 @@
       height: 36px;
       line-height: 36px;
       text-align: center;
+      &.monthend {
+        height: 144px;
+      }
     }
+  }
+  label.week_counter {
+    border: 1px solid #767676;
+    background: #e6e6e6; // $light-gray
+    height: 36px;
+    line-height: 36px;
+    padding: 0 7px;
+    border-radius: 20px;
   }
 }
 .next-month, .prev-month {

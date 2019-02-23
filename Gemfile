@@ -52,6 +52,8 @@ gem 'omniauth-google-oauth2'
 
 gem 'stateful_enum' # TODO: May be we can remove this if we are not using much of its functionality
 
+gem 'material_design_iconsfont', git: 'https://github.com/AquisTech/material_design_iconsfont'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

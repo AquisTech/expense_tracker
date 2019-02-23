@@ -35,4 +35,9 @@
         - if current_user.admin?
           %td= account.created_at
           %td= account.updated_at
-        %td= render 'shared/table_row_action_buttons', object: account
+        %td
+          .button-group
+            = link_to icon_tag('visibility'), 'javascript:void(0)', class: 'button clear success', data: {open: 'ajax-reveal', url: accounts_path(account)}
+            = link_to icon_tag('create'), 'javascript:void(0)', class: 'button clear warning', data: {open: 'ajax-reveal', url: edit_account_path(account)}
+            - unless account.default?
+              = link_to icon_tag('delete'), account, method: :delete, data: { confirm: "Are you sure you want to delete this Account?" }, class: 'button clear alert'

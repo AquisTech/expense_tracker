@@ -54,7 +54,10 @@ class User < ApplicationRecord
   end
 
   def add_default_cash_wallet!
-    self.accounts.create!(name: 'Cash Wallet', description: 'Cash in hand', details: 'Cash in hand', account_type: 'CS', payment_modes: ['CS'])
+    self.accounts.create!(
+      name: 'Cash Wallet', description: 'Cash in hand', details: 'Cash in hand', account_type: 'CS', payment_modes: [], default: true,
+      account_balances_attributes: [{ opening_balance: 0, calculated_closing_balance: 0, actual_closing_balance: 0, month: DateTime.now.month, year: DateTime.now.year, user: self }]
+    )
   end
 
   def add_family!

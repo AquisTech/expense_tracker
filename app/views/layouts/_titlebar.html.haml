@@ -3,4 +3,5 @@
     %button.menu-icon{"data-open" => "offCanvasLeft", :type => "button"}
     %span.title-bar-title= link_to 'ExpenseTracker', root_path
   .title-bar-right
-    %button.menu-icon{"data-open" => "offCanvasRight", :type => "button"}
+    %button{"data-open" => "offCanvasRight", :type => "button"}
+      = icon_tag 'account_circle', 'text-default'

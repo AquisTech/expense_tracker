@@ -14,6 +14,6 @@
       .card-section
         = current_user.currency
   %ul.menu.vertical
-    = link_to 'Groups', groups_path
+    = link_to 'Manage Family', 'javascript:void(0)', data: {open: 'ajax-reveal', url: group_path(current_user.family)}
     = render 'devise/menu/registration_items'
     = render 'devise/menu/login_items'

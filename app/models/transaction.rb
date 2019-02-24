@@ -1,9 +1,9 @@
 class Transaction < ApplicationRecord
 
-  belongs_to :transaction_purpose # TODO: Prevent destroy of transaction purpose if transactions are associated. Use soft delete
+  belongs_to :transaction_purpose
   belongs_to :user
 
-  has_many :payments, as: :transactable, dependent: :destroy # TODO: Check if destroy is correct or we have to use nullify to maintain history
+  has_many :payments, as: :transactable, dependent: :destroy
 
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: :all_blank
 

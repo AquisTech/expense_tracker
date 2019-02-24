@@ -4,8 +4,8 @@ class Transfer < ApplicationRecord
   belongs_to :source_account, class_name: 'Account'
   belongs_to :destination_account, class_name: 'Account'
   has_many :payments, as: :transactable, dependent: :destroy
-  has_one :credit_payment, -> { where(credit: true) }, class_name: 'Payment', foreign_key: :transactable_id
-  has_one :debit_payment, -> { where(credit: false) }, class_name: 'Payment', foreign_key: :transactable_id
+  has_one :credit_payment, -> { where(credit: true) }, class_name: 'Payment', as: :transactable
+  has_one :debit_payment, -> { where(credit: false) }, class_name: 'Payment', as: :transactable
 
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 } # TODO: Add gem to handle currency/money related stuff
   validates :source_account_id, numericality: { other_than: proc {|t| t.destination_account_id}, message: 'cannot be same as Destination Account' },

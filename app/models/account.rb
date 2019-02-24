@@ -3,9 +3,9 @@ class Account < ApplicationRecord
   serialize :payment_modes
 
   belongs_to :user
-  has_many :account_balances
-  has_many :transactions
-  has_many :transfers
+  has_many :account_balances, dependent: :destroy
+  has_many :transactions, dependent: :restrict_with_error
+  has_many :transfers, dependent: :restrict_with_error
   accepts_nested_attributes_for :account_balances, allow_destroy: true, reject_if: :all_blank
 
   ACCOUNT_TYPES = {

@@ -3,8 +3,8 @@ class TransactionPurpose < ApplicationRecord
   belongs_to :user
   belongs_to :preferred_account, class_name: 'Account'
   has_one :recurrence_rule, dependent: :destroy
-  has_many :transactions
-  has_many :transfers
+  has_many :transactions, dependent: :restrict_with_error
+  has_many :transfers, dependent: :restrict_with_error
   has_many :occurrences, through: :recurrence_rule
 
   accepts_nested_attributes_for :recurrence_rule

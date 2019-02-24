@@ -1,7 +1,7 @@
 %h1
   Transfers
   = render 'shared/family_switch'
-  = link_to 'Add New Transfer', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_transfer_path}
+  = add_new_button('Add New Transfer', new_transfer_path)
 
 %table.striped.hover.table-striped.stack
   %thead

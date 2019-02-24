@@ -1,6 +1,6 @@
 %h1
   Groups
-  = link_to 'Add New Group', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_group_path}
+  = add_new_button('Add New Group', new_group_path)
 
 .table-scroll
   %table.striped.hover.table-striped.stack

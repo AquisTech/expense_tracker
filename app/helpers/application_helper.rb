@@ -22,8 +22,12 @@ module ApplicationHelper
     content_tag(:div, text, class: 'button warning', data: {close: ''})
   end
 
-  def link_to_reveal # TODO: Implement link_to_reveal
+  def add_new_button(content, url)
+    link_to_reveal(content, url, 'button primary float-right margin-top-1')
+  end
 
+  def link_to_reveal(content, url, classes)
+    link_to content, 'javascript:void(0)', class: classes, data: {open: 'ajax-reveal', url: url}
   end
 
   def turbolink_to # TODO: Implement turbolink_to

@@ -1,6 +1,6 @@
 %h1
   Users
-  = link_to 'Add New User', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_user_path}
+  = add_new_button('Add New User', new_user_path)
 
 .table-scroll
   %table.striped.hover.table-striped.stack

@@ -1,7 +1,7 @@
 %h1
   Transactions
   = render 'shared/family_switch'
-  = link_to 'Add New Transaction', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_transaction_path}
+  = add_new_button('Add New Transaction', new_transaction_path)
 
 %table.striped.hover.table-striped.stack
   %thead

@@ -1,7 +1,7 @@
 %h1
   Payments
   = render 'shared/family_switch'
-  = link_to 'Add New Payment', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_payment_path}
+  = add_new_button('Add New Payment', new_payment_path)
 
 %table.striped.hover.table-striped.stack
   %thead

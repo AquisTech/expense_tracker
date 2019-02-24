@@ -1,6 +1,6 @@
 %h1
   Group Users
-  = link_to 'Add New Group User', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_group_user_path}
+  = add_new_button('Add New Group User', new_group_user_path)
 
 .table-scroll
   %table.striped.hover.table-striped.stack

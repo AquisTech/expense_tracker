@@ -1,0 +1,9 @@
+.top-bar#responsive-menu
+  .top-bar-left
+    %ul.menu
+      %li= link_to 'ExpenseTracker', root_path, class: 'text-default font-bold'
+  .top-bar-right
+    - if user_signed_in?
+      = render 'layouts/menus', vertical: false
+    - else
+      = # no menus for now

@@ -15,8 +15,9 @@
   %body
     .off-canvas-wrapper
       = render 'layouts/titlebar'
-      = render 'layouts/left_sidebar'
-      = render 'layouts/right_sidebar'
+      = render 'layouts/top_navigation'
+      - if user_signed_in?
+        = render 'layouts/left_navigation'
       .off-canvas-content{"data-off-canvas-content" => ""}
         = # TODO : Create class and styling for .container and use instead of .row
         .row

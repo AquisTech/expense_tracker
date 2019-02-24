@@ -1,0 +1,15 @@
+#offCanvasLeft.off-canvas.position-left{'data-off-canvas': '', 'data-transition': 'overlap'}
+  .card
+    .card-image
+      = image_tag Rails.env.development? || current_user.image_url.blank? ? 'rupee' : current_user.image_url
+    .card-section
+      = current_user.name
+    .card-section
+      = current_user.email
+    .card-section
+      = current_user.gender
+    .card-section
+      = current_user.locale
+    .card-section
+      = current_user.currency
+  = render 'layouts/menus', vertical: true

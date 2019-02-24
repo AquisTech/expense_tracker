@@ -1,0 +1,20 @@
+%ul.menu{ class: vertical ? 'vertical' : '' }
+  // Access for all
+  = render 'devise/menu/registration_items'
+  %li= link_to 'Manage Family', 'javascript:void(0)', data: {open: 'ajax-reveal', url: group_path(current_user.family)}, class: 'text-default'
+  %li= link_to 'Dashboard', root_path, class: 'text-default'
+  - ['accounts', 'transaction_purposes'].each do |model|
+    %li
+      = link_to model.titleize, send("#{model}_path"), class: 'text-default'
+  // Detailed access - need to think
+  - ['transactions', 'transfers', 'payments'].each do |model|
+    %li
+      = link_to model.titleize, send("#{model}_path"), class: 'text-default'
+  // Access for all
+  %li= link_to 'Summary', summary_path, class: 'text-default'
+  // Access for Admins only
+  - if current_user.admin?
+    - ['categories', 'sub_categories', 'users', 'account_balances', 'groups', 'group_users', 'recurrence_rules', 'occurrences'].each do |model|
+      %li
+        = link_to model.titleize, send("#{model}_path"), class: 'text-default'
+  = render 'devise/menu/login_items'

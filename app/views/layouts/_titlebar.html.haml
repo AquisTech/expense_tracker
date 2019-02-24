@@ -1,7 +1,6 @@
-.title-bar
+.title-bar{'data-responsive-toggle': 'responsive-menu', 'data-hide-for': 'medium'}
   .title-bar-left
-    %button.menu-icon{"data-open" => "offCanvasLeft", :type => "button"}
-    %span.title-bar-title= link_to 'ExpenseTracker', root_path
+    - if user_signed_in?
+      %button.menu-icon{"data-open" => "offCanvasLeft", :type => "button"}
+    .title-bar-title= link_to 'ExpenseTracker', root_path, class: 'text-default'
   .title-bar-right
-    %button{"data-open" => "offCanvasRight", :type => "button"}
-      = icon_tag 'account_circle', 'text-default'

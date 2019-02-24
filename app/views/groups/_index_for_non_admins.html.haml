@@ -17,7 +17,7 @@
           %td= group.owner.name
           %td
             .button-group
-              = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: {open: 'ajax-reveal', url: edit_group_path(group)}
-              = link_to "#{group.group_users.count} Members", 'javascript:void(0)', class: 'button success', data: {open: 'ajax-reveal', url: group_path(group)}
+              = link_to_edit_icon(group)
+              = link_to_reveal "#{group.group_users.count} Members", group_path(group), 'button success'
               - if !group.default? && current_user.group_owner_for?(group)
-                = link_to 'Delete', group, method: :delete, data: { confirm: 'Are you sure you want to delete this Group?' }, class: 'button alert'
+                = link_to_delete_icon(group)

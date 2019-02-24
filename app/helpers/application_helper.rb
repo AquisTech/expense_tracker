@@ -30,7 +30,20 @@ module ApplicationHelper
     link_to content, 'javascript:void(0)', class: classes, data: {open: 'ajax-reveal', url: url}
   end
 
-  def turbolink_to # TODO: Implement turbolink_to
-
+  def link_to_edit(object)
+    link_to_reveal 'Edit', url_for(action: :edit, id: object), 'button primary'
   end
+
+  def link_to_edit_icon(object)
+    link_to_reveal icon_tag('create'), url_for(action: :edit, id: object), 'button clear warning'
+  end
+
+  def link_to_show_icon(object)
+    link_to_reveal icon_tag('visibility'), url_for(object), 'button clear success'
+  end
+
+  def link_to_delete_icon(object)
+    link_to icon_tag('delete'), object, method: :delete, data: { confirm: "Are you sure you want to delete this #{object.class.name}?" }, class: 'button clear alert'
+  end
+
 end

@@ -23,5 +23,5 @@
   %strong Updated at:
   = @account.updated_at
 .row
-  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_account_path(@account)}
+  = link_to_edit(@account)
   = close_reveal_button

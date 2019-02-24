@@ -20,5 +20,5 @@
   %strong Updated at:
   = @transaction.updated_at
 .row
-  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_transaction_path(@transaction)}
+  = link_to_edit(@transaction)
   = close_reveal_button

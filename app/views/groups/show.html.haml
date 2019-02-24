@@ -18,8 +18,8 @@
   %strong Owner:
   = @group.owner.name
 .row
-  = link_to 'Edit', 'javascript:void(0)', class: 'button primary', data: {open: 'ajax-reveal', url: edit_group_path(@group)}
-  = close_reveal_button # TODO: Add this method to be copied via generator
+  = link_to_edit(@group)
+  = close_reveal_button
 %hr
 .row
   %strong Members:

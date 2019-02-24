@@ -1,4 +1,4 @@
 .button-group
-  = link_to icon_tag('visibility'), 'javascript:void(0)', class: 'button clear success', data: {open: 'ajax-reveal', url: url_for(object)}
-  = link_to icon_tag('create'), 'javascript:void(0)', class: 'button clear warning', data: {open: 'ajax-reveal', url: url_for(action: :edit, id: object)}
-  = link_to icon_tag('delete'), object, method: :delete, data: { confirm: "Are you sure you want to delete this #{object.class.name}?" }, class: 'button clear alert'
+  = link_to_show_icon(object)
+  = link_to_edit_icon(object)
+  = link_to_delete_icon(object)

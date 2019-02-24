@@ -1,7 +1,7 @@
 %ul.menu{ class: vertical ? 'vertical' : '' }
   // Access for all
   = render 'devise/menu/registration_items'
-  %li= link_to 'Manage Family', 'javascript:void(0)', data: {open: 'ajax-reveal', url: group_path(current_user.family)}, class: 'text-default'
+  %li= link_to_reveal 'Manage Family', group_path(current_user.family), 'text-default'
   %li= link_to 'Dashboard', root_path, class: 'text-default'
   - ['accounts', 'transaction_purposes'].each do |model|
     %li

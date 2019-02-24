@@ -12,7 +12,7 @@
             - else
               = f.select :transaction_purpose_id, current_user.transaction_purposes.map { |tp| [tp.name, tp.id, { transfer: tp.transfer? }] }, {}, class: :transaction_purpose_select
               .help-text
-                = link_to 'Add New Transaction Purpose', 'javascript:void(0)', class: 'float-right', data: {open: 'ajax-reveal', url: new_transaction_purpose_path}
+                = link_to_reveal 'Add New Transaction Purpose', new_transaction_purpose_path, 'float-right'
             = f.hidden_field :transacted_at, value: transacted_at
           .medium-6.large-4.cell
             %label

@@ -1,7 +1,7 @@
 class TransactionPurpose < ApplicationRecord
   belongs_to :sub_category
   belongs_to :user
-  belongs_to :preferred_account, class_name: 'Account'
+  belongs_to :preferred_account, class_name: 'Account', optional: true
   has_one :recurrence_rule, dependent: :destroy
   has_many :transactions, dependent: :restrict_with_error
   has_many :transfers, dependent: :restrict_with_error

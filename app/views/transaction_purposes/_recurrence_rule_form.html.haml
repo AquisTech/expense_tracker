@@ -16,21 +16,22 @@
       = rr.collection_check_boxes :rules, Date::ABBR_DAYNAMES.map.with_index.to_h, :last, :first, { checked: rr.object.rules, include_hidden: false }, disabled: disable_weekly_inputs
 
   #monthly{ class: hide_if(!rr.object.monthly?) }
-    .fieldset
-      = radio_button_tag :day_of_month_or_week_monthly, :day_of_month, !rr.object.monthly_days_of_week?
-      %label Day of Month
-      = radio_button_tag :day_of_month_or_week_monthly, :day_of_week, rr.object.monthly_days_of_week?
-      %label Day of Week
+    %fieldset.fieldset
+      .text-center
+        = radio_button_tag :day_of_month_or_week_monthly, :day_of_month, !rr.object.monthly_days_of_week?
+        %label Day of Month
+        = radio_button_tag :day_of_month_or_week_monthly, :day_of_week, rr.object.monthly_days_of_week?
+        %label Day of Week
 
       - disable_dom_monthly = !!rr.object.monthly_days_of_week?
-      .day_of_month.input-group{ class: hide_if(disable_dom_monthly) }
+      .day_of_month.align-center.input-group{ class: hide_if(disable_dom_monthly) }
         - ((1..31).to_a << -1).in_groups_of(7).map do |days_of_week|
           .row.columns
             = rr.collection_check_boxes :rules, days_of_week.compact, :to_s, :to_s, { checked: rr.object.rules, include_hidden: false }, disabled: disable_dom_monthly do |day|
               %div= day.check_box + (day.value == '-1' ? day.label(class: :monthend) { 'Last day of month' } : day.label)
 
       - disable_dow_monthly = !rr.object.monthly_days_of_week?
-      .day_of_week.input-group{ class: hide_if(disable_dow_monthly) }
+      .day_of_week.align-center.input-group{ class: hide_if(disable_dow_monthly) }
         = rr.fields :rules do |r|
           .row.columns
             - [1, 2, 3, 4, -1].each do |n|
@@ -43,10 +44,11 @@
 
   #yearly{ class: hide_if(!rr.object.yearly?) }
     %fieldset.fieldset
-      = radio_button_tag :day_of_month_or_week_yearly, :day_of_month, !rr.object.yearly_days_of_week?
-      %label Day of Month
-      = radio_button_tag :day_of_month_or_week_yearly, :day_of_week, rr.object.yearly_days_of_week?
-      %label Day of Week
+      .text-center
+        = radio_button_tag :day_of_month_or_week_yearly, :day_of_month, !rr.object.yearly_days_of_week?
+        %label Day of Month
+        = radio_button_tag :day_of_month_or_week_yearly, :day_of_week, rr.object.yearly_days_of_week?
+        %label Day of Week
       - (1..12).to_a.each do |month|
         .month{ class: [month, hide_if(month != 1)] }
           .input-group
@@ -55,7 +57,7 @@
             %label.input-group-label.next-month{ month: month + 1, disabled: month == 12 } Next Month >
 
           - disable_dom_yearly = !!rr.object.yearly_days_of_week?
-          .day_of_month.input-group{ class: hide_if(disable_dom_yearly) }
+          .day_of_month.align-center.input-group{ class: hide_if(disable_dom_yearly) }
             = rr.fields :rules do |r|
               - ((1..Time.days_in_month(month, 2000)).to_a << -1).in_groups_of(7).map do |days_of_week|
                 .row.columns
@@ -63,7 +65,7 @@
                     %div= day.check_box + (day.value == '-1' ? day.label(class: :monthend) { 'Last day of month' } : day.label)
 
           - disable_dow_yearly = !rr.object.yearly_days_of_week?
-          .day_of_week.input-group{ class: hide_if(disable_dow_yearly) }
+          .day_of_week.align-center.input-group{ class: hide_if(disable_dow_yearly) }
 
             = rr.fields :rules do |r|
               = r.fields month.to_s do |m|

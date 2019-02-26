@@ -29,6 +29,8 @@
       height: 36px;
       line-height: 36px;
       text-align: center;
+      margin-right: 0.25rem;
+      margin-left: 0.25rem;
       &.monthend {
         height: 144px;
       }
@@ -39,20 +41,20 @@
     background: #e6e6e6; // $light-gray
     height: 36px;
     line-height: 36px;
-    padding: 0 7px;
+    padding-left: 7px;
     position: relative;
     margin-right: 10px;
-  }
-  label.week_counter:before {
-    content: "";
-    position: absolute;
-    right: -18px;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-left: 18px solid #e6e6e6; // $light-gray
-    border-top: 17px solid transparent;
-    border-bottom: 17px solid transparent;
+    &::before {
+      content: "";
+      position: absolute;
+      right: -18px;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 18px solid #e6e6e6; // $light-gray
+      border-top: 17px solid transparent;
+      border-bottom: 17px solid transparent;
+    }
   }
 }
 .next-month, .prev-month {

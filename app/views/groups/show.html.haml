@@ -30,8 +30,11 @@
       = f.hidden_field :id, value: @group.id
       .input-group-button= f.submit 'Invite to join group', class: 'button primary'
 .row
-  = link_to "https://wa.me/?text=Hello%20world!", class: 'button success hollow' do
-    = 'Invite via WhatsApp'
+  = invite_for_registration_via_whatsapp
+  .help-text
+    = icon_tag 'info'
+    = 'You need to have WhatsApp application or WhatsApp web setup on your device.'
+
 
 .row
   %table.striped.hover.table-striped.stack

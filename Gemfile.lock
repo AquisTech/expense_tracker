@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/AquisTech/material_design_iconsfont
-  revision: 5972649aad015c366be8ef6e7d876bf9a6890445
+  revision: 2d4eec0638b6958ca68bd8f998b752975dfafe98
   specs:
     material_design_iconsfont (0.1.0)
 

@@ -1,14 +1,9 @@
-= foundation_devise_error_messages!
-.grid-x
-  .medium-6.grid-container.columns
-    .login-box
+= render layout: 'devise/shared/devise_layout' do
+  .large-12.columns
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post}) do |f|
       .row
-        .large-12.columns
-          = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post}) do |f|
-            .row
-              %h5.text-center= t('.forgot_your_password', :default => 'Forgot your password?')
-            .row
-              = f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: "Email"
-            .row
-              = f.submit t('.send_me_reset_password_instructions', :default => "Send me reset password instructions"), class: "button expanded large-12 large-centered columns"
-        = render "devise/shared/links"
+        %h5.text-center= t('.forgot_your_password', :default => 'Forgot your password?')
+      .row
+        = f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: "Email"
+      .row
+        = f.submit t('.send_me_reset_password_instructions', :default => "Send me reset password instructions"), class: "button expanded large-12 large-centered columns"

@@ -1,0 +1,8 @@
+= foundation_devise_error_messages!
+.grid-x
+  .medium-6.grid-container.columns
+    .login-box
+      .row
+        = render 'devise/shared/oauth_provider_links'
+        = yield
+        = render "devise/shared/links"

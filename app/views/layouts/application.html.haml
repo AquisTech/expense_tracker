@@ -19,12 +19,10 @@
       - if user_signed_in?
         = render 'layouts/left_navigation'
       .off-canvas-content{"data-off-canvas-content" => ""}
-        = # TODO : Create class and styling for .container and use instead of .row
-        .row
-          .grid-container
-            = flash_messages
-            = yield
-            %div.scroll-to-top
-              Scroll to Top
-            = render 'layouts/reveal'
+        .grid-container.margin-top-1
+          = flash_messages
+          = yield
+          %div.scroll-to-top
+            Scroll to Top
+          = render 'layouts/reveal'
         = render 'layouts/footer'

@@ -22,15 +22,14 @@
         %label Day of Month
         = radio_button_tag :day_of_month_or_week_monthly, :day_of_week, rr.object.monthly_days_of_week?
         %label Day of Week
-
-      - disable_dom_monthly = !!rr.object.monthly_days_of_week?
+      - disable_dom_monthly = !rr.object.monthly? || !rr.object.rules.is_a?(Array)
       .day_of_month.align-center.input-group{ class: hide_if(disable_dom_monthly) }
         - ((1..31).to_a << -1).in_groups_of(7).map do |days_of_week|
           .row.columns
             = rr.collection_check_boxes :rules, days_of_week.compact, :to_s, :to_s, { checked: rr.object.rules, include_hidden: false }, disabled: disable_dom_monthly do |day|
               %div= day.check_box + (day.value == '-1' ? day.label(class: :monthend) { 'Last day of month' } : day.label)
 
-      - disable_dow_monthly = !rr.object.monthly_days_of_week?
+      - disable_dow_monthly = !rr.object.monthly? || !rr.object.rules.is_a?(Hash)
       .day_of_week.align-center.input-group{ class: hide_if(disable_dow_monthly) }
         = rr.fields :rules do |r|
           .row.columns

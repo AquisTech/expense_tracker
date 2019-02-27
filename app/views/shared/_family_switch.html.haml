@@ -1,4 +1,4 @@
-%span.switch.text-primary.text-center
+%span.switch.tiny{class: "#{'text-primary show-for-medium' unless local_assigns[:switch_in_titlebar]}"}
   %span Self
   = check_box_tag :family, params[:family], params[:family] == 'true', class: 'switch-input', id: 'family_switch'
   %label.switch-paddle.rounded{ for: 'family_switch' }

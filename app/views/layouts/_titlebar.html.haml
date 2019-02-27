@@ -1,6 +1,6 @@
 .title-bar{'data-responsive-toggle': 'responsive-menu', 'data-hide-for': 'medium'}
-  .title-bar-left
-    - if user_signed_in?
-      %button.menu-icon{"data-open" => "offCanvasLeft", :type => "button"}
-    .title-bar-title= link_to 'ExpenseTracker', root_path, class: 'text-default'
+  - if user_signed_in?
+    %button.menu-icon{"data-open" => "offCanvasLeft", :type => "button"}
+  .title-bar-title= link_to 'ExpenseTracker', root_path, class: 'text-default'
   .title-bar-right
+    = render 'shared/family_switch', switch_in_titlebar: true

@@ -1,6 +1,7 @@
 = render layout: 'devise/shared/devise_layout' do
   .large-12.columns
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      = render 'devise/shared/or_tag'
       .row
         %h5.text-center= t('.sign_in', :default => "Sign in")
       .row

@@ -52,9 +52,9 @@
         .card-section.clonable-fragment{ class: clonable_fragment_class }
           .grid-x.grid-padding-x
             .medium-6.large-4.cell
-              = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode'}, class: :payment_mode_select
+              = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_payment_mode) : p.object.payment_mode)}, class: :payment_mode_select
             .medium-6.large-4.cell
-              = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account'}, class: :bank_account_select
+              = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : p.object.account_id)}, class: :bank_account_select
             .medium-6.large-3.cell
               = p.amount_field :amount, currency: '&#8377;'
             .medium-6.large-1.cell

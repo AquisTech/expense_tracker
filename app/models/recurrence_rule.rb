@@ -13,6 +13,7 @@ class RecurrenceRule < ApplicationRecord
   validates :ends_on, timeliness: { after: :starts_on }, allow_nil: true
 
   after_create :create_occurrences
+  after_update :recreate_occurrences
 
   has_many :occurrences, dependent: :destroy
   belongs_to :transaction_purpose # TODO: Remove transaction_purpose_id from RecurrenceRule
@@ -89,6 +90,13 @@ class RecurrenceRule < ApplicationRecord
     else
       # TODO: #FutureScope Add custom rule
       raise 'Invalid Rule. TODO: Support custom rule'
+    end
+  end
+
+  def recreate_occurrences
+    if rules_previously_changed?
+      occurrences.destroy_all
+      create_occurrences
     end
   end
 

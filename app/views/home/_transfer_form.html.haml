@@ -23,10 +23,10 @@
       .card-section
         .grid-x.grid-padding-x
           .medium-6.large-4.cell
-            = f.select :source_account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Source Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : transaction.debit_payment.account_id)}
+            = f.select :source_account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Source Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : transaction.source_account_id)}
           .medium-6.large-4.cell
             = f.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {selected: f.object.payment_mode, include_blank: 'Select Payment Mode', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_payment_mode) : f.object.payment_mode)}, class: :payment_mode_select
           .medium-6.large-4.cell
-            = f.select :destination_account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Destination Account', selected: (transaction.new_record? ? nil : transaction.credit_payment.account_id)}, class: :bank_account_select # TODO : Preferred destination account in transaction purpose
+            = f.select :destination_account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Destination Account', selected: (transaction.new_record? ? nil : transaction.destination_account_id)}, class: :bank_account_select # TODO : Preferred destination account in transaction purpose
           .medium-6.large-4.cell
             = f.submit 'Save Transaction', class: 'button success'

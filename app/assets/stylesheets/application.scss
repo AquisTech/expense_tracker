@@ -90,7 +90,7 @@
 .field_with_errors {
   display: inline;
 }
-.card-section {
+.card-section:not(:last-child) {
   border-bottom: 1px dashed #e6e6e6; // $light-gray
 }
 .loader {

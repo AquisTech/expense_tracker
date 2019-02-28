@@ -48,28 +48,33 @@
             %label
               = f.text_field :description, id: :transaction_description, placeholder: :description
           - clonable_fragment_class = transaction.new_record? ? "new_transaction_for_#{transaction.transaction_purpose_id}" : "transaction_#{transaction.id}"
-      = f.fields :payments do |p|
-        .card-section.clonable-fragment{ class: clonable_fragment_class }
-          .grid-x.grid-padding-x
-            .medium-6.large-4.cell
-              = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_payment_mode) : p.object.payment_mode)}, class: :payment_mode_select
-            .medium-6.large-4.cell
-              = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : p.object.account_id)}, class: :bank_account_select
-            .medium-6.large-3.cell
-              = p.amount_field :amount, currency: '&#8377;'
-            .medium-6.large-1.cell
-              = p.hidden_field :_destroy
-              = link_to 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' } do
-                %span.show-for-large
-                  = '&times'.html_safe
-                %span.hide-for-large
-                  = 'Delete Payment'
-            - if f.object.payments.last == p.object
-              .small-6.cell
-                = link_to 'javascript:void(0)', class: 'clone-fragment button primary' do
-                  / %span.show-for-small-only
-                  /   = '+'
-                  / %span.show-for-medium
-                  = 'Add More Payment'
-              .small-6.cell
-                = f.submit 'Save Transaction', class: 'button success'
+
+      %ul.accordion{ 'data-accordion': '', 'data-allow-all-closed': 'true' }
+        %li.accordion-item{ 'data-accordion-item': '' }
+          = link_to 'Change preferred payments details', '#', class: 'accordion-title'
+          .accordion-content.padding-0{ 'data-tab-content': '' }
+            = f.fields :payments do |p|
+              .card-section.clonable-fragment{ class: clonable_fragment_class }
+                .grid-x.grid-padding-x
+                  .medium-6.large-4.cell
+                    = p.collection_select :payment_mode, Payment::PAYMENT_MODES, :first, :last, {include_blank: 'Select Payment Mode', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_payment_mode) : p.object.payment_mode)}, class: :payment_mode_select
+                  .medium-6.large-4.cell
+                    = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : p.object.account_id)}, class: :bank_account_select
+                  .medium-6.large-3.cell
+                    = p.amount_field :amount, currency: '&#8377;'
+                  .medium-6.large-1.cell
+                    = p.hidden_field :_destroy
+                    = link_to 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' } do
+                      %span.show-for-large
+                        = '&times'.html_safe
+                      %span.hide-for-large
+                        = 'Delete Payment'
+                  - if f.object.payments.last == p.object
+                    .small-6.cell
+                      = link_to 'javascript:void(0)', class: 'clone-fragment button primary' do
+                        / %span.show-for-small-only
+                        /   = '+'
+                        / %span.show-for-medium
+                        = 'Add More Payment'
+                    .small-6.cell
+                      = f.submit 'Save Transaction', class: 'button success'

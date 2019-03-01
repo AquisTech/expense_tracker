@@ -20,6 +20,8 @@
           .medium-6.large-4.cell
             %label
               = f.text_field :description, id: :transaction_description, placeholder: :description
+          .medium-6.large-4.cell.out-of-accordion
+            = f.submit 'Save Transaction', class: 'button success'
       %ul.accordion{ 'data-accordion': '', 'data-allow-all-closed': 'true' }
         %li.accordion-item{ 'data-accordion-item': '' }
           = link_to 'Change preferred payments details', '#', class: 'accordion-title'

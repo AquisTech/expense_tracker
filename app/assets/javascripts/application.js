@@ -40,6 +40,13 @@ $(document).on('turbolinks:load', function() {
       }
     });
   });
+  // Show/hide save transaction button on toggle of accordion
+  $('body').on('down.zf.accordion', function(e,$panel) {
+    $panel.parents('.card').find('.out-of-accordion').hide();
+  })
+  $('body').on('up.zf.accordion', function(e,$panel) {
+    $panel.parents('.card').find('.out-of-accordion').show();
+  });
   // Recurrence Rule Section: Toggling as per type
   $('.reveal-content').on('change', 'select#recurrence_rule_type', function(e) {
     $('#weekly, #monthly, #yearly').addClass('hide');

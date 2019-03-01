@@ -47,6 +47,8 @@
           .medium-6.large-4.cell
             %label
               = f.text_field :description, id: :transaction_description, placeholder: :description
+          .medium-6.large-4.cell.out-of-accordion
+            = f.submit 'Save Transaction', class: 'button success'
           - clonable_fragment_class = transaction.new_record? ? "new_transaction_for_#{transaction.transaction_purpose_id}" : "transaction_#{transaction.id}"
 
       %ul.accordion{ 'data-accordion': '', 'data-allow-all-closed': 'true' }

@@ -28,5 +28,7 @@ class HomeController < ApplicationController
       end
     end
     # TODO: Change above logic instead of looping only fetch collect of today's transaction and place them at bottom.
+    # @other_day_transaction_purposes = current_user.transaction_purposes.where.not(id: occurrences.pluck(:transaction_purpose_id))
+    @other_day_transaction_purposes = current_user.transaction_purposes # TODO : Show only transaction purposes which are not for today
   end
 end

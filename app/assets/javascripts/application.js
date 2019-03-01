@@ -47,6 +47,12 @@ $(document).on('turbolinks:load', function() {
   $('body').on('up.zf.accordion', function(e, $panel) {
     $panel.parents('.card').find('.out-of-accordion').show();
   });
+  // Change payment amount as per payment amount if only one payment is present
+  $('body').on('keyup change', '.transaction_amount', function(e) {
+    if ($(this).parents('.card').find('.clonable-fragment').length == 1) {
+      $(this).parents('.card').find('.clonable-fragment').find('.payment_amount').val($(this).val());
+    }
+  });
   // Recurrence Rule Section: Toggling as per type
   $('.reveal-content').on('change', 'select#recurrence_rule_type', function(e) {
     $('#weekly, #monthly, #yearly').addClass('hide');

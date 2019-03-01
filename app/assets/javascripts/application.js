@@ -41,10 +41,10 @@ $(document).on('turbolinks:load', function() {
     });
   });
   // Show/hide save transaction button on toggle of accordion
-  $('body').on('down.zf.accordion', function(e,$panel) {
+  $('body').on('down.zf.accordion', function(e, $panel) {
     $panel.parents('.card').find('.out-of-accordion').hide();
   })
-  $('body').on('up.zf.accordion', function(e,$panel) {
+  $('body').on('up.zf.accordion', function(e, $panel) {
     $panel.parents('.card').find('.out-of-accordion').show();
   });
   // Recurrence Rule Section: Toggling as per type
@@ -140,14 +140,18 @@ $(document).on('turbolinks:load', function() {
       element.parents('.clonable-fragment:first').find('input, select').css({'border-color': 'red', 'background': 'red', 'opacity': 0.2, 'color': 'white'}); // TODO: add note as 'Marked for destruction'
     }
   }
-  // Fetch estimate for transaction purpose
+  // Fetch transaction purpose details
   function getEstimateForTransactionPurpose(transaction_purpose_select, transfer) {
     $.ajax({
       url: '/transaction_purposes/' + transaction_purpose_select.val(),
       dataType: 'json',
       success: function(result) {
         var target_selector = transfer ? '.custom_transfer' : '.custom_transaction';
-        $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]').val(result['estimate']);
+        var amount_field = $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]')
+        amount_field.val(result['estimate']);
+        if(!transfer) {
+          amount_field.prev('span.input-group-label').attr('class', 'input-group-label input-group-inset ' + (result['credit'] == true ? 'plus' : 'minus'));
+        }
         $(target_selector).find('select[name$="[payment_mode]"]').val(result['preferred_payment_mode']);
         $(target_selector).find('select[name$="[account_id]"]').val(result['preferred_account_id']);
       }

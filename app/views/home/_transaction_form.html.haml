@@ -63,7 +63,7 @@
                   .medium-6.large-4.cell
                     = p.select :account_id, current_user.accounts.map { |a| [a.name, a.id, { payment_modes: a.payment_modes }] }, {include_blank: 'Select Bank Account', selected: (transaction.new_record? ? transaction.transaction_purpose.try(:preferred_account_id) : p.object.account_id)}, class: :bank_account_select
                   .medium-6.large-3.cell
-                    = p.amount_field :amount, currency: '&#8377;'
+                    = p.amount_field :amount, currency: '&#8377;', sign: transaction.transaction_purpose.try(:sign_class)
                   .medium-6.large-1.cell
                     = p.hidden_field :_destroy
                     = link_to 'javascript:void(0)', class: 'delete-fragment button alert', data: { parent_object: clonable_fragment_class, entity: 'payment' } do

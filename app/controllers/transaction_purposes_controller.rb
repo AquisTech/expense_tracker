@@ -69,6 +69,7 @@ class TransactionPurposesController < ApplicationController
       rules = params[:day_of_month_or_week_monthly] == 'day_of_month' ? [] : {} if type == 'Monthly' && rules.blank?
       rules = { '1' => (params[:day_of_month_or_week_yearly] == 'day_of_month' ? [] : {}) } if type == 'Yearly' && rules.blank?
       params[:transaction_purpose][:recurrence_rule_attributes][:rules] = rules
-      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, :credit, :transfer, :preferred_payment_mode, :preferred_account_id, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
+      params.require(:transaction_purpose).permit(:name, :estimate, :sub_category_id, :credit, :transfer,
+        :preferred_payment_mode, :preferred_account_id, :preferred_dest_account_id, recurrence_rule_attributes: {}) # TODO: Allow selected params in nested attrs
     end
 end

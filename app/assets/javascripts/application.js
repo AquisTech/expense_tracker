@@ -155,11 +155,14 @@ $(document).on('turbolinks:load', function() {
         var target_selector = transfer ? '.custom_transfer' : '.custom_transaction';
         var amount_field = $(target_selector).find('input[name="transaction[amount]"],input[name="transfer[amount]"],input[name="transaction[payments_attributes][0][amount]"],transfer[payments_attributes][0][amount]')
         amount_field.val(result['estimate']);
-        if(!transfer) {
+        if(transfer) {
+          $(target_selector).find('select[name$="[source_account_id]"]').val(result['preferred_account_id']);
+          $(target_selector).find('select[name$="[destination_account_id]"]').val(result['preferred_dest_account_id']);
+        } else {
           amount_field.prev('span.input-group-label').attr('class', 'input-group-label input-group-inset ' + (result['credit'] == true ? 'plus' : 'minus'));
+          $(target_selector).find('select[name$="[account_id]"]').val(result['preferred_account_id']);
         }
         $(target_selector).find('select[name$="[payment_mode]"]').val(result['preferred_payment_mode']);
-        $(target_selector).find('select[name$="[account_id]"]').val(result['preferred_account_id']);
       }
     });
   }
@@ -216,7 +219,7 @@ $(document).on('turbolinks:load', function() {
   });
   // Toggle credit-debit radio on transfer checkbox toggle
   $('body').on('change', '#transaction_purpose_transfer', function(e) {
-    toggleCreditDebitRadioOnTransferToggle();
+    toggleFormFieldsOnTransferToggle();
   });
   // Show/hide scroll to top button
   $(document).on('scroll', function(){
@@ -243,10 +246,12 @@ function toggleMonthlyDayOfMonthOrWeek(selection) {
   $('#monthly .day_of_month, #monthly .day_of_week').find('select, input').attr('disabled', true);
   $('#monthly .' + selection).find('select, input').attr('disabled', false);
 }
-function toggleCreditDebitRadioOnTransferToggle() {
+function toggleFormFieldsOnTransferToggle() {
   if ($('#transaction_purpose_transfer').prop('checked')) {
     $('.credit_debit_toggle').hide();
+    $('.destination_account').show();
   } else {
     $('.credit_debit_toggle').show();
+    $('.destination_account').hide();
   }
 }

@@ -35,15 +35,15 @@ module ApplicationHelper
   end
 
   def link_to_edit_icon(object)
-    link_to_reveal icon_tag('create'), url_for(action: :edit, id: object), 'button clear warning'
+    link_to_reveal 'Edit', url_for(action: :edit, id: object), 'button clear warning' # TODO : icon_tag('create')
   end
 
   def link_to_show_icon(object)
-    link_to_reveal icon_tag('visibility'), url_for(object), 'button clear success'
+    link_to_reveal 'Show', url_for(object), 'button clear success' # TODO : icon_tag('visibility')
   end
 
   def link_to_delete_icon(object)
-    link_to icon_tag('delete'), object, method: :delete, data: { confirm: "Are you sure you want to delete this #{object.class.name}?" }, class: 'button clear alert'
+    link_to 'Delete', object, method: :delete, data: { confirm: "Are you sure you want to delete this #{object.class.name}?" }, class: 'button clear alert' # TODO : icon_tag('delete')
   end
 
   def invite_for_registration_via_whatsapp

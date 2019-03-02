@@ -38,6 +38,6 @@
         %td
           .button-group
             = link_to_show_icon(account)
-            = link_to_edit_icon(account)
             - unless account.default?
+              = link_to_edit_icon(account)
               = link_to_delete_icon(account)

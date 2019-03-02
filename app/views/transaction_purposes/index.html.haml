@@ -37,4 +37,9 @@
         - if current_user.admin?
           %td= transaction_purpose.created_at
           %td= transaction_purpose.updated_at
-        %td= render 'shared/table_row_action_buttons', object: transaction_purpose
+        %td
+          .button-group
+            = link_to_show_icon(transaction_purpose)
+            - unless transaction_purpose.default?
+              = link_to_edit_icon(transaction_purpose)
+              = link_to_delete_icon(transaction_purpose)

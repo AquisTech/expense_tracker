@@ -41,14 +41,15 @@ class User < ApplicationRecord
   end
 
   def add_default_transaction_purposes!
+    time = Time.now
     self.transaction_purposes.new([
       {
-        name: 'One Time Credit', sub_category: SubCategory.find_by(name: 'One Time Credit'), credit: true, estimate: 0,
-        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: Time.now, user: self}
+        name: 'Unscheduled Credit', sub_category: SubCategory.find_by(name: 'Unscheduled Credit'), credit: true, estimate: 0, default: true,
+        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: time, ends_on: time + 1.second, user: self, count: 0}
       },
       {
-        name: 'One Time Debit', sub_category: SubCategory.find_by(name: 'One Time Debit'), credit: false, estimate: 0,
-        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: Time.now, user: self}
+        name: 'Unscheduled Debit', sub_category: SubCategory.find_by(name: 'Unscheduled Debit'), credit: false, estimate: 0, default: true,
+        recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: time, ends_on: time + 1.second, user: self, count: 0}
       }
     ]).map(&:save!)
   end

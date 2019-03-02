@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_172748) do
+ActiveRecord::Schema.define(version: 2019_03_02_132553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2019_03_01_172748) do
     t.string "preferred_payment_mode"
     t.bigint "preferred_account_id"
     t.bigint "preferred_dest_account_id"
+    t.boolean "default", default: false
     t.index ["preferred_account_id"], name: "index_transaction_purposes_on_preferred_account_id"
     t.index ["preferred_dest_account_id"], name: "index_transaction_purposes_on_preferred_dest_account_id"
     t.index ["sub_category_id"], name: "index_transaction_purposes_on_sub_category_id"

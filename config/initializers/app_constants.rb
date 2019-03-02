@@ -1,0 +1,1 @@
+SUBCATEGORIES = SubCategory.includes(:category).all

@@ -50,7 +50,7 @@
         %label Day of Week
       - (1..12).to_a.each do |month|
         .month{ class: [month, hide_if(month != 1)] }
-          .input-group
+          .input-group.align-center
             %label.input-group-label.prev-month{ month: month - 1, disabled: month == 1 } < Previous Month
             %label.input-group-label= Date::MONTHNAMES[month]
             %label.input-group-label.next-month{ month: month + 1, disabled: month == 12 } Next Month >

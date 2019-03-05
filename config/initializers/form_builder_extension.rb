@@ -13,4 +13,17 @@ class ActionView::Helpers::FormBuilder
       number_field(method, options)
     end.html_safe
   end
+
+  def awesomplete_select(method, collection, method_for_value, method_for_text, options={})
+    (
+      text_field("#{method}_search", id: "#{method}_awesomplete", data: { list: "##{method}_list" }.merge(options)) +
+      content_tag(:datalist, id: "#{method}_list") do
+        collection.map do |member|
+          content_tag(:option, member.send(method_for_text), value: member.send(method_for_value))
+        end.join.html_safe
+      end +
+      hidden_field(method, id: "#{method}_awesomplete_value") +
+      raw("<script>new Awesomplete(document.getElementById('#{method}_awesomplete'), {list: '##{method}_list', replace: function(suggestion) { this.input.value = suggestion.label; document.getElementById('#{method}_awesomplete_value').value = suggestion.value; }});</script>")
+    )
+  end
 end

@@ -18,7 +18,7 @@
       = f.label :debit
   .row
     = f.label :sub_category_id
-    = f.collection_select :sub_category_id, SUBCATEGORIES, :id, :name_with_category, id: :transaction_purpose_sub_category_id
+    = f.awesomplete_select :sub_category_id, SUBCATEGORIES, :id, :name_with_category, { minChars: 1, maxItems: 10 }
   .row
     = f.label :estimate
     = f.amount_field :estimate, id: :transaction_purpose_estimate, currency: '&#8377;'

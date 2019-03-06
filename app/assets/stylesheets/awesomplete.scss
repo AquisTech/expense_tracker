@@ -27,6 +27,8 @@
   padding: 0;
   margin: -1rem 0 0 0;
   background: #fff;
+  max-height: 316px;
+  overflow-y: scroll;
 }
 .awesomplete > ul {
   border-radius: .3em;

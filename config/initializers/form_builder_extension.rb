@@ -23,7 +23,7 @@ class ActionView::Helpers::FormBuilder
         end.join.html_safe
       end +
       hidden_field(method, id: "#{method}_awesomplete_value") +
-      raw("<script>new Awesomplete(document.getElementById('#{method}_awesomplete'), {list: '##{method}_list', replace: function(suggestion) { this.input.value = suggestion.label; document.getElementById('#{method}_awesomplete_value').value = suggestion.value; }});</script>")
+      raw("<script>var comboplete = new Awesomplete(document.getElementById('#{method}_awesomplete'), {list: '##{method}_list', replace: function(suggestion) { this.input.value = suggestion.label; document.getElementById('#{method}_awesomplete_value').value = suggestion.value; }}); Awesomplete.$('##{method}_awesomplete').addEventListener('click', function() { if (comboplete.ul.childNodes.length === 0) { comboplete.minChars = 0; comboplete.evaluate(); } else if (comboplete.ul.hasAttribute('hidden')) { comboplete.open(); } else { comboplete.close(); }});</script>")
     )
   end
 end

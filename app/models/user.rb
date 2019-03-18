@@ -51,7 +51,7 @@ class User < ApplicationRecord
         name: 'Unscheduled Debit', sub_category: SubCategory.find_by(name: 'Unscheduled Debit'), credit: false, estimate: 0, default: true,
         recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: time, ends_on: time + 1.second, user: self, count: 0}
       }
-    ]).map(&:save!)
+    ]).map { |tp| tp.save(validate: false) }
   end
 
   def add_default_cash_wallet!

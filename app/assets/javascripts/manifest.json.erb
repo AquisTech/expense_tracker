@@ -1,13 +1,13 @@
 <% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
 {
-  "name": "Expense Tracker",
-  "short_name": "ExT",
+  "name": "MoneyBee",
+  "short_name": "MB",
   "start_url": "/",
   "scope": "/",
   "icons": [
   <% icon_sizes.map { |s| "#{s}x#{s}" }.each.with_index do |dim, i| %>
     {
-      "src": "<%= image_path "serviceworker-rails/heart-#{dim}.png" %>",
+      "src": "<%= image_path "logo.png" %>",
       "sizes": "<%= dim %>",
       "type": "image/png"
     }<%= i == (icon_sizes.length - 1) ? '' : ',' %>

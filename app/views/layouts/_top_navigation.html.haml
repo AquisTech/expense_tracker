@@ -1,7 +1,10 @@
 .top-bar#responsive-menu
   .top-bar-left
     %ul.menu
-      %li= link_to 'ExpenseTracker', root_path, class: 'text-default font-bold'
+      %li
+        = link_to root_path, class: 'text-default font-bold' do
+          = image_tag 'logo', class: 'logo'
+          = 'MoneyBee'
   .top-bar-right
     - if user_signed_in?
       = render 'layouts/menus', vertical: false

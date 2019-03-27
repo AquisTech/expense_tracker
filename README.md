@@ -1,4 +1,7 @@
-# README
+<h1 style="text-align: center; font-size: 100px;">
+  <img src="app/assets/images/logo.png" alt="MoneyBee" width=100px height=100px>
+  MoneyBee
+</h1>
 
 This README would normally document whatever steps are necessary to get the
 application up and running.

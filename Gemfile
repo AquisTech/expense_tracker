@@ -40,7 +40,7 @@ gem 'haml-rails'
 gem 'foundation-rails'
 gem 'autoprefixer-rails'
 
-gem 'jquery-rails'
+gem 'jquery-rails', '>= 4.3.4'
 
 gem 'validates_timeliness', '~> 5.0.0.alpha2'
 

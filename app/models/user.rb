@@ -45,13 +45,15 @@ class User < ApplicationRecord
     self.transaction_purposes.new([
       {
         name: 'Unscheduled Credit', sub_category: SubCategory.find_by(name: 'Unscheduled Credit'), credit: true, estimate: 0, default: true,
+        preferred_payment_mode: 'CS', preferred_account_id: self.accounts.find_by(default: true).id,
         recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: time, ends_on: time + 1.second, user: self, count: 0}
       },
       {
         name: 'Unscheduled Debit', sub_category: SubCategory.find_by(name: 'Unscheduled Debit'), credit: false, estimate: 0, default: true,
+        preferred_payment_mode: 'CS', preferred_account_id: self.accounts.find_by(default: true).id,
         recurrence_rule_attributes: {type: 'Daily', interval: 1, starts_on: time, ends_on: time + 1.second, user: self, count: 0}
       }
-    ]).map { |tp| tp.save(validate: false) }
+    ]).map(&:save)
   end
 
   def add_default_cash_wallet!

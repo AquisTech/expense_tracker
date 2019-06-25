@@ -10,7 +10,7 @@ class Occurrence < ApplicationRecord
   validates :days, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: -1 }
   validates :weeks, numericality: { only_integer: true, greater_than_or_equal_to: -1 }, allow_nil: true
   validates :months, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
-  validates :count, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
+  validates :count, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true, unless: proc { |o| o.transaction_purpose.default? }
   validates :starts_on, presence: true, timeliness: true
   validates :ends_on, timeliness: { after: :starts_on }, allow_nil: true
 

@@ -42,7 +42,7 @@ gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
 
-gem 'validates_timeliness', '~> 5.0.0.alpha2'
+gem 'validates_timeliness', '~> 5.0.0.alpha5'
 
 gem 'serviceworker-rails'
 

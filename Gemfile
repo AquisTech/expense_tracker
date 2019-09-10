@@ -46,7 +46,7 @@ gem 'validates_timeliness', '~> 5.0.0.alpha2'
 
 gem 'serviceworker-rails'
 
-gem 'devise'
+gem 'devise', '>= 4.7.1'
 gem 'devise-foundation-views'
 gem 'omniauth-google-oauth2'
 

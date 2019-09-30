@@ -60,7 +60,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rspec-rails"
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "selenium-webdriver", ">= 3.14.0"
   gem "chromedriver-helper"
   gem "database_cleaner"
   gem "faker"

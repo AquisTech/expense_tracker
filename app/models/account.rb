@@ -17,7 +17,7 @@ class Account < ApplicationRecord
     CS: 'Cash'
   }
   before_validation {
-    self.payment_modes << 'CS'
+    self.payment_modes << 'CS' unless ['Smart Card', 'E-Wallet', 'Cash'].include?(self.account_type)
   }
   validates :name, presence: true
   validates :description, presence: true

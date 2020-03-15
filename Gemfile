@@ -5,12 +5,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.4.0'
+ruby '2.4.1'
 
 gem 'rails', '5.2.1'
 
 # Use MySQL & PG as the database for Active Record
-gem 'mysql2'
+# gem 'mysql2'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma'

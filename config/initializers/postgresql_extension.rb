@@ -61,4 +61,4 @@ module ActiveRecord::PostgreSQLExtension
   end
 end
 
-ActiveRecord::Base.send(:include, ActiveRecord::PostgreSQLExtension) if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
+ActiveRecord::Base.send(:include, ActiveRecord::PostgreSQLExtension) if Rails.const_defined?('Server') && ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'

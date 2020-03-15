@@ -57,4 +57,4 @@ module ActiveRecord::MysqlExtension
   end
 end
 
-ActiveRecord::Base.send(:include, ActiveRecord::MysqlExtension) if ActiveRecord::Base.connection.adapter_name == 'Mysql2'
+ActiveRecord::Base.send(:include, ActiveRecord::MysqlExtension) if Rails.const_defined?('Server') && ActiveRecord::Base.connection.adapter_name == 'Mysql2'

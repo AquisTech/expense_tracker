@@ -32,10 +32,10 @@ $(document).on('turbolinks:load', function() {
       },
       error: function(result) {
         if(result['status'] == 401) {
-          var message = '<div class="flash-message callout border-none radius shadow warning" data-closable="true"><span class="text-warning">You\'ve been logged out. Please reload page and login again.</span></div>'
+          var message = '<div class="flash-message callout border-none radius shadow warning" data-closable=""><span class="text-warning">You\'ve been logged out. Please reload page and login again.</span></div>'
           // Implement login popup
         } else {
-          var message = '<div class="flash-message callout border-none radius shadow warning" data-closable="true"><span class="text-warning">' + result['status'].toString() + ' : Error loading content. Please close popup and retry.' + '</span></div>'
+          var message = '<div class="flash-message callout border-none radius shadow warning" data-closable=""><span class="text-warning">' + result['status'].toString() + ' : Error loading content. Please close popup and retry.' + '</span></div>'
         }
         $('.reveal-content').html(message);
       }

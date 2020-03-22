@@ -12,10 +12,14 @@
         %th Actions
 
     %tbody
-      - @group_users.each do |group_user|
+      - if @group_users.present?
+        - @group_users.each do |group_user|
+          %tr
+            %td= group_user.id
+            %td= group_user.user.name
+            %td= group_user.group.name
+            %td= render 'shared/table_row_action_buttons', object: group_user
+      - else
         %tr
-          %td= group_user.id
-          %td= group_user.user.name
-          %td= group_user.group.name
-          %td= render 'shared/table_row_action_buttons', object: group_user
+          %td.text-center{colspan: 4}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

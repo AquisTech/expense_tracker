@@ -21,26 +21,30 @@
       %th Actions
 
   %tbody
-    - @transaction_purposes.each do |transaction_purpose|
+    - if @transaction_purposes.present?
+      - @transaction_purposes.each do |transaction_purpose|
+        %tr
+          - if current_user.admin?
+            %td= transaction_purpose.id
+          - if family_view?
+            %td= transaction_purpose.user.name
+          %td= transaction_purpose.name
+          %td= transaction_purpose.sub_category.name_with_category
+          %td{ class: transaction_purpose.credit? ? 'text-success' : 'text-alert' }
+            = transaction_purpose.sign
+            = transaction_purpose.estimate
+          %td= transaction_purpose.preferred_payment_mode
+          %td= transaction_purpose.preferred_account.try(:name)
+          - if current_user.admin?
+            %td= transaction_purpose.created_at
+            %td= transaction_purpose.updated_at
+          %td
+            .button-group
+              = link_to_show_icon(transaction_purpose)
+              - unless transaction_purpose.default?
+                = link_to_edit_icon(transaction_purpose)
+                = link_to_delete_icon(transaction_purpose)
+    - else
       %tr
-        - if current_user.admin?
-          %td= transaction_purpose.id
-        - if family_view?
-          %td= transaction_purpose.user.name
-        %td= transaction_purpose.name
-        %td= transaction_purpose.sub_category.name_with_category
-        %td{ class: transaction_purpose.credit? ? 'text-success' : 'text-alert' }
-          = transaction_purpose.sign
-          = transaction_purpose.estimate
-        %td= transaction_purpose.preferred_payment_mode
-        %td= transaction_purpose.preferred_account.try(:name)
-        - if current_user.admin?
-          %td= transaction_purpose.created_at
-          %td= transaction_purpose.updated_at
-        %td
-          .button-group
-            = link_to_show_icon(transaction_purpose)
-            - unless transaction_purpose.default?
-              = link_to_edit_icon(transaction_purpose)
-              = link_to_delete_icon(transaction_purpose)
+        %td.text-center{colspan: 10}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

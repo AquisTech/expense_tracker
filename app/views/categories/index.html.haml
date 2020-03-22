@@ -12,11 +12,15 @@
       %th Actions
 
   %tbody
-    - @categories.each do |category|
+    - if @categories.present?
+      - @categories.each do |category|
+        %tr
+          %td= category.id
+          %td= category.name
+          %td= category.created_at
+          %td= category.updated_at
+          %td= render 'shared/table_row_action_buttons', object: category
+    - else
       %tr
-        %td= category.id
-        %td= category.name
-        %td= category.created_at
-        %td= category.updated_at
-        %td= render 'shared/table_row_action_buttons', object: category
+        %td.text-center{colspan: 5}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

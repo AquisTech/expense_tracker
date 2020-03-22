@@ -19,19 +19,23 @@
       %th Actions
 
   %tbody
-    - @transactions.each do |transaction|
+    - if @transactions.present?
+      - @transactions.each do |transaction|
+        %tr
+          - if current_user.admin?
+            %td= transaction.id
+          - if family_view?
+            %td= transaction.user.name
+          %td= transaction.transaction_purpose.name
+          %td= transaction.description
+          %td{ class: transaction.credit? ? 'text-success' : 'text-alert' }
+            = transaction.sign
+            = transaction.amount
+          - if current_user.admin?
+            %td= transaction.created_at
+            %td= transaction.updated_at
+          %td= render 'shared/table_row_action_buttons', object: transaction
+    - else
       %tr
-        - if current_user.admin?
-          %td= transaction.id
-        - if family_view?
-          %td= transaction.user.name
-        %td= transaction.transaction_purpose.name
-        %td= transaction.description
-        %td{ class: transaction.credit? ? 'text-success' : 'text-alert' }
-          = transaction.sign
-          = transaction.amount
-        - if current_user.admin?
-          %td= transaction.created_at
-          %td= transaction.updated_at
-        %td= render 'shared/table_row_action_buttons', object: transaction
+        %td.text-center{colspan: 8}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

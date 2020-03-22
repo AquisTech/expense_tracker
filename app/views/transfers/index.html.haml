@@ -20,18 +20,22 @@
       %th Actions
 
   %tbody
-    - @transfers.each do |transfer|
+    - if @transfers.present?
+      - @transfers.each do |transfer|
+        %tr
+          - if current_user.admin?
+            %td= transfer.id
+          - if family_view?
+            %td= transfer.user.name
+          %td= transfer.amount
+          %td= transfer.description
+          %td= transfer.source_account.name
+          %td= transfer.destination_account.name
+          - if current_user.admin?
+            %td= transfer.created_at
+            %td= transfer.updated_at
+          %td= render 'shared/table_row_action_buttons', object: transfer
+    - else
       %tr
-        - if current_user.admin?
-          %td= transfer.id
-        - if family_view?
-          %td= transfer.user.name
-        %td= transfer.amount
-        %td= transfer.description
-        %td= transfer.source_account.name
-        %td= transfer.destination_account.name
-        - if current_user.admin?
-          %td= transfer.created_at
-          %td= transfer.updated_at
-        %td= render 'shared/table_row_action_buttons', object: transfer
+        %td.text-center{colspan: 9}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

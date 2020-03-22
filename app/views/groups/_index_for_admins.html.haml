@@ -15,13 +15,17 @@
         %th Actions
 
     %tbody
-      - @groups.each do |group|
+      - if @groups.present?
+        - @groups.each do |group|
+          %tr
+            %td= group.id
+            %td= group.owner.name
+            %td= group.name
+            %td= group.default
+            %td= group.created_at
+            %td= group.updated_at
+            %td= render 'shared/table_row_action_buttons', object: group
+      - else
         %tr
-          %td= group.id
-          %td= group.owner.name
-          %td= group.name
-          %td= group.default
-          %td= group.created_at
-          %td= group.updated_at
-          %td= render 'shared/table_row_action_buttons', object: group
+          %td.text-center{colspan: 7}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

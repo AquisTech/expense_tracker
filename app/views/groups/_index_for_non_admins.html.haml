@@ -11,14 +11,18 @@
         %th Actions
 
     %tbody
-      - @groups.each do |group|
+      - if @groups.present?
+        - @groups.each do |group|
+          %tr
+            %td= group.name
+            %td= group.owner.name
+            %td
+              .button-group
+                = link_to_edit_icon(group)
+                = link_to_reveal "#{group.group_users.count} Members", group_path(group), 'button success'
+                - if !group.default? && current_user.group_owner_for?(group)
+                  = link_to_delete_icon(group)
+      - else
         %tr
-          %td= group.name
-          %td= group.owner.name
-          %td
-            .button-group
-              = link_to_edit_icon(group)
-              = link_to_reveal "#{group.group_users.count} Members", group_path(group), 'button success'
-              - if !group.default? && current_user.group_owner_for?(group)
-                = link_to_delete_icon(group)
+          %td.text-center{colspan: 3}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

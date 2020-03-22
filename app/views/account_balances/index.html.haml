@@ -18,17 +18,21 @@
       %th Actions
 
   %tbody
-    - @account_balances.each do |account_balance|
+    - if @account_balances.present?
+      - @account_balances.each do |account_balance|
+        %tr
+          %td= account_balance.id
+          %td= account_balance.user.name
+          %td= account_balance.opening_balance
+          %td= account_balance.calculated_closing_balance
+          %td= account_balance.actual_closing_balance
+          %td= Date::MONTHNAMES[account_balance.month]
+          %td= account_balance.year
+          %td= account_balance.account.name
+          %td= account_balance.created_at
+          %td= account_balance.updated_at
+          %td= render 'shared/table_row_action_buttons', object: account_balance
+    - else
       %tr
-        %td= account_balance.id
-        %td= account_balance.user.name
-        %td= account_balance.opening_balance
-        %td= account_balance.calculated_closing_balance
-        %td= account_balance.actual_closing_balance
-        %td= Date::MONTHNAMES[account_balance.month]
-        %td= account_balance.year
-        %td= account_balance.account.name
-        %td= account_balance.created_at
-        %td= account_balance.updated_at
-        %td= render 'shared/table_row_action_buttons', object: account_balance
+        %td.text-center{colspan: 11}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

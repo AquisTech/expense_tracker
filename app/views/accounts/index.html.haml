@@ -21,25 +21,29 @@
       %th Actions
 
   %tbody
-    - @accounts.each do |account|
+    - if @accounts.present?
+      - @accounts.each do |account|
+        %tr
+          - if current_user.admin?
+            %td= account.id
+          - if family_view?
+            %td= account.user.name
+          %td= account.name
+          %td= account.description
+          %td= account.details
+          %td= account.account_type_name
+          %td= account.payment_modes.join(', ')
+          - if current_user.admin?
+            %td= account.created_at
+            %td= account.updated_at
+          %td
+            .button-group
+              = link_to_show_icon(account)
+              - unless current_user.id == account.user_id
+                - unless account.default?
+                  = link_to_edit_icon(account)
+                  = link_to_delete_icon(account)
+    - else
       %tr
-        - if current_user.admin?
-          %td= account.id
-        - if family_view?
-          %td= account.user.name
-        %td= account.name
-        %td= account.description
-        %td= account.details
-        %td= account.account_type_name
-        %td= account.payment_modes.join(', ')
-        - if current_user.admin?
-          %td= account.created_at
-          %td= account.updated_at
-        %td
-          .button-group
-            = link_to_show_icon(account)
-            - unless current_user.id == account.user_id
-              - unless account.default?
-                = link_to_edit_icon(account)
-                = link_to_delete_icon(account)
+        %td.text-center{colspan: 10}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

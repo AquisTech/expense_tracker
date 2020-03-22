@@ -29,27 +29,31 @@
         %th Actions
 
     %tbody
-      - @users.each do |user|
+      - if @users.present?
+        - @users.each do |user|
+          %tr
+            %td= user.id
+            %td= user.email
+            %td= user.encrypted_password
+            %td= user.reset_password_token
+            %td= user.reset_password_sent_at
+            %td= user.remember_created_at
+            %td= user.sign_in_count
+            %td= user.current_sign_in_at
+            %td= user.last_sign_in_at
+            %td= user.current_sign_in_ip
+            %td= user.last_sign_in_ip
+            %td= user.confirmation_token
+            %td= user.confirmed_at
+            %td= user.confirmation_sent_at
+            %td= user.unconfirmed_email
+            %td= user.failed_attempts
+            %td= user.unlock_token
+            %td= user.locked_at
+            %td= user.created_at
+            %td= user.updated_at
+            %td= render 'shared/table_row_action_buttons', object: user
+      - else
         %tr
-          %td= user.id
-          %td= user.email
-          %td= user.encrypted_password
-          %td= user.reset_password_token
-          %td= user.reset_password_sent_at
-          %td= user.remember_created_at
-          %td= user.sign_in_count
-          %td= user.current_sign_in_at
-          %td= user.last_sign_in_at
-          %td= user.current_sign_in_ip
-          %td= user.last_sign_in_ip
-          %td= user.confirmation_token
-          %td= user.confirmed_at
-          %td= user.confirmation_sent_at
-          %td= user.unconfirmed_email
-          %td= user.failed_attempts
-          %td= user.unlock_token
-          %td= user.locked_at
-          %td= user.created_at
-          %td= user.updated_at
-          %td= render 'shared/table_row_action_buttons', object: user
+          %td.text-center{colspan: 21}= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

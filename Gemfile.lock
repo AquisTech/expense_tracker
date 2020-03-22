@@ -200,6 +200,7 @@ GEM
     overcommit (0.45.0)
       childprocess (~> 0.6, >= 0.6.3)
       iniparse (~> 1.4)
+    pagy (3.7.3)
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
@@ -357,6 +358,7 @@ DEPENDENCIES
   mini_racer
   omniauth-google-oauth2
   overcommit
+  pagy
   pg
   puma
   rails (= 5.2.1)

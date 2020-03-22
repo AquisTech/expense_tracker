@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def hide_if(condition)
     :hide if condition
   end

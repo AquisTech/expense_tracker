@@ -13,31 +13,23 @@ class PaymentsController < ApplicationController
   def create
     @payment = current_user.payments.new(payment_params)
     if @payment.save
-      redirect_to payments_url, notice: 'Payment was successfully created.'
+      redirect_to payments_path, notice: 'Payment was successfully created.'
     else
       render_failure(@payment)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @payment.update(payment_params)
-      redirect_to payments_url, notice: 'Payment was successfully updated.'
+      redirect_to payments_path, notice: 'Payment was successfully updated.'
     else
       render_failure(@payment)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @payment.destroy
-    redirect_to payments_url, notice: 'Payment was successfully destroyed.'
+    redirect_to payments_path, notice: 'Payment was successfully destroyed.'
   end
 
   private

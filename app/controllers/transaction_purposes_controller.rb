@@ -21,13 +21,9 @@ class TransactionPurposesController < ApplicationController
     end
   end
 
-  def edit
-    render layout: false
-  end
-
   def update
     if @transaction_purpose.update(transaction_purpose_params)
-      redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully updated.'
+      redirect_to transaction_purposes_path, notice: 'Transaction purpose was successfully updated.'
     else
       render_failure(@transaction_purpose)
     end
@@ -43,7 +39,7 @@ class TransactionPurposesController < ApplicationController
 
   def destroy
     @transaction_purpose.destroy
-    redirect_to transaction_purposes_url, notice: 'Transaction purpose was successfully destroyed.'
+    redirect_to transaction_purposes_path, notice: 'Transaction purpose was successfully destroyed.'
   end
 
   def display_recurrence_rule_text

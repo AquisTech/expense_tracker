@@ -13,31 +13,23 @@ class OccurrencesController < ApplicationController
   def create
     @occurrence = current_user.occurrences.new(occurrence_params)
     if @occurrence.save
-      redirect_to occurrences_url, notice: 'Occurrence was successfully created.'
+      redirect_to occurrences_path, notice: 'Occurrence was successfully created.'
     else
       render_failure(@occurrence)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @occurrence.update(occurrence_params)
-      redirect_to occurrences_url, notice: 'Occurrence was successfully updated.'
+      redirect_to occurrences_path, notice: 'Occurrence was successfully updated.'
     else
       render_failure(@occurrence)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @occurrence.destroy
-    redirect_to occurrences_url, notice: 'Occurrence was successfully destroyed.'
+    redirect_to occurrences_path, notice: 'Occurrence was successfully destroyed.'
   end
 
   private

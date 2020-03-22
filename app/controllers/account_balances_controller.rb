@@ -13,31 +13,23 @@ class AccountBalancesController < ApplicationController
   def create
     @account_balance = current_user.account_balances.new(account_balance_params)
     if @account_balance.save
-      redirect_to account_balances_url, notice: 'Account balance was successfully created.'
+      redirect_to account_balances_path, notice: 'Account balance was successfully created.'
     else
       render_failure(@account_balance)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @account_balance.update(account_balance_params)
-      redirect_to account_balances_url, notice: 'Account balance was successfully updated.'
+      redirect_to account_balances_path, notice: 'Account balance was successfully updated.'
     else
       render_failure(@account_balance)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @account_balance.destroy
-    redirect_to account_balances_url, notice: 'Account balance was successfully destroyed.'
+    redirect_to account_balances_path, notice: 'Account balance was successfully destroyed.'
   end
 
   private

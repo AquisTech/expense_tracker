@@ -13,31 +13,23 @@ class GroupUsersController < ApplicationController
   def create
     @group_user = current_user.group_users.new(group_user_params)
     if @group_user.save
-      redirect_to group_users_url, notice: 'Group user was successfully created.'
+      redirect_to group_users_path, notice: 'Group user was successfully created.'
     else
       render_failure(@group_user)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @group_user.update(group_user_params)
-      redirect_to group_users_url, notice: 'Group user was successfully updated.'
+      redirect_to group_users_path, notice: 'Group user was successfully updated.'
     else
       render_failure(@group_user)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @group_user.destroy
-    redirect_to group_users_url, notice: 'Group user was successfully destroyed.'
+    redirect_to group_users_path, notice: 'Group user was successfully destroyed.'
   end
 
   private

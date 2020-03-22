@@ -13,31 +13,23 @@ class RecurrenceRulesController < ApplicationController
   def create
     @recurrence_rule = current_user.recurrence_rules.new(recurrence_rule_params)
     if @recurrence_rule.save
-      redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully created.'
+      redirect_to recurrence_rules_path, notice: 'Recurrence rule was successfully created.'
     else
       render_failure(@recurrence_rule)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @recurrence_rule.update(recurrence_rule_params)
-      redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully updated.'
+      redirect_to recurrence_rules_path, notice: 'Recurrence rule was successfully updated.'
     else
       render_failure(@recurrence_rule)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @recurrence_rule.destroy
-    redirect_to recurrence_rules_url, notice: 'Recurrence rule was successfully destroyed.'
+    redirect_to recurrence_rules_path, notice: 'Recurrence rule was successfully destroyed.'
   end
 
   private

@@ -13,31 +13,23 @@ class GroupsController < ApplicationController
   def create
     @group = current_user.groups.new(group_params)
     if @group.save
-      redirect_to groups_url, notice: 'Group was successfully created.'
+      redirect_to groups_path, notice: 'Group was successfully created.'
     else
       render_failure(@group)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @group.update(group_params)
-      redirect_to groups_url, notice: 'Group was successfully updated.'
+      redirect_to groups_path, notice: 'Group was successfully updated.'
     else
       render_failure(@group)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @group.destroy
-    redirect_to groups_url, notice: 'Group was successfully destroyed.'
+    redirect_to groups_path, notice: 'Group was successfully destroyed.'
   end
 
   def invite_member
@@ -54,7 +46,7 @@ class GroupsController < ApplicationController
       # Implement this after friendlyId is implemented
       # Check if the link is opened by intended user, else create record with status as requested
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   private

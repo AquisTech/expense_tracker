@@ -13,31 +13,23 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_url, notice: 'User was successfully created.'
+      redirect_to users_path, notice: 'User was successfully created.'
     else
       render_failure(@user)
     end
-  end
-
-  def edit
-    render layout: false
   end
 
   def update
     if @user.update(user_params)
-      redirect_to users_url, notice: 'User was successfully updated.'
+      redirect_to users_path, notice: 'User was successfully updated.'
     else
       render_failure(@user)
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to users_path, notice: 'User was successfully destroyed.'
   end
 
   def accept_membership
@@ -46,7 +38,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to join group. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def decline_membership
@@ -55,7 +47,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to decline membership. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def cancel_membership
@@ -64,7 +56,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to leave group. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def remove_from_group
@@ -73,7 +65,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to remove user. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def cancel_invitation
@@ -82,7 +74,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to cancel invitation. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def block_membership
@@ -91,7 +83,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to block group. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def block_user
@@ -100,7 +92,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to block user. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def transfer_ownership # TODO: move to groups controller
@@ -109,7 +101,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to transfer ownership. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   def toggle_admin
@@ -118,7 +110,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Failed to toggle admin access. #{@user.errors.full_messages.to_sentence}"
     end
-    redirect_to groups_url
+    redirect_to groups_path
   end
 
   private

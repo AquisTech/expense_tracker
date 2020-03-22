@@ -25,10 +25,6 @@ class TransfersController < ApplicationController
     end
   end
 
-  def edit
-    render layout: false
-  end
-
   # TODO: Make this compatible for transfers/form
   # This action is called from home/index
   def update
@@ -41,13 +37,9 @@ class TransfersController < ApplicationController
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     @transfer.destroy
-    redirect_to transfers_url, notice: 'Transfer was successfully destroyed.'
+    redirect_to transfers_path, notice: 'Transfer was successfully destroyed.'
   end
 
   private

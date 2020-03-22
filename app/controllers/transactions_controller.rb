@@ -25,10 +25,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def edit
-    render layout: false
-  end
-
   # TODO: Make this compatible for transcations/form
   # This action is called from home/index
   def update
@@ -41,15 +37,11 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def show
-    render layout: false
-  end
-
   def destroy
     if @transaction.destroy
-      redirect_to transactions_url, success: 'Transaction destroyed successfully.'
+      redirect_to transactions_path, success: 'Transaction destroyed successfully.'
     else
-      redirect_to transactions_url, failure: 'Transaction failed to destroy.'
+      redirect_to transactions_path, failure: 'Transaction failed to destroy.'
     end
   end
 

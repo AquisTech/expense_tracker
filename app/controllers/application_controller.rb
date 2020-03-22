@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
     render 'shared/failure', locals: { object: object }
   end
 
+  def edit
+    render layout: false
+  end
+
+  def show
+    render layout: false
+  end
+
   def current_scope
     @current_scope ||= family_view? ? current_user.family : current_user
   end

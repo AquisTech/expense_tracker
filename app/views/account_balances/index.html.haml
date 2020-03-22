@@ -31,3 +31,4 @@
         %td= account_balance.created_at
         %td= account_balance.updated_at
         %td= render 'shared/table_row_action_buttons', object: account_balance
+#pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

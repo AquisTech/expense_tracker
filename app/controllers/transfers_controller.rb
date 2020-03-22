@@ -2,7 +2,7 @@ class TransfersController < ApplicationController
   before_action :set_transfer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transfers = current_scope.transfers
+    @pagy, @transfers = pagy(current_scope.transfers)
   end
 
   def new

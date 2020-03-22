@@ -52,3 +52,4 @@
           %td= user.created_at
           %td= user.updated_at
           %td= render 'shared/table_row_action_buttons', object: user
+#pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

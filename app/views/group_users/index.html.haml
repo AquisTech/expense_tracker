@@ -18,3 +18,4 @@
           %td= group_user.user.name
           %td= group_user.group.name
           %td= render 'shared/table_row_action_buttons', object: group_user
+#pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

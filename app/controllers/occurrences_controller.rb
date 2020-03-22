@@ -2,7 +2,7 @@ class OccurrencesController < ApplicationController
   before_action :set_occurrence, only: [:show, :edit, :update, :destroy]
 
   def index
-    @occurrences = current_user.occurrences
+    @pagy, @occurrences = pagy(current_user.occurrences)
   end
 
   def new

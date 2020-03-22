@@ -2,7 +2,7 @@ class TransactionPurposesController < ApplicationController
   before_action :set_transaction_purpose, only: [:show, :edit, :update, :destroy]
 
   def index
-    @transaction_purposes = current_scope.transaction_purposes
+    @pagy, @transaction_purposes = pagy(current_scope.transaction_purposes)
   end
 
   def new

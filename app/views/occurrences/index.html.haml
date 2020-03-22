@@ -35,3 +35,4 @@
         %td= occurrence.created_at
         %td= occurrence.updated_at
         %td= render 'shared/table_row_action_buttons', object: occurrence
+#pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

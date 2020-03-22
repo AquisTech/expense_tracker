@@ -2,7 +2,7 @@ class GroupUsersController < ApplicationController
   before_action :set_group_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @group_users = current_user.group_users
+    @pagy, @group_users = pagy(current_user.group_users)
   end
 
   def new

@@ -28,8 +28,11 @@ class RecurrenceRulesController < ApplicationController
   end
 
   def destroy
-    @recurrence_rule.destroy
-    redirect_to recurrence_rules_path, notice: 'Recurrence rule was successfully destroyed.'
+    if @recurrence_rule.destroy
+      redirect_to recurrence_rules_path, notice: 'Recurrence rule was successfully destroyed.'
+    else
+      redirect_to recurrence_rules_path, notice: 'Recurrence rule could not be destroyed.'
+    end
   end
 
   private

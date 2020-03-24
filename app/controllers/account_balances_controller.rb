@@ -28,8 +28,11 @@ class AccountBalancesController < ApplicationController
   end
 
   def destroy
-    @account_balance.destroy
-    redirect_to account_balances_path, notice: 'Account balance was successfully destroyed.'
+    if @account_balance.destroy
+      redirect_to account_balances_path, notice: 'Account balance was successfully destroyed.'
+    else
+      redirect_to account_balances_path, notice: 'Account balance could not be destroyed.'
+    end
   end
 
   private

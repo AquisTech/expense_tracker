@@ -28,8 +28,11 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group.destroy
-    redirect_to groups_path, notice: 'Group was successfully destroyed.'
+    if @group.destroy
+      redirect_to groups_path, notice: 'Group was successfully destroyed.'
+    else
+      redirect_to groups_path, notice: 'Group could not be destroyed.'
+    end
   end
 
   def invite_member

@@ -38,8 +38,11 @@ class TransactionPurposesController < ApplicationController
   end
 
   def destroy
-    @transaction_purpose.destroy
-    redirect_to transaction_purposes_path, notice: 'Transaction purpose was successfully destroyed.'
+    if @transaction_purpose.destroy
+      redirect_to transaction_purposes_path, notice: 'Transaction purpose was successfully destroyed.'
+    else
+      redirect_to transaction_purposes_path, notice: 'Transaction purpose could not be destroyed.'
+    end
   end
 
   def display_recurrence_rule_text

@@ -38,8 +38,11 @@ class TransfersController < ApplicationController
   end
 
   def destroy
-    @transfer.destroy
-    redirect_to transfers_path, notice: 'Transfer was successfully destroyed.'
+    if @transfer.destroy
+      redirect_to transfers_path, notice: 'Transfer was successfully destroyed.'
+    else
+      redirect_to transfers_path, notice: 'Transfer could not be destroyed.'
+    end
   end
 
   private

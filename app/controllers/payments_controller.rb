@@ -28,8 +28,11 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
-    @payment.destroy
-    redirect_to payments_path, notice: 'Payment was successfully destroyed.'
+    if @payment.destroy
+      redirect_to payments_path, notice: 'Payment was successfully destroyed.'
+    else
+      redirect_to payments_path, notice: 'Payment could not be destroyed.'
+    end
   end
 
   private

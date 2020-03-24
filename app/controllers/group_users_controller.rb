@@ -28,8 +28,11 @@ class GroupUsersController < ApplicationController
   end
 
   def destroy
-    @group_user.destroy
-    redirect_to group_users_path, notice: 'Group user was successfully destroyed.'
+    if @group_user.destroy
+      redirect_to group_users_path, notice: 'Group user was successfully destroyed.'
+    else
+      redirect_to group_users_path, notice: 'Group user could not be destroyed.'
+    end
   end
 
   private

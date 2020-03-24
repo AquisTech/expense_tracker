@@ -28,8 +28,11 @@ class OccurrencesController < ApplicationController
   end
 
   def destroy
-    @occurrence.destroy
-    redirect_to occurrences_path, notice: 'Occurrence was successfully destroyed.'
+    if @occurrence.destroy
+      redirect_to occurrences_path, notice: 'Occurrence was successfully destroyed.'
+    else
+      redirect_to occurrences_path, notice: 'Occurrence could not be destroyed.'
+    end
   end
 
   private

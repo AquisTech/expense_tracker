@@ -41,7 +41,7 @@ class TransactionsController < ApplicationController
     if @transaction.destroy
       redirect_to transactions_path, success: 'Transaction destroyed successfully.'
     else
-      redirect_to transactions_path, failure: 'Transaction failed to destroy.'
+      redirect_to transactions_path, failure: 'Transaction could not be destroyed.'
     end
   end
 

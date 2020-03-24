@@ -28,8 +28,11 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to categories_path, notice: 'Category was successfully destroyed.'
+    if @category.destroy
+      redirect_to categories_path, notice: 'Category was successfully destroyed.'
+    else
+      redirect_to categories_path, notice: 'Category could not be destroyed.'
+    end
   end
 
   private

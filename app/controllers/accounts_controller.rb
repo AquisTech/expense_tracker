@@ -29,8 +29,11 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account.destroy
-    redirect_to accounts_path, notice: 'Account was successfully destroyed.'
+    if @account.destroy
+      redirect_to accounts_path, notice: 'Account was successfully destroyed.'
+    else
+      redirect_to accounts_path, notice: 'Account could not be destroyed.'
+    end
   end
 
   private

@@ -309,7 +309,7 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    timeliness (0.3.8)
+    timeliness (0.4.4)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -318,8 +318,8 @@ GEM
     uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.0)
-    validates_timeliness (5.0.0.alpha3)
-      timeliness (~> 0.3.8)
+    validates_timeliness (5.0.0.beta2)
+      timeliness (>= 0.3.10, < 1)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.7.0)
@@ -371,7 +371,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier
-  validates_timeliness (~> 5.0.0.alpha2)
+  validates_timeliness (~> 5.0.0.beta2)
   web-console
 
 RUBY VERSION

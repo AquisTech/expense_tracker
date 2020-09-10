@@ -7,7 +7,7 @@ end
 
 ruby '2.4.1'
 
-gem 'rails', '5.2.1'
+gem 'rails', '6.0.3.3'
 
 # Use MySQL & PG as the database for Active Record
 # gem 'mysql2'

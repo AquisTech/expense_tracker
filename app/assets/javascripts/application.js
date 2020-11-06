@@ -16,14 +16,11 @@
 //= require foundation
 //= require awesomplete
 //= require serviceworker-companion
-//= require pagy
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
   // Initialize Zurb Foundation JS
   $(document).foundation();
-  // Initialize Pagy JS
-  Pagy.init(document.getElementById('pagy'));
   // Remote modal with AJAX and Reveal
   $('body').on('click', '[data-open="ajax-reveal"]', function(e) {
     e.preventDefault();

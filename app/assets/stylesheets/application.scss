@@ -149,6 +149,8 @@
   height: 1.5rem;
   margin-right: 5px;
 }
-table .button-group {
-  margin-bottom: 0;
+table {
+  .button-group, .input-group {
+    margin-bottom: 0;
+  }
 }

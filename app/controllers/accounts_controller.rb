@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pagy, @accounts = pagy(current_scope.accounts)
+    @accounts = current_scope.accounts
   end
 
   def new

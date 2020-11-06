@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pagy, @payments = pagy(current_scope.payments)
+    @payments = current_scope.payments
   end
 
   def new

@@ -2,7 +2,7 @@ class RecurrenceRulesController < ApplicationController
   before_action :set_recurrence_rule, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pagy, @recurrence_rules = pagy(current_user.recurrence_rules)
+    @recurrence_rules = current_user.recurrence_rules
   end
 
   def new

@@ -2,7 +2,7 @@ class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pagy, @transactions = pagy(current_scope.transactions)
+    @transactions = current_scope.transactions
   end
 
   def new

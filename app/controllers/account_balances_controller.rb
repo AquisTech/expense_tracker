@@ -2,7 +2,7 @@ class AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pagy, @account_balances = pagy(current_user.account_balances)
+    @account_balances = current_user.account_balances
   end
 
   def new

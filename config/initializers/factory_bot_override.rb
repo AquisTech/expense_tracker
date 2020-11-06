@@ -30,16 +30,16 @@ if defined?(FactoryBot)
       begin
         FactoryBot.factory_by_name(name)
       rescue ArgumentError => e
-        system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name].class_name}")
+        system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name].try(:class_name)}")
       end
     end
 
     def factory_notation_for_association(association_name)
       find_or_create_factory(association_name)
-      if singular_table_name.classify.constantize.reflections[association_name].class_name == association_name.classify
+      if singular_table_name.classify.constantize.reflections[association_name].try(:class_name) == association_name.classify
         association_name
       else
-        "association :#{association_name}, factory: :#{singular_table_name.classify.constantize.reflections[association_name].class_name.underscore}"
+        "association :#{association_name}, factory: :#{singular_table_name.classify.constantize.reflections[association_name].try(:class_name).try(:underscore)}"
       end
     end
 

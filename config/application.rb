@@ -17,7 +17,9 @@ module ExpenseTracker
     # -- all .rb files in that directory are automatically loaded.
     config.generators do |g|
       # g.orm false
+      g.scaffold_stylesheet false
       g.assets false
+      g.helper false
       # g.test_framework  false
     end
   end

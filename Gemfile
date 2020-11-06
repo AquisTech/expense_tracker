@@ -56,7 +56,7 @@ gem 'material_design_iconsfont', git: 'https://github.com/AquisTech/material_des
 
 gem 'pagy'
 gem 'jquery-datatables'
-gem 'ajax-datatables-rails'
+gem 'ajax-datatables-rails', '>= 1.2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

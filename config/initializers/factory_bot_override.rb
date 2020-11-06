@@ -57,6 +57,7 @@ if defined?(FactoryBot)
     end
 
     def factory_attributes
+      return '' if self.behavior == :revoke
       attrs = if ActiveRecord::Base.connection.table_exists?(table_name)
         singular_table_name.classify.constantize.columns.reject { |col| ['id', 'created_at', 'updated_at'].include?(col.name) }
       else

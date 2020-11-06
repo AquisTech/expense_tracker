@@ -1,0 +1,1 @@
+rails g my_scaffold $1 --no-migration --no-resource-route

@@ -30,7 +30,7 @@ development:
   <<: *default
   database: et_dev
   username: postgres
-  password: postgresdb
+  password: postgres
 
 test:
   <<: *default

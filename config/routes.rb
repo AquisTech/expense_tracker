@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  concern :with_datatable do
+    post :datatable, on: :collection
+  end
   resources :group_users
   resources :groups do
     post :invite_member, on: :collection
   end
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   resources :users do
     collection do
       post :accept_membership

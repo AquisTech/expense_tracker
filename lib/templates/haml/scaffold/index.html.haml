@@ -3,7 +3,7 @@
   = link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_<%= singular_table_name %>_path}
 <%- attributes = singular_table_name.classify.constantize.column_names %>
 .table-scroll
-  %table.striped.hover.table-striped.stack
+  %table.striped.hover.table-striped.stack#<%= table_name %>-datatable{ data: { source: datatable_<%= table_name %>_path(format: :json) } }
     %thead
       %tr
         <%- attributes.each do |attribute| -%>
@@ -12,18 +12,3 @@
         %th Actions
 
     %tbody
-      - if @<%= plural_table_name %>.present?
-        - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
-          %tr
-            <%- attributes.each do |attribute| -%>
-            <%- if attribute =~ /_id$/ -%>
-            %td= <%= singular_table_name %>.<%= attribute.gsub(/_id$/, '') %>.name
-            <%- else -%>
-            %td= <%= singular_table_name %>.<%= attribute %>
-            <%- end -%>
-            <%- end -%>
-            %td= render 'shared/table_row_action_buttons', object: <%= singular_table_name %>
-      - else
-        %tr
-          %td.text-center{ colspan: <%= attributes.size + 1 %> }= 'No records found'
-#pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

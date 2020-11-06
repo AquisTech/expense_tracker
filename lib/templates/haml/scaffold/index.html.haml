@@ -12,18 +12,18 @@
         %th Actions
 
     %tbody
-      - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+      - if @<%= plural_table_name %>.present?
+        - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+          %tr
+            <%- attributes.each do |attribute| -%>
+            <%- if attribute =~ /_id$/ -%>
+            %td= <%= singular_table_name %>.<%= attribute.gsub(/_id$/, '') %>.name
+            <%- else -%>
+            %td= <%= singular_table_name %>.<%= attribute %>
+            <%- end -%>
+            <%- end -%>
+            %td= render 'shared/table_row_action_buttons', object: <%= singular_table_name %>
+      - else
         %tr
-          <%- attributes.each do |attribute| -%>
-          <%- if attribute =~ /_id$/ -%>
-          %td= <%= singular_table_name %>.<%= attribute.gsub(/_id$/, '') %>.name
-          <%- else -%>
-          %td= <%= singular_table_name %>.<%= attribute %>
-          <%- end -%>
-          <%- end -%>
-          %td
-            .button-group
-              = link_to 'Show', 'javascript:void(0)', class: 'button success', data: { open: 'ajax-reveal', url: <%= singular_table_name %>_path(<%= singular_table_name %>) }
-              = link_to 'Edit', 'javascript:void(0)', class: 'button warning', data: { open: 'ajax-reveal', url: edit_<%= singular_table_name %>_path(<%= singular_table_name %>) }
-              = link_to 'Delete', <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure you want to delete this <%= singular_table_name.titleize %>?' }, class: 'button alert'
+          %td.text-center{ colspan: <%= attributes.size + 1 %> }= 'No records found'
 #pagy= pagy_foundation_combo_nav_js(@pagy).html_safe

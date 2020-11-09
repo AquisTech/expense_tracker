@@ -1,0 +1,7 @@
+$(document).on('turbolinks:load', function() {
+  if (!$.fn.DataTable.isDataTable('table#dttb-<%= name.tableize %>')) {
+    $('table#dttb-<%= name.tableize %>').DataTable({
+      columns: <%%= <%= name.classify.pluralize %>Datatable.new({}).js_view_columns %>
+    });
+  }
+});

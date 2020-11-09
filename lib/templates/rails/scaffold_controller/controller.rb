@@ -10,7 +10,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def datatable
-    render json: <%= controller_class_name %>Datatable.new(params)
+    render json: <%= controller_class_name %>Datatable.new(params, view_context: view_context)
   end
 
   def new

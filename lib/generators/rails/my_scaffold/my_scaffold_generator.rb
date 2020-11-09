@@ -16,7 +16,7 @@ module Rails
       end
 
       def add_datatable_javascript
-        template 'datatable.js', "app/assets/javascripts/datatables/#{table_name}_datatable.js"
+        template 'datatable.js.erb', "app/assets/javascripts/datatables/#{table_name}_datatable.js.erb"
       end
     end
   end

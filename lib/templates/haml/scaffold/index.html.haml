@@ -1,14 +1,13 @@
 %h1
   <%= plural_table_name.titleize %>
-  = link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: {open: 'ajax-reveal', url: new_<%= singular_table_name %>_path}
-<%- attributes = singular_table_name.classify.constantize.column_names %>
-.table-scroll
-  %table.striped.hover.table-striped.stack#<%= table_name %>-datatable{ data: { source: datatable_<%= table_name %>_path(format: :json) } }
-    %thead
-      %tr
-        <%- attributes.each do |attribute| -%>
-        %th <%= attribute.humanize %>
-        <%- end -%>
-        %th Actions
+  = link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: { open: 'ajax-reveal', url: new_<%= singular_table_name %>_path }
+<%- attributes = singular_table_name.classify.constantize.column_names -%>
 
-    %tbody
+%table#dttb-<%= plural_table_name %>.responsive.nowrap.table.table-hover{ data: { source: datatable_<%= table_name %>_path(format: :json) } }
+  %thead
+    %tr
+<% attributes.each do |attribute| -%>
+      %th <%= attribute.titleize %>
+<% end -%>
+      %th Actions
+  %tbody

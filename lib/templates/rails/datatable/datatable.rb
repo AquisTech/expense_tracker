@@ -4,8 +4,9 @@ class <%= datatable_name %> < ApplicationDatatable
   def view_columns
     @view_columns ||= {
     <%- attributes.each do |attr| -%>
-      <%= attr %>: { source: '<%= name.classify %>.<%= attr %>' },
+      <%= attr %>: { source: '<%= name.classify %>.<%= attr %>', orderable: true, searchable: true, cond: :like },
     <%- end -%>
+      actions: { searchable: false, orderable: false }
     }
   end
 
@@ -15,7 +16,8 @@ class <%= datatable_name %> < ApplicationDatatable
       <%- attributes.each do |attr| -%>
         <%= attr %>: record.<%= attr %>,
       <%- end -%>
-        DT_RowId: record.id,
+        actions: link_to_actions(record),
+        DT_RowId: record.id
       }
     end
   end

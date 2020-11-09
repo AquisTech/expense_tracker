@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery3
+//= require datatables
 //= require foundation
 //= require awesomplete
 //= require serviceworker-companion

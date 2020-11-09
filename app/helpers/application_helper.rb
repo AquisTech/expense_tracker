@@ -46,6 +46,10 @@ module ApplicationHelper
     link_to 'Delete', object, method: :delete, data: { confirm: "Are you sure you want to delete this #{object.class.name}?" }, class: 'button clear alert' # TODO : icon_tag('delete')
   end
 
+  def link_to_actions(object)
+    link_to_show_icon(object) + link_to_edit_icon(object) + link_to_delete_icon(object)
+  end
+
   def invite_for_registration_via_whatsapp
     url = build_whatsapp_url("Hey Buddy! Join me on MoneyBee, an expense tracking, budgeting and finance planning app. #{new_user_registration_url}")
     link_to 'Invite via WhatsApp', url, class: 'button success hollow'

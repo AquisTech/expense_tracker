@@ -3,6 +3,10 @@ module ButtonAndLinkHelper
     content_tag(:div, text, class: 'button warning', data: {close: ''})
   end
 
+  # def add_new_button(content = "Add New #{controller_name.singularize.titleize}")
+  #   link_to_reveal(content, url_for(action: :new, controller: controller_name), 'button primary float-right margin-top-1')
+  # end
+
   def add_new_button(content, url)
     link_to_reveal(content, url, 'button primary float-right margin-top-1')
   end

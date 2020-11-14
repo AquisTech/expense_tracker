@@ -1,6 +1,6 @@
 %h1
   <%= plural_table_name.titleize %>
-  = link_to 'Add New <%= singular_table_name.titleize %>', 'javascript:void(0)', class: 'button primary float-right', data: { open: 'ajax-reveal', url: new_<%= singular_table_name %>_path }
+  = add_new_button('Add New <%= singular_table_name.titleize %>', new_<%= singular_table_name %>_path)
 <%- attributes = singular_table_name.classify.constantize.column_names -%>
 
 %table#dttb-<%= plural_table_name %>.responsive.nowrap.table.table-hover{ data: { source: datatable_<%= table_name %>_path(format: :json) } }

@@ -61,7 +61,8 @@ if defined?(FactoryBot)
       begin
         FactoryBot.factory_by_name(name)
       rescue ArgumentError => e
-        system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name].try(:class_name)}")
+        puts "#{e.message}\nGenerating new factory for '#{name}'"
+        system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name]&.class_name || name.classify}")
       end
     end
 

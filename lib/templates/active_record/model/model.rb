@@ -2,21 +2,22 @@
 class <%= class_name %> < <%= parent_class_name.classify %>
   # Validations
   <%- attributes_names = attributes.empty? ? singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') : attributes -%>
-<% attributes_names.each do |attr, value| %>
-  validates :<%= attr %>, presence: true<%- if value.type == :integer && !attr.ends_with?('_id') -%>
-  <%= ', numericality: { only_integer: true }' %>
+<% attributes_names.each do |attr, value| -%>
+<% next if attr.ends_with?('_id') -%>
+  validates :<%= attr %>, presence: true<%- if value.type == :integer -%>
+, numericality: { only_integer: true }
 <%- elsif value.type == :float -%>
-  <%= ', numericality: true' %>
+, numericality: true
 <%- elsif value.type == :boolean -%>
-  <%= ', inclusion: { in: [true, false] }' %>
+, inclusion: { in: [true, false] }
 <%- elsif value.type == :text -%>
 <%- elsif value.type == :string -%>
 <%- elsif value.type == :date -%>
 <%- elsif value.type == :datetime -%>
 <%- end -%><%- if attr.ends_with?('_confirmation') -%>
-  <%= ', confirmation: true' %>
-<%- end -%>
-<%- end -%>
+, confirmation: true
+<%- end %>
+<% end -%>
   # Callbacks
 
   # Associations

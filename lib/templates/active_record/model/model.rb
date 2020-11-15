@@ -20,9 +20,14 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   # Callbacks
 
   # Associations
+  <%- belongs_to_attrs = attributes_names.select{ |attr, value| k.ends_with?('_id') } -%>
+  <% belongs_to_attrs.each do |attr, value| -%>
+belongs_to :<%= attr %>
+  <% end %>
 <% attributes.select(&:reference?).each do |attribute| -%>
   belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', required: true' if attribute.required? %>
 <% end -%>
+
 <% attributes.select(&:token?).each do |attribute| -%>
   has_secure_token<% if attribute.name != "token" %> :<%= attribute.name %><% end %>
 <% end -%>

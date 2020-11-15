@@ -50,7 +50,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
 
     def <%= "#{singular_table_name}_params" %>
-      <%- attributes_names = singular_table_name.classify.constantize.column_names - ['id', 'created_at', 'updated_at'] -%>
+      <%- attributes_names = attributes.empty? ? singular_table_name.classify.constantize.column_names - ['id', 'created_at', 'updated_at'] : attributes -%>
       <%- if attributes_names.empty? -%>
       params.fetch(:<%= singular_table_name %>, {})
       <%- else -%>

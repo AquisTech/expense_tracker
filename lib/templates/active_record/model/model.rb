@@ -1,8 +1,25 @@
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
-  # Add model sections' pointers
-  [:attributes, :attributes=, :field_type, :field_type_by_name,
-    :invoke_with_padding, :options, :options=]
+  # Validations
+  <%- attributes_names = attributes.empty? ? singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') : attributes -%>
+<% attributes_names.each do |attr, value| %>
+  validates :<%= attr %>, presence: true<%- if value.type == :integer && !attr.ends_with?('_id') -%>
+  <%= ', numericality: { only_integer: true }' %>
+<%- elsif value.type == :float -%>
+  <%= ', numericality: true' %>
+<%- elsif value.type == :boolean -%>
+  <%= ', inclusion: { in: [true, false] }' %>
+<%- elsif value.type == :text -%>
+<%- elsif value.type == :string -%>
+<%- elsif value.type == :date -%>
+<%- elsif value.type == :datetime -%>
+<%- end -%><%- if attr.ends_with?('_confirmation') -%>
+  <%= ', confirmation: true' %>
+<%- end -%>
+<%- end -%>
+  # Callbacks
+
+  # Associations
 <% attributes.select(&:reference?).each do |attribute| -%>
   belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', required: true' if attribute.required? %>
 <% end -%>

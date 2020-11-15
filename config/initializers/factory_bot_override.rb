@@ -68,10 +68,11 @@ if defined?(FactoryBot)
 
     def factory_notation_for_association(association_name)
       find_or_create_factory(association_name)
-      if singular_table_name.classify.constantize.reflections[association_name]&.class_name == association_name.classify
+      reflection_name = singular_table_name.classify.constantize.reflections[association_name]&.class_name
+      if reflection_name.nil? || reflection_name == association_name.classify
         association_name
       else
-        "association :#{association_name}, factory: :#{singular_table_name.classify.constantize.reflections[association_name]&.class_name&.underscore}"
+        "association :#{association_name}, factory: :#{reflection_name&.underscore}"
       end
     end
 
@@ -108,18 +109,19 @@ if defined?(FactoryBot)
     def factory_attributes
       return '' if self.behavior == :revoke
       attrs = if ActiveRecord::Base.connection.table_exists?(table_name)
-        singular_table_name.classify.constantize.columns.reject { |col| ['id', 'created_at', 'updated_at'].include?(col.name) }
+        singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at')
       else
         attributes
       end
 
-      attrs.map do |attribute|
-        if attribute.name.ends_with?('_id')
-          factory_notation_for_association(attribute.name.gsub(/_id/, ''))
+      attrs.map do |attr_key, attribute|
+        if attr_key.ends_with?('_id')
+          factory_notation_for_association(attr_key.gsub(/_id/, ''))
         else
-          factory_notation_for_non_association_attr(attribute.name, attribute.type)
+          next if attr_key.ends_with?('_type') && attrs.keys.include?(attr_key.gsub(/_type/, '_id'))
+          factory_notation_for_non_association_attr(attr_key, attribute.type)
         end
-      end.join("\n")
+      end.compact.join("\n")
     end
   end
 end

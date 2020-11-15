@@ -59,8 +59,8 @@ if defined?(FactoryBot)
 
     def find_or_create_factory(name)
       begin
-        FactoryBot.factory_by_name(name)
-      rescue ArgumentError => e
+        FactoryBot::Internal.factory_by_name(name)
+      rescue => e
         puts "#{e.message}\nGenerating new factory for '#{name}'"
         system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name]&.class_name || name.classify}")
       end
@@ -113,7 +113,6 @@ if defined?(FactoryBot)
       else
         attributes
       end
-
       attrs.map do |attr_key, attribute|
         if attr_key.ends_with?('_id')
           factory_notation_for_association(attr_key.gsub(/_id/, ''))

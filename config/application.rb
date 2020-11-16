@@ -20,7 +20,9 @@ module ExpenseTracker
       g.scaffold_stylesheet false
       g.assets false
       g.helper false
-      # g.test_framework  false
+      g.test_framework false
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+      g.factory_bot true
     end
   end
 end

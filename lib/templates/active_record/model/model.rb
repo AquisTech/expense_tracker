@@ -1,7 +1,7 @@
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
   # Validations
-<%- attributes_names = singular_table_name.classify.constantize.columns_hash.except('id', 'created_at', 'updated_at') -%>
+<%- attributes_names = attributes.empty? ? class_name.constantize.columns_hash.except('id', 'created_at', 'updated_at') : attributes -%>
 <% assoc_attrs = attributes_names.select { |attr, value| attr.ends_with?('_id') } -%>
 <% assoc_attrs.dup.each do |attr, value| -%>
 <% type_attr = attr.gsub(/_id$/, '_type') -%>
@@ -33,7 +33,15 @@ class <%= class_name %> < <%= parent_class_name.classify %>
 <% attributes.select(&:reference?).each do |attribute| -%>
   belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', required: true' if attribute.required? %>
 <% end -%>
-
+<% attributes.select(&:rich_text?).each do |attribute| -%>
+  has_rich_text :<%= attribute.name %>
+<% end -%>
+<% attributes.select(&:attachment?).each do |attribute| -%>
+  has_one_attached :<%= attribute.name %>
+<% end -%>
+<% attributes.select(&:attachments?).each do |attribute| -%>
+  has_many_attached :<%= attribute.name %>
+<% end -%>
 <% attributes.select(&:token?).each do |attribute| -%>
   has_secure_token<% if attribute.name != "token" %> :<%= attribute.name %><% end %>
 <% end -%>

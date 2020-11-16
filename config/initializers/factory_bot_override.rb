@@ -62,7 +62,7 @@ if defined?(FactoryBot)
         FactoryBot::Internal.factory_by_name(name)
       rescue => e
         puts "#{e.message}\nGenerating new factory for '#{name}'"
-        system("rails g factory_bot:model #{singular_table_name.classify.constantize.reflections[name]&.class_name || name.classify}")
+        Rails::Generators.invoke('factory_bot:model', [singular_table_name.classify.constantize.reflections[name]&.class_name || name.classify, '--dir=spec/factories'], behavior: behavior)
       end
     end
 

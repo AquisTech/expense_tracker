@@ -48,7 +48,7 @@ if defined?(FactoryBot)
       faker_methods.each do |fc, fm_array|
         fm_array.map do |fm|
           match_size = (fm.to_s =~ %r{#{attribute_name}})
-          if match_size && match_size >= 0
+          if match_size && match_size >= 0 && !fm.to_s.ends_with?('=')
             possible_method_hash[fc] ||= []
             possible_method_hash[fc] << fm
           end

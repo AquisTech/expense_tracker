@@ -35,13 +35,13 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
 
   describe 'associations' do
 <% class_name.constantize.reflections.each do |assoc, details| -%>
-<% p_key_spec = ".with_primary_key(#{details.options[:primary_key]})" if details.options[:primary_key] -%>
-<% f_key_spec = ".with_foreign_key(#{details.options[:foreign_key]})" if details.options[:foreign_key] -%>
-<% dep_spec = ".dependent(#{details.options[:dependent]})" if details.options[:dependent] -%>
+<% p_key_spec = ".with_primary_key(:#{details.options[:primary_key]})" if details.options[:primary_key] -%>
+<% f_key_spec = ".with_foreign_key(:#{details.options[:foreign_key]})" if details.options[:foreign_key] -%>
+<% dep_spec = ".dependent(:#{details.options[:dependent]})" if details.options[:dependent] -%>
 <% counter_cache_spec = ".counter_cache(#{details.options[:counter_cache]})" if details.options[:counter_cache] -%>
 <% touch_spec = ".touch(#{details.options[:touch]})" if details.options[:touch] -%>
 <% autosave_spec = ".autosave(#{details.options[:autosave]})" if details.options[:autosave] -%>
-<% inverse_of_spec = ".inverse_of(#{details.options[:inverse_of]})" if details.options[:inverse_of] -%>
+<% inverse_of_spec = ".inverse_of(:#{details.options[:inverse_of]})" if details.options[:inverse_of] -%>
 <% required_spec = ".required" if details.options[:required] -%>
 <% optional_spec = ".optional" if details.options[:optional] -%>
     it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %><%= dep_spec %><%= counter_cache_spec %><%= touch_spec %><%= autosave_spec %><%= inverse_of_spec %><%= required_spec %><%= optional_spec %> }

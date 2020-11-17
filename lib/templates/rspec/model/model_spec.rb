@@ -47,5 +47,14 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
     it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %><%= dep_spec %><%= counter_cache_spec %><%= touch_spec %><%= autosave_spec %><%= inverse_of_spec %><%= required_spec %><%= optional_spec %> }
 <% end -%>
   end
+
+  describe 'nested attributes' do
+<% class_name.constantize.nested_attributes_options.each do |assoc, details| -%>
+<% allow_destroy_spec = ".allow_destroy(#{details[:allow_destroy]})" if details[:allow_destroy] -%>
+<% limit_spec = ".limit(#{details[:limit]})" if details[:limit] -%>
+<% update_only_spec = ".update_only(#{details[:update_only]})" if details[:update_only] -%>
+    it { should accept_nested_attributes_for(:<%= assoc %>)<%= allow_destroy_spec %><%= limit_spec %><%= update_only_spec %> }
+<% end -%>
+  end
 end
 <% end -%>

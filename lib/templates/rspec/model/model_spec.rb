@@ -1,15 +1,29 @@
 <% require "#{Rails.root}/app/models/#{singular_table_name}.rb" -%>
+<% attributes_names = class_name.constantize.columns_hash.except('id', 'created_at', 'updated_at') -%>
 require 'rails_helper'
 
 <% module_namespacing do -%>
 RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
   let(:<%= singular_table_name %>) { create(:<%= singular_table_name %>) }
 
-  it "has a valid factory" do
+  it 'has a valid factory' do
     expect(<%= singular_table_name %>).to be_valid
   end
 
-<% attributes_names = class_name.constantize.columns_hash.except('id', 'created_at', 'updated_at') -%>
+  describe 'database columns' do
+<% attributes_names.each do |attr, value| -%>
+<% options = ['default', 'null', 'limit', 'precision', 'scale'].map{ |o| "#{o}: #{value.send(o)}" unless value.send(o).nil? }.compact.join(", ") -%>
+<% options_spec = ".with_options(#{options})" -%>
+    it { should have_db_column(:<%= attr %>).of_type(:<%= value.type %>)<%= options_spec %> }
+<% end -%>
+  end
+
+  describe 'database indexes' do
+<% ActiveRecord::Base.connection.indexes(class_name.constantize.table_name).each do |index_details| -%>
+    it { should have_db_index(<%= index_details.columns.size == 1 ? ":#{index_details.columns.first}" : index_details.columns.map(&:to_sym) %>).unique(<%= index_details.unique %>) }
+<% end -%>
+  end
+
   describe 'validations' do
 <% attributes_names.each do |attr, value| -%>
 <% next if attr.ends_with?('_id') -%>

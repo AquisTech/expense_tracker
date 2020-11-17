@@ -38,6 +38,7 @@ if defined?(FactoryBot)
     def faker_methods
       methods_hash = {}
       Faker.constants.sort.map do |const|
+        next if [:Config, :VERSION].include?(const)
         methods_hash[const] = "Faker::#{const}".constantize.public_methods - IGNORED_FAKER_METHODS
       end
       methods_hash

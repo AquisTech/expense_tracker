@@ -41,7 +41,10 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
 <% counter_cache_spec = ".counter_cache(#{details.options[:counter_cache]})" if details.options[:counter_cache] -%>
 <% touch_spec = ".touch(#{details.options[:touch]})" if details.options[:touch] -%>
 <% autosave_spec = ".autosave(#{details.options[:autosave]})" if details.options[:autosave] -%>
-    it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %><%= dep_spec %><%= counter_cache_spec %><%= touch_spec %><%= autosave_spec %> }
+<% inverse_of_spec = ".inverse_of(#{details.options[:inverse_of]})" if details.options[:inverse_of] -%>
+<% required_spec = ".required" if details.options[:required] -%>
+<% optional_spec = ".optional" if details.options[:optional] -%>
+    it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %><%= dep_spec %><%= counter_cache_spec %><%= touch_spec %><%= autosave_spec %><%= inverse_of_spec %><%= required_spec %><%= optional_spec %> }
 <% end -%>
   end
 end

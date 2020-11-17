@@ -35,7 +35,9 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
 
   describe 'associations' do
 <% class_name.constantize.reflections.each do |assoc, details| -%>
-    it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>) }
+<% p_key_spec = ".with_primary_key(#{details.options[:primary_key]})" if details.options[:primary_key] -%>
+<% f_key_spec = ".with_foreign_key(#{details.options[:foreign_key]})" if details.options[:foreign_key] -%>
+    it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %> }
 <% end -%>
   end
 end

@@ -1,5 +1,5 @@
 <% require "#{Rails.root}/app/models/#{singular_table_name}.rb" -%>
-<% attributes_names = class_name.constantize.columns_hash.except('id', 'created_at', 'updated_at') -%>
+<% attributes_names = class_name.constantize.columns_hash -%>
 require 'rails_helper'
 
 <% module_namespacing do -%>
@@ -23,6 +23,7 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
     it { should have_db_index(<%= index_details.columns.size == 1 ? ":#{index_details.columns.first}" : index_details.columns.map(&:to_sym) %>).unique(<%= index_details.unique %>) }
 <% end -%>
   end
+<% attributes_names = class_name.constantize.columns_hash.except('id', 'created_at', 'updated_at') -%>
 
   describe 'validations' do
 <% attributes_names.each do |attr, value| -%>

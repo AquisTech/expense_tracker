@@ -38,12 +38,18 @@ RSpec.describe <%= class_name %>, <%= type_metatag(:model) %> do
 <% p_key_spec = ".with_primary_key(:#{details.options[:primary_key]})" if details.options[:primary_key] -%>
 <% f_key_spec = ".with_foreign_key(:#{details.options[:foreign_key]})" if details.options[:foreign_key] -%>
 <% dep_spec = ".dependent(:#{details.options[:dependent]})" if details.options[:dependent] -%>
+<% inverse_of_spec = ".inverse_of(:#{details.options[:inverse_of]})" if details.options[:inverse_of] -%>
+<% through_spec = ".through(:#{details.options[:through]})" if details.options[:through] -%>
+<% source_spec = ".source(:#{details.options[:source]})" if details.options[:source] -%>
+<% join_table_spec = ".join_table(:#{details.options[:join_table]})" if details.options[:join_table] -%>
 <% counter_cache_spec = ".counter_cache(#{details.options[:counter_cache]})" if details.options[:counter_cache] -%>
 <% touch_spec = ".touch(#{details.options[:touch]})" if details.options[:touch] -%>
 <% autosave_spec = ".autosave(#{details.options[:autosave]})" if details.options[:autosave] -%>
-<% inverse_of_spec = ".inverse_of(:#{details.options[:inverse_of]})" if details.options[:inverse_of] -%>
+<% validate_spec = ".validate(#{details.options[:validate]})" if details.options[:validate] -%>
+<% index_errors_spec = ".index_errors(#{details.options[:index_errors]})" if details.options[:index_errors] -%>
 <% required_spec = ".required" if details.options[:required] -%>
 <% optional_spec = ".optional" if details.options[:optional] -%>
+<% class_name_spec = ".class_name('#{details.options[:class_name]}')" if details.options[:class_name] -%>
     it { should <%= {belongs_to: 'belong_to', has_one: 'have_one', has_many: 'have_many'}[details.macro] %>(:<%= assoc %>)<%= p_key_spec %><%= f_key_spec %><%= dep_spec %><%= counter_cache_spec %><%= touch_spec %><%= autosave_spec %><%= inverse_of_spec %><%= required_spec %><%= optional_spec %> }
 <% end -%>
   end

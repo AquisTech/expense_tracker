@@ -103,7 +103,8 @@ if defined?(FactoryBot)
         float: 'Faker::Number.decimal',
         text: 'Faker::Lorem.paragraph',
         date: 'Faker::Date.backward',
-        datetime: 'Faker::Time.backward'
+        datetime: 'Faker::Time.backward',
+        boolean: 'Faker::Boolean.boolean'
       }[attr_type]
     end
 

@@ -48,7 +48,7 @@ gem 'serviceworker-rails'
 
 gem 'devise'
 gem 'devise-foundation-views'
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '>= 0.6.0'
 
 gem 'stateful_enum' # TODO: May be we can remove this if we are not using much of its functionality
 

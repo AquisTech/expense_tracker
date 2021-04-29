@@ -1,0 +1,29 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: nokogiri
+    versions:
+    - 1.11.1
+    - 1.11.2
+  - dependency-name: omniauth
+    versions:
+    - 2.0.1
+    - 2.0.2
+    - 2.0.3
+  - dependency-name: capybara
+    versions:
+    - 3.35.1
+  - dependency-name: autoprefixer-rails
+    versions:
+    - 10.2.0.0
+  - dependency-name: mini_racer
+    versions:
+    - 0.3.1
+  - dependency-name: validates_timeliness
+    versions:
+    - 5.0.0.beta2

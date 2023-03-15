@@ -7,7 +7,7 @@ end
 
 ruby '2.5.5'
 
-gem 'rails', '5.2.1'
+gem 'rails', '6.1.7.3'
 
 # Use MySQL & PG as the database for Active Record
 # gem 'mysql2'
@@ -15,7 +15,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '>= 5.0.8'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -46,7 +46,7 @@ gem 'validates_timeliness', '~> 5.0.0.alpha2'
 
 gem 'serviceworker-rails'
 
-gem 'devise'
+gem 'devise', '>= 4.7.0'
 gem 'devise-foundation-views'
 gem 'omniauth-google-oauth2'
 

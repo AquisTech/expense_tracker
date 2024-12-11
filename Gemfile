@@ -7,7 +7,7 @@ end
 
 ruby '2.5.5'
 
-gem 'rails', '5.2.1'
+gem 'rails', '7.0.8.7'
 
 # Use MySQL & PG as the database for Active Record
 # gem 'mysql2'
@@ -15,7 +15,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '>= 6.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -56,7 +56,7 @@ gem 'material_design_iconsfont', git: 'https://github.com/AquisTech/material_des
 
 gem 'pagy'
 gem 'jquery-datatables'
-gem 'ajax-datatables-rails'
+gem 'ajax-datatables-rails', '>= 1.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
